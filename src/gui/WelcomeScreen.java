@@ -41,7 +41,7 @@ public class WelcomeScreen {
         layout = new GridBagLayout();
         // Set the layout and size of the window
         mainFrame.setLayout(layout);
-        mainFrame.setSize(600,800);
+        mainFrame.setSize(600,650);
         // Create the text to go in the title 
         String title = "<html><h1><b>Welcome to NWNE - NEXUS</b></h1></html>";
         // Create the layout to layout the titles
