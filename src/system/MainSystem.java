@@ -21,5 +21,6 @@ public class MainSystem {
     public static void main(String[] args)
     {
         WelcomeScreen welcomeScreen = new WelcomeScreen();
+        
     }
 }
