@@ -1,6 +1,6 @@
-DROP DATABASE IF EXISTS `nexus`;
-CREATE DATABASE `nexus`;
-USE `nexus`;
+DROP DATABASE IF EXISTS `Nexus`;
+CREATE DATABASE `Nexus`;
+USE `Nexus`;
 
 CREATE TABLE `Tickets` (
 `id` INT(4) NOT NULL,
@@ -10,12 +10,14 @@ CREATE TABLE `Tickets` (
 `problemDescription` VARCHAR(255) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL,
 `CISKeywords` VARCHAR(255) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL,
 `delegateImpact` ENUM('Low', 'Medium', 'High') NOT NULL,
-`showOnCIS` ENUM('Yes','No') NOT NULL,
 PRIMARY KEY (`id`)
 ) Engine = InnoDB;
 
+CREATE TABLE `Verification-Queue` (
+)
 
+CREATE TABLE `CIS-Entries` (
+)
 
-
-
--- Tables Needed: Tickets, Users, Team Members
+CREATE TABLE `Users` (
+)
