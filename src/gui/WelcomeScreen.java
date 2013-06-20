@@ -11,7 +11,6 @@ package gui;
 
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
-import java.awt.GridLayout;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -45,10 +44,11 @@ public class WelcomeScreen {
         mainFrame.setLayout(layout);
         mainFrame.setSize(600,650);
         // Create the text to go in the title 
-        String title = "<html><h1><b>Welcome to NWNE - NEXUS</b></h1></html>";
-        // Create the layout to layout the titles
-        String subtitle = "<html><h3><b> Project Version 1.0 (Kuuga)</b></h3>"
-                + "</html>";
+        String title;
+        title = "<html><h1><b>Welcome to NWNE - NEXUS</b></h1></html>";
+        String subtitle;
+        subtitle = "<html><h3><b> Project Version 1.0 (Kuuga)</b></h3>"
+         + "</html>";
         // Create the label itself, adding in the text
         titleLabel = new JLabel(title, JLabel.CENTER);
         subtitleLabel = new JLabel(subtitle,JLabel.CENTER);
