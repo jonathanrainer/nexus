@@ -13,15 +13,20 @@ CREATE TABLE `Tickets` (
 PRIMARY KEY (`id`)
 ) Engine = InnoDB;
 
+CREATE TABLE `Users` (
+`userID` CHAR(6) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL,
+`name` VARCHAR(255) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL,
+`team` ENUM('Super Users', 'Control Office', 'Night Crew', 'Information Team',
+'Administration Team') NOT NULL,
+`password` VARCHAR(255) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL,
+PRIMARY KEY (`userID`)
+) Engine = InnoDB;
+
+
 --CREATE TABLE `Verification-Queue` (
 --)
 
 --CREATE TABLE `CIS-Entries` (
 --)
 
-CREATE TABLE `Users` (
-`userid` CHAR(6) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL,
-`name` VARCHAR(255) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL,
-`team` ENUM('Super Users', 'Control Office', 'Night Crew', 'Information Team',
-'Administration Team') NOT NULL,
-)
+
