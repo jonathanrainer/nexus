@@ -4,40 +4,24 @@
  */
 package system;
 
+import gui.MainGUI;
+
 /**
  *
  * @author jonathanrainer
  */
 
-import gui.WelcomeScreen;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-
 public class MainSystem {
     
-    private WelcomeScreen welcomeScreen;
+    private MainGUI mainGUI;
     
     public MainSystem()
     {
-        welcomeScreen = new WelcomeScreen();
-        addActionListeners();
+        mainGUI = new MainGUI();
     }
     
     public static void main(String[] args)
     {
         MainSystem mainSystem  = new MainSystem();
-    }
-    
-    private void addActionListeners()
-    {
-        welcomeScreen.getContinueButton().addActionListener(new ActionListener()
-        {
-            @Override
-            public void actionPerformed(ActionEvent e)
-            {
-                welcomeScreen.getMainFrame().dispose();
-            }
-        }
-        );
     }
 }
