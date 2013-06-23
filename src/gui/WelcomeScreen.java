@@ -12,8 +12,6 @@ package gui;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import javax.swing.*;
 
 public class WelcomeScreen {
@@ -94,9 +92,6 @@ public class WelcomeScreen {
         mainFrame.add(continueButton, continueButtonConstraints);
         mainFrame.setVisible(true);
         mainFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        
-        //Add in all the action Listeners
-        addActionListeners();
     }
     
     private GridBagConstraints createGridBagConstraints(int gridx, int gridy, 
@@ -118,16 +113,13 @@ public class WelcomeScreen {
         return constraints;
     }
     
-    private void addActionListeners()
+    public JButton getContinueButton()
     {
-        continueButton.addActionListener(new ActionListener()
-        {
-            @Override
-            public void actionPerformed(ActionEvent e)
-            {
-                mainFrame.removeAll();
-            }
-        }
-        );
+        return continueButton;
+    }
+    
+    public JFrame getMainFrame()
+    {
+        return mainFrame;
     }
 }

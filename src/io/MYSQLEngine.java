@@ -4,11 +4,11 @@
  */
 package io;
 
-import java.sql.*;
 /**
  *
  * @author jonathanrainer
  */
+
 public class MYSQLEngine {
     
      // JDBC driver name and database URL
