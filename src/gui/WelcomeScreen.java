@@ -30,10 +30,9 @@ public class WelcomeScreen {
         mainFrame = template.giveTemplatedJFrame("Welcome to NWNE - NEXUS");
         // Create the text to go in the title 
         String title;
-        title = "<html><h1><b>Welcome to NWNE - NEXUS</b></h1></html>";
+        title = template.headingString("Welcome to NWNE - NEXUS", 1);
         String subtitle;
-        subtitle = "<html><h3><b> Project Version 1.0 (Kuuga)</b></h3>"
-         + "</html>";
+        subtitle = template.headingString("Project Version 1.0 (Kuuga)",3);
         // Create the label itself, adding in the text
         titleLabel = new JLabel(title, JLabel.CENTER);
         subtitleLabel = new JLabel(subtitle,JLabel.CENTER);
@@ -54,7 +53,8 @@ public class WelcomeScreen {
         // Create the label itself
         welcomeTextLabel = new JLabel(welcomeText, JLabel.CENTER);
         // Create the continue button
-        continueButton = new JButton("<html><h2><b>Continue</b></h2></html>");
+        continueButton = new JButton(template.headingString(
+                "Continue</b></h2></html>",2));
         //continueButton.setFont(rockwell);
         GridBagConstraints titleConstraints = template.
                 createGridBagConstraints(0, 1, GridBagConstraints.BOTH, 0, 0, 

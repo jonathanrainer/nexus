@@ -5,6 +5,7 @@
 package system;
 
 import gui.MainGUI;
+import io.MYSQLEngine;
 
 /**
  *
@@ -14,14 +15,16 @@ import gui.MainGUI;
 public class MainSystem {
     
     private MainGUI mainGUI;
+    private MYSQLEngine mysqlEngine;
     
     public MainSystem()
     {
-        mainGUI = new MainGUI();
+        mysqlEngine = new MYSQLEngine("localhost", "Nexus","root","");
+        mainGUI = new MainGUI(mysqlEngine.enumerateTeamNames());
     }
     
     public static void main(String[] args)
     {
-        MainSystem mainSystem  = new MainSystem();
+        MainSystem mainSystem  = new MainSystem();      
     }
 }

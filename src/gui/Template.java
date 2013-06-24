@@ -61,4 +61,19 @@ public class Template {
         return constraints;
     }
     
+    public String headingString(String input, int size)
+    {
+        if (size <= 0 || size > 6)
+        {
+            return input;
+        }
+        else
+        {
+            return "<html><h"+ size +"><b>" + input + "</b></h" + size + 
+                    "</html>";
+        }
+        
+    }
+    
+    
 }
