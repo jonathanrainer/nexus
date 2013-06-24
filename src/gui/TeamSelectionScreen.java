@@ -9,7 +9,6 @@ package gui;
  * @author jonathanrainer
  */
 
-import gui.Template;
 import javax.swing.JFrame;
 
 public class TeamSelectionScreen {
