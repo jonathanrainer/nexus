@@ -76,8 +76,6 @@ public class WelcomeScreen {
                 new Insets(0, 0, 0, 0),GridBagConstraints.CENTER, 0.0, 0.0, 1, 
                 1);
         mainFrame.add(continueButton, continueButtonConstraints);
-        mainFrame.setVisible(true);
-        mainFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     }
     
     public JButton getContinueButton()

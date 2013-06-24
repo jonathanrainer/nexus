@@ -57,7 +57,15 @@ public class TeamSelectionScreen {
                 new Insets(0, 0, 0, 0), GridBagConstraints.CENTER, 0.0, 0.0, 1, 
                 1);
         mainFrame.add(continueButton,continueButtonConstraints);
-        
-        mainFrame.setVisible(true);
+    }
+    
+    public JButton getContinueButton()
+    {
+        return continueButton;
+    }
+    
+    public JFrame getMainFrame()
+    {
+        return mainFrame;
     }
 }

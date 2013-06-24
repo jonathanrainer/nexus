@@ -13,31 +13,25 @@ import java.util.ArrayList;
  * @author jonathanrainer
  */
 public class MainGUI {
-    
-    private WelcomeScreen welcomeScreen;
-    private TeamSelectionScreen teamSelectionScreen;
-    private ArrayList<String> teamNames;
+
+   private WelcomeScreen welcomeScreen;
+   private TeamSelectionScreen teamSelectionScreen;
     
     public MainGUI(ArrayList<String> teamNames)
     {
         welcomeScreen = new WelcomeScreen();
-        this.teamNames = teamNames;
-        addActionListeners();
+        teamSelectionScreen = new TeamSelectionScreen(teamNames);
+    }
+
+     public WelcomeScreen getWelcomeScreen() 
+     {
+        return welcomeScreen;
+     }
+
+    public TeamSelectionScreen getTeamSelectionScreen() 
+    {
+        return teamSelectionScreen;
     }
     
-    private void addActionListeners()
-    {
-        welcomeScreen.getContinueButton().addActionListener(new ActionListener()
-        {
-            @Override
-            public void actionPerformed(ActionEvent e)
-            {
-                welcomeScreen.getMainFrame().dispose();
-                teamSelectionScreen = new TeamSelectionScreen(teamNames);
-            }
-        }
-        );
-        
-    }
     
 }
