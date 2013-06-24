@@ -19,7 +19,7 @@ public class MainSystem {
     
     public MainSystem()
     {
-        mysqlEngine = new MYSQLEngine("localhost", "Nexus","root","");
+        mysqlEngine = new MYSQLEngine("localhost", "Nexus","nexus","nexus2713");
         mainGUI = new MainGUI(mysqlEngine.enumerateTeamNames());
     }
     
