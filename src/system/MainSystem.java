@@ -4,7 +4,7 @@
  */
 package system;
 
-import gui.MainGUI;
+import gui.InitialGUI;
 import io.MYSQLEngine;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -19,13 +19,13 @@ public class MainSystem {
     
     private MYSQLEngine mysqlEngine;
     private ArrayList<String> teamNames;
-    private MainGUI mainGUI;
+    private InitialGUI initialGUI;
     
     public MainSystem()
     {
         mysqlEngine = new MYSQLEngine("localhost", "Nexus","nexus","nexus2713");
         teamNames = mysqlEngine.enumerateTeamNames();
-        mainGUI = new MainGUI(teamNames);
+        initialGUI = new InitialGUI(teamNames);
         addActionListeners();
     }
     
@@ -38,33 +38,33 @@ public class MainSystem {
     
     private void addActionListeners()
     {
-        mainGUI.getWelcomeScreen().getContinueButton().addActionListener
+        initialGUI.getWelcomeScreen().getContinueButton().addActionListener
                 (new ActionListener()
         {
             @Override
             public void actionPerformed(ActionEvent e)
             {
-                mainGUI.getWelcomeScreen().getMainFrame().dispose();
-                mainGUI.getTeamSelectionScreen().getMainFrame().setVisible(true);
+                initialGUI.getWelcomeScreen().getMainFrame().dispose();
+                initialGUI.getTeamSelectionScreen().getMainFrame().setVisible(true);
             }
         }
         );
         
-        mainGUI.getTeamSelectionScreen().getContinueButton().addActionListener
+        initialGUI.getTeamSelectionScreen().getContinueButton().addActionListener
                 (new ActionListener()
         {
             @Override
             public void actionPerformed(ActionEvent e)
             {
-                mainGUI.getTeamSelectionScreen().getMainFrame().dispose();
+                initialGUI.getTeamSelectionScreen().getMainFrame().dispose();
                 
             }
         });
        
     }
     
-    private MainGUI getMainGUI()
+    private InitialGUI getMainGUI()
     {
-        return mainGUI;
+        return initialGUI;
     }
 }

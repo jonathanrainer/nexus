@@ -12,12 +12,12 @@ import java.util.ArrayList;
  *
  * @author jonathanrainer
  */
-public class MainGUI {
+public class InitialGUI {
 
    private WelcomeScreen welcomeScreen;
    private TeamSelectionScreen teamSelectionScreen;
     
-    public MainGUI(ArrayList<String> teamNames)
+    public InitialGUI(ArrayList<String> teamNames)
     {
         welcomeScreen = new WelcomeScreen();
         teamSelectionScreen = new TeamSelectionScreen(teamNames);
