@@ -20,6 +20,8 @@ public class MainSystem {
     private MYSQLEngine mysqlEngine;
     private ArrayList<String> teamNames;
     private InitialGUI initialGUI;
+    private User user;
+    
     
     public MainSystem()
     {
@@ -56,8 +58,10 @@ public class MainSystem {
             @Override
             public void actionPerformed(ActionEvent e)
             {
+                user = new User(initialGUI.getTeamSelectionScreen().
+                        getTeamComboBox().getSelectedItem().toString());
                 initialGUI.getTeamSelectionScreen().getMainFrame().dispose();
-                
+                System.out.println(user.getUserGroup());
             }
         });
        
@@ -66,5 +70,10 @@ public class MainSystem {
     private InitialGUI getMainGUI()
     {
         return initialGUI;
+    }
+    
+    private User getUser()
+    {
+        return user;
     }
 }

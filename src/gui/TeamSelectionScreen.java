@@ -68,4 +68,9 @@ public class TeamSelectionScreen {
     {
         return mainFrame;
     }
+    
+    public JComboBox getTeamComboBox()
+    {
+        return teamSelectionComboBox;
+    }
 }
