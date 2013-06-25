@@ -34,7 +34,7 @@ public class MainSystem {
     public static void main(String[] args)
     {
         MainSystem mainSystem  = new MainSystem(); 
-        mainSystem.getMainGUI().getWelcomeScreen().getMainFrame().setVisible
+        mainSystem.getInitialGUI().getWelcomeScreen().getMainFrame().setVisible
                 (true);
     }
     
@@ -50,7 +50,7 @@ public class MainSystem {
                 initialGUI.getTeamSelectionScreen().getMainFrame().setVisible(true);
             }
         }
-        );
+                );
         
         initialGUI.getTeamSelectionScreen().getContinueButton().addActionListener
                 (new ActionListener()
@@ -63,11 +63,12 @@ public class MainSystem {
                 initialGUI.getTeamSelectionScreen().getMainFrame().dispose();
                 System.out.println(user.getUserGroup());
             }
-        });
+        }
+                );
        
     }
     
-    private InitialGUI getMainGUI()
+    private InitialGUI getInitialGUI()
     {
         return initialGUI;
     }
