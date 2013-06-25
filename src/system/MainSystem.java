@@ -11,7 +11,8 @@ import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
 /**
- *
+ * The highest level of the system as a whole, all major functionality will,
+ * at least in principle, be controlled from here.
  * @author jonathanrainer
  */
 
@@ -22,7 +23,10 @@ public class MainSystem {
     private InitialGUI initialGUI;
     private User user;
     
-    
+    /**
+     * Construct all the components of the Main System and such that it can have
+     * control over them.
+     */
     public MainSystem()
     {
         mysqlEngine = new MYSQLEngine("localhost", "Nexus","nexus","nexus2713");
@@ -31,6 +35,11 @@ public class MainSystem {
         addActionListeners();
     }
     
+    /**
+     * Construct the Main System and then set the first GUI window so it's
+     * visible.
+     * @param args Any command line arguments
+     */
     public static void main(String[] args)
     {
         MainSystem mainSystem  = new MainSystem(); 
@@ -38,8 +47,18 @@ public class MainSystem {
                 (true);
     }
     
+    /**
+     * Add ActionListeners to the GUI elements that require them. All
+     * ActionListeners are declared in-line rather than being written as 
+     * separate classes. Any larger ActionListeners are declared in separate
+     * classes.
+     */
     private void addActionListeners()
     {
+        /**
+         * Add an ActionListener to the continue button on the welcome screen. 
+         * Simply moves the system on a stage.
+         */
         initialGUI.getWelcomeScreen().getContinueButton().addActionListener
                 (new ActionListener()
         {
@@ -52,6 +71,11 @@ public class MainSystem {
         }
                 );
         
+        /**
+         * Add an ActionListener to the continue button on the Team Selection 
+         * screen. This creates a user object and then begins to construct the
+         * underlying system properly.
+         */
         initialGUI.getTeamSelectionScreen().getContinueButton().addActionListener
                 (new ActionListener()
         {
@@ -61,18 +85,26 @@ public class MainSystem {
                 user = new User(initialGUI.getTeamSelectionScreen().
                         getTeamComboBox().getSelectedItem().toString());
                 initialGUI.getTeamSelectionScreen().getMainFrame().dispose();
-                System.out.println(user.getUserGroup());
+                System.out.println(user.getTeam());
             }
         }
                 );
        
     }
     
+    /**
+     * Get the initial GUI object out of the Main System.
+     * @return The initial GUI
+     */
     private InitialGUI getInitialGUI()
     {
         return initialGUI;
     }
     
+    /**
+     * Return the user object from the Main System.
+     * @return The User object.
+     */
     private User getUser()
     {
         return user;

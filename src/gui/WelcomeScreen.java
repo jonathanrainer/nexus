@@ -28,8 +28,8 @@ public class WelcomeScreen {
     //private Font rockwell = new Font("ExpressWay", Font.BOLD, 14);
 
     /**
-     * Construct a welcome screen object. No need for parameters in as form, in
-     * this case, is more important than function.
+     * Construct a welcome screen object. No need for parameters in as 
+     * form, in this case, is more important than function.
      */
     public WelcomeScreen() {
         template = new Template();

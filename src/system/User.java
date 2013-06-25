@@ -5,21 +5,32 @@
 package system;
 
 /**
- *
+ * Encapsulates functionality related to the user of this system.
  * @author jonathanrainer
  */
 public class User {
     
-    private String userGroup;
+    /**
+     * A string that describes the team the user belongs to. 
+     */
+    private String team;
     
-    public User(String userGroup)
+    /**
+     * Construct the user object
+     * @param team The team the user belongs to
+     */
+    public User(String team)
     {
-        this.userGroup = userGroup;
+        this.team = team;
     }
     
-    public String getUserGroup()
+    /**
+     * Return the team the user belongs to
+     * @return The team the user belongs to
+     */
+    public String getTeam()
     {
-        return userGroup;
+        return team;
     }
             
 }
