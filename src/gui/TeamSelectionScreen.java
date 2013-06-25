@@ -18,6 +18,8 @@ import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.SwingConstants;
+import javax.swing.plaf.basic.BasicArrowButton;
 
 public class TeamSelectionScreen {
 
@@ -43,7 +45,12 @@ public class TeamSelectionScreen {
      * using the application.
      */
     private JButton continueButton;
-
+    /**
+     * A basic back button.
+     */
+    private BasicArrowButton backButton;
+    
+    
     /**
      * Construct a new Team Selection Screen utilising the teams that are
      * available to select from.
@@ -81,10 +88,18 @@ public class TeamSelectionScreen {
         // Create the continue buttons and its associated constraints.
         continueButton = new JButton(template.headingString("Continue", 2));
         GridBagConstraints continueButtonConstraints = template.
-                createGridBagConstraints(0, 3, GridBagConstraints.BOTH, 30, 30,
+                createGridBagConstraints(0, 3, GridBagConstraints.NORTH, 40, 40,
                 new Insets(0, 0, 0, 0), GridBagConstraints.CENTER, 0.0, 0.0, 1,
                 1);
         mainFrame.add(continueButton, continueButtonConstraints);
+        
+        // Create back button so that users can go back to the previous screen
+        backButton = new BasicArrowButton(BasicArrowButton.WEST);
+        GridBagConstraints basicArrowButtonConstraints;
+        basicArrowButtonConstraints = template.createGridBagConstraints(0, 4, 
+                GridBagConstraints.SOUTHWEST, 40, 40, new Insets(0, 0, 0, 0), 
+                GridBagConstraints.SOUTHWEST, 0.0, 0.0, 1,1);
+        mainFrame.add(backButton, basicArrowButtonConstraints);
     }
 
     /**

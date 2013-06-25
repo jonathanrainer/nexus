@@ -5,6 +5,7 @@
 package system;
 
 import gui.InitialGUI;
+import gui.MainGUI;
 import io.MYSQLEngine;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -21,6 +22,7 @@ public class MainSystem {
     private MYSQLEngine mysqlEngine;
     private ArrayList<String> teamNames;
     private InitialGUI initialGUI;
+    private MainGUI mainGUI;
     private User user;
     
     /**
@@ -85,7 +87,7 @@ public class MainSystem {
                 user = new User(initialGUI.getTeamSelectionScreen().
                         getTeamComboBox().getSelectedItem().toString());
                 initialGUI.getTeamSelectionScreen().getMainFrame().dispose();
-                System.out.println(user.getTeam());
+                mainGUI = new MainGUI(user.getTeam());
             }
         }
                 );

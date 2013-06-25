@@ -10,6 +10,9 @@ import java.awt.Insets;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JMenu;
+import javax.swing.JMenuBar;
+
 
 /**
  * A class to deal with the fact that a lot of the screens are going to be, to
@@ -44,14 +47,25 @@ public class Template {
      */
     public JFrame giveTemplatedJFrame(String title) {
         JFrame templatedFrame = new JFrame(title);
+        
         GridBagLayout layout = new GridBagLayout();
         templatedFrame.setLayout(layout);
-        templatedFrame.setSize(600, 650);
+        
+        templatedFrame.setSize(800, 600);
+        
         JLabel logo = new JLabel(newWineLogo);
         GridBagConstraints logoConstraints = createGridBagConstraints(
                 0, 0, GridBagConstraints.BOTH, 0, 0, new Insets(0, 0, 0, 0),
                 GridBagConstraints.CENTER, 0.0, 0.0, 1, 1);
         templatedFrame.add(logo, logoConstraints);
+        
+        // Create the menu to go across the top of the frame.
+        JMenuBar menuBar = new JMenuBar();
+        JMenu fileMenu = new JMenu("File");
+        menuBar.add(fileMenu);
+        templatedFrame.setJMenuBar(menuBar);
+        
+        
         templatedFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         return templatedFrame;
     }

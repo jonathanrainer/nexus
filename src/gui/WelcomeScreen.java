@@ -82,7 +82,7 @@ public class WelcomeScreen {
                 1);
         mainFrame.add(welcomeTextLabel, welcomeTextConstraints);
         GridBagConstraints continueButtonConstraints = template.
-                createGridBagConstraints(0, 4, GridBagConstraints.BOTH, 0, 0,
+                createGridBagConstraints(0, 4, GridBagConstraints.NORTH, 0, 0,
                 new Insets(0, 0, 0, 0), GridBagConstraints.CENTER, 0.0, 0.0, 1,
                 1);
         mainFrame.add(continueButton, continueButtonConstraints);
