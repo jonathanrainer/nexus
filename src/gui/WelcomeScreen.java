@@ -5,7 +5,9 @@
 package gui;
 
 /**
- *
+ * The first screen that will be seen when the Nexus application is started. 
+ * Really only for informative purposes and not much functionality is contained
+ * herein. 
  * @author jonathanrainer
  */
 
@@ -21,8 +23,14 @@ public class WelcomeScreen {
     private JLabel welcomeTextLabel;
     private JButton continueButton;
     private Template template;
+    // The code below can be included if you want to change the font that
+    // appears on buttons etc.
     //private Font rockwell = new Font("ExpressWay", Font.BOLD, 14);
     
+    /**
+     * Construct a welcome screen object. No need for parameters in as form,
+     * in this case, is more important than function.
+     */
     public WelcomeScreen()
     {
         template = new Template();
@@ -55,7 +63,10 @@ public class WelcomeScreen {
         // Create the continue button
         continueButton = new JButton(template.headingString(
                 "Continue</b></h2></html>",2));
-        //continueButton.setFont(rockwell);
+        // Can be included if you wish to change the button font.
+        // continueButton.setFont(rockwell);
+        // Create the various constraints such that the parts are laid out 
+        // correctly
         GridBagConstraints titleConstraints = template.
                 createGridBagConstraints(0, 1, GridBagConstraints.BOTH, 0, 0, 
                 new Insets(0, 0, 0, 0), GridBagConstraints.CENTER, 0.0, 0.0, 1, 
@@ -78,11 +89,19 @@ public class WelcomeScreen {
         mainFrame.add(continueButton, continueButtonConstraints);
     }
     
+    /**
+     * Get the continue button.
+     * @return The continue button.
+     */
     public JButton getContinueButton()
     {
         return continueButton;
     }
-    
+   
+    /**
+     * Get the main frame.
+     * @return The main frame.
+     */
     public JFrame getMainFrame()
     {
         return mainFrame;
