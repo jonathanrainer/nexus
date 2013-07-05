@@ -128,4 +128,14 @@ public class TeamSelectionScreen {
     public JComboBox getTeamComboBox() {
         return teamSelectionComboBox;
     }
+    
+    /**
+     * Get the back button.
+     * 
+     * @return The back button
+     */
+    public BasicArrowButton getBackButton()
+    {
+        return backButton;
+    }
 }
