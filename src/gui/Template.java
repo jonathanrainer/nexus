@@ -48,7 +48,8 @@ public class Template {
     public JFrame giveTemplatedJFrame(String title) {
         JFrame templatedFrame = new JFrame(title);
         
-        GridBagLayout layout = new GridBagLayout();
+        GridBagLayout layout;
+        layout = new GridBagLayout();
         templatedFrame.setLayout(layout);
         
         templatedFrame.setSize(800, 600);
