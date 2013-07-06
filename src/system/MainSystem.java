@@ -34,7 +34,8 @@ public class MainSystem {
         mysqlEngine = new MYSQLEngine("localhost", "Nexus","nexus","nexus2713");
         teamNames = mysqlEngine.enumerateTeamNames();
         initialGUI = new InitialGUI(teamNames);
-        addActionListeners();
+        addActionListenersInitialGUI();
+        System.out.println(mysqlEngine.getLastTicketID());
     }
     
     /**
@@ -55,7 +56,7 @@ public class MainSystem {
      * separate classes. Any larger ActionListeners are declared in separate
      * classes.
      */
-    private void addActionListeners()
+    private void addActionListenersInitialGUI()
     {
         /**
          * Add an ActionListener to the continue button on the welcome screen. 
