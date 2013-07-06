@@ -91,6 +91,19 @@ public class MainSystem {
             }
         }
                 );
+        
+        initialGUI.getTeamSelectionScreen().getBackButton().addActionListener(
+                new ActionListener()
+                {
+                    @Override
+                    public void actionPerformed(ActionEvent e)
+                    {
+                        initialGUI.getTeamSelectionScreen().getMainFrame().
+                                dispose();
+                        initialGUI.getWelcomeScreen().getMainFrame().setVisible
+                                (true);
+                    }
+                });
        
     }
     
