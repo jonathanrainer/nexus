@@ -133,7 +133,21 @@ public class TaskSelectionScreen {
         return mainFrame;
     }
 
+    /**
+     * Returns the main frame into which all the content is placed so other 
+     * methods can access the parts of the GUI they need.
+     * @return The main JFrame for this part of the GUI.
+     */
     public JFrame getMainFrame() {
         return mainFrame;
     }
+    
+    /**
+     * A method to return the ArrayList of buttons accessible to the user.
+     * @return The ArrayList of buttons accessible to the user.
+     */
+    public ArrayList<JButton> getButtons() {
+        return buttons;
+    }
+    
 }
