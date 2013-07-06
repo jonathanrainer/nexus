@@ -19,7 +19,7 @@ public class ControlOfficeEntryForm {
     private Template template;
 
     public ControlOfficeEntryForm() {
-        
+        mainFrame = template.giveTemplatedJFrame("test");
         
     }
 }

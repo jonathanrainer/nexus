@@ -148,9 +148,9 @@ public class MYSQLEngine {
              * that it can be populated later. This ensures that the new Ticket
              * ID is unique and there are no problems with overlapping ID's.
              */
-            String insert = "INSERT INTO Tickets (DEFAULT, DEFAULT, NULL. NULL,"
-                    + "NULL, NULL, DEFAULT; SELECT MAX(`id`) FROM Tickets";
-            ResultSet rs1 = stmt1.executeQuery(insert);
+            String insert = "INSERT INTO `Tickets` VALUES(DEFAULT, DEFAULT, "
+                    + "NULL, NULL, NULL, NULL, DEFAULT)";
+            int returnCode = stmt1.executeUpdate(insert);
             String maximum = "SELECT MAX(`id`) FROM Tickets";
             ResultSet rs2 = stmt2.executeQuery(maximum);
             // Extract the resulting data from the ResultSet
@@ -160,13 +160,11 @@ public class MYSQLEngine {
                 i++;
             }
             // Close all the statements, result set and connection.
-            rs1.close();
             rs2.close();
             stmt1.close();
             stmt2.close();
             conn.close();
         } catch (SQLException se) {
-            //Handle errors for JDBC
         } catch (Exception e) {
             //Handle errors for Class.forName
         } finally {
@@ -177,13 +175,14 @@ public class MYSQLEngine {
                     stmt2.close();
                 }
             } catch (SQLException se2) {
-            }// nothing we can do
+            }
 
             try {
                 if (conn != null) {
                     conn.close();
                 }
             } catch (SQLException se) {
+                
             }
         }
        return result; 
