@@ -59,7 +59,7 @@ public class MYSQLEngine {
         Connection conn = null;
         Statement stmt = null;
         // Create a new ArrayList to store the results of the MYSQL query.
-        ArrayList<String> results = new ArrayList<String>();
+        ArrayList<String> results = new ArrayList<>();
         // Begin try block so SQL Exceptions can be handled later
         try {
             // Register JDBC driver
@@ -125,5 +125,67 @@ public class MYSQLEngine {
             }
         }
         return results;
+    }
+    
+    public int getLastTicketID() {
+        // Set up the initial connection and statement objects
+        Connection conn = null;
+        Statement stmt1 = null;
+        Statement stmt2 = null;
+        int result = 0;
+        // Begin try block so SQL Exceptions can be handled later
+        try {
+            // Register JDBC driver
+            Class.forName("com.mysql.jdbc.Driver");
+            // Open a connection
+            conn = DriverManager.getConnection(DB_URL, USER, PASS);
+
+            // Create and Execute the SQL Query
+            stmt1 = conn.createStatement();
+            stmt2 = conn.createStatement();
+            /**
+             * Query states: Insert into the table Tickets a blank ticket such
+             * that it can be populated later. This ensures that the new Ticket
+             * ID is unique and there are no problems with overlapping ID's.
+             */
+            String insert = "INSERT INTO Tickets (DEFAULT, DEFAULT, NULL. NULL,"
+                    + "NULL, NULL, DEFAULT; SELECT MAX(`id`) FROM Tickets";
+            ResultSet rs1 = stmt1.executeQuery(insert);
+            String maximum = "SELECT MAX(`id`) FROM Tickets";
+            ResultSet rs2 = stmt2.executeQuery(maximum);
+            // Extract the resulting data from the ResultSet
+            int i = 1;
+            while(rs2.next()) {
+                result = rs2.getInt(i);
+                i++;
+            }
+            // Close all the statements, result set and connection.
+            rs1.close();
+            rs2.close();
+            stmt1.close();
+            stmt2.close();
+            conn.close();
+        } catch (SQLException se) {
+            //Handle errors for JDBC
+        } catch (Exception e) {
+            //Handle errors for Class.forName
+        } finally {
+            //finally block used to close resources should all else fail
+            try {
+                if (stmt1 != null || stmt2 != null) {
+                    stmt1.close();
+                    stmt2.close();
+                }
+            } catch (SQLException se2) {
+            }// nothing we can do
+
+            try {
+                if (conn != null) {
+                    conn.close();
+                }
+            } catch (SQLException se) {
+            }
+        }
+       return result; 
     }
 }
