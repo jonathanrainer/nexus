@@ -18,7 +18,6 @@ import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
-import javax.swing.SwingConstants;
 import javax.swing.plaf.basic.BasicArrowButton;
 
 public class TeamSelectionScreen {
