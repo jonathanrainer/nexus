@@ -127,11 +127,15 @@ public class MYSQLEngine {
         return results;
     }
     
-    public int getLastTicketID() {
+    /**
+     * Creates a Blank Ticket in the database with the ID, Date/Time and 
+     * Delegate Impact set to their default values and all other values set to 
+     * NULL.
+     */
+    public void createBlankTicket() {
         // Set up the initial connection and statement objects
         Connection conn = null;
         Statement stmt1 = null;
-        Statement stmt2 = null;
         int result = 0;
         // Begin try block so SQL Exceptions can be handled later
         try {
@@ -142,7 +146,6 @@ public class MYSQLEngine {
 
             // Create and Execute the SQL Query
             stmt1 = conn.createStatement();
-            stmt2 = conn.createStatement();
             /**
              * Query states: Insert into the table Tickets a blank ticket such
              * that it can be populated later. This ensures that the new Ticket
@@ -151,18 +154,9 @@ public class MYSQLEngine {
             String insert = "INSERT INTO `Tickets` VALUES(DEFAULT, DEFAULT, "
                     + "NULL, NULL, NULL, NULL, DEFAULT)";
             int returnCode = stmt1.executeUpdate(insert);
-            String maximum = "SELECT MAX(`id`) FROM Tickets";
-            ResultSet rs2 = stmt2.executeQuery(maximum);
             // Extract the resulting data from the ResultSet
-            int i = 1;
-            while(rs2.next()) {
-                result = rs2.getInt(i);
-                i++;
-            }
             // Close all the statements, result set and connection.
-            rs2.close();
             stmt1.close();
-            stmt2.close();
             conn.close();
         } catch (SQLException se) {
         } catch (Exception e) {
@@ -170,9 +164,8 @@ public class MYSQLEngine {
         } finally {
             //finally block used to close resources should all else fail
             try {
-                if (stmt1 != null || stmt2 != null) {
+                if (stmt1 != null) {
                     stmt1.close();
-                    stmt2.close();
                 }
             } catch (SQLException se2) {
             }
@@ -185,6 +178,5 @@ public class MYSQLEngine {
                 
             }
         }
-       return result; 
     }
 }

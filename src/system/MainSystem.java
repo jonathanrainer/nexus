@@ -4,6 +4,7 @@
  */
 package system;
 
+import gui.ControlOfficeEntryForm;
 import gui.InitialGUI;
 import gui.MainGUI;
 import io.MYSQLEngine;
@@ -31,11 +32,11 @@ public class MainSystem {
      */
     public MainSystem()
     {
-        mysqlEngine = new MYSQLEngine("localhost", "Nexus","nexus","nexus2713");
-        teamNames = mysqlEngine.enumerateTeamNames();
-        initialGUI = new InitialGUI(teamNames);
-        addActionListenersInitialGUI();
-        System.out.println(mysqlEngine.getLastTicketID());
+//        mysqlEngine = new MYSQLEngine("localhost", "Nexus","nexus","nexus2713");
+//        teamNames = mysqlEngine.enumerateTeamNames();
+//        initialGUI = new InitialGUI(teamNames);
+//        addActionListenersInitialGUI();
+        ControlOfficeEntryForm cofe = new ControlOfficeEntryForm();
     }
     
     /**

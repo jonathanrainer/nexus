@@ -57,7 +57,7 @@ public class Template {
         JLabel logo = new JLabel(newWineLogo);
         GridBagConstraints logoConstraints = createGridBagConstraints(
                 0, 0, GridBagConstraints.BOTH, 0, 0, new Insets(0, 0, 0, 0),
-                GridBagConstraints.CENTER, 0.0, 0.0, 1, 1);
+                GridBagConstraints.CENTER, 0.0, 0.0, 1, 5);
         templatedFrame.add(logo, logoConstraints);
         
         // Create the menu to go across the top of the frame.
