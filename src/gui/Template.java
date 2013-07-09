@@ -6,12 +6,14 @@ package gui;
 
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
+import java.awt.GridLayout;
 import java.awt.Insets;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
+import javax.swing.JPanel;
 
 
 /**
@@ -45,14 +47,14 @@ public class Template {
      * @return A JFrame with the template applied to it, so other components can
      * be added on top.
      */
-    public JFrame giveTemplatedJFrame(String title) {
+    public JFrame giveGridBagTemplatedJFrame(String title) {
         JFrame templatedFrame = new JFrame(title);
         
         GridBagLayout layout;
         layout = new GridBagLayout();
         templatedFrame.setLayout(layout);
         
-        templatedFrame.setSize(800, 600);
+        templatedFrame.setSize(900, 700);
         
         JLabel logo = new JLabel(newWineLogo);
         GridBagConstraints logoConstraints = createGridBagConstraints(
@@ -70,6 +72,7 @@ public class Template {
         templatedFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         return templatedFrame;
     }
+    
 
     /**
      * This function removes the tedious process of setting each part of the
