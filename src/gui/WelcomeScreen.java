@@ -34,7 +34,7 @@ public class WelcomeScreen {
     public WelcomeScreen() {
         template = new Template();
         // Create mainv templated frame to place content into
-        mainFrame = template.giveTemplatedJFrame("Welcome to NWNE - NEXUS");
+        mainFrame = template.giveGridBagTemplatedJFrame("Welcome to NWNE - NEXUS");
         // Create the text to go in the title 
         String title;
         title = template.headingString("Welcome to NWNE - NEXUS", 1);
