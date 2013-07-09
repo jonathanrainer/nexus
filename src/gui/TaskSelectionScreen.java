@@ -25,7 +25,7 @@ public class TaskSelectionScreen {
     public TaskSelectionScreen(String team) {
         buttons = new ArrayList<>();
         template = new Template();
-        mainFrame = template.giveTemplatedJFrame("Task Selection - " + team
+        mainFrame = template.giveGridBagTemplatedJFrame("Task Selection - " + team
                 + "- NWNE - Nexus");
         String title;
         title = template.headingString("Please select the task you wish to "
