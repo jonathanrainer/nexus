@@ -32,11 +32,11 @@ public class MainSystem {
      */
     public MainSystem()
     {
-//        mysqlEngine = new MYSQLEngine("localhost", "Nexus","nexus","nexus2713");
+        mysqlEngine = new MYSQLEngine("localhost", "Nexus","nexus","nexus2713");
 //        teamNames = mysqlEngine.enumerateTeamNames();
 //        initialGUI = new InitialGUI(teamNames);
 //        addActionListenersInitialGUI();
-        ControlOfficeEntryForm cofe = new ControlOfficeEntryForm();
+        ControlOfficeEntryForm cofe = new ControlOfficeEntryForm(mysqlEngine,true);
     }
     
     /**
@@ -47,8 +47,7 @@ public class MainSystem {
     public static void main(String[] args)
     {
         MainSystem mainSystem  = new MainSystem(); 
-        mainSystem.getInitialGUI().getWelcomeScreen().getMainFrame().setVisible
-                (true);
+        //mainSystem.getInitialGUI().getWelcomeScreen().getMainFrame().setVisible(true);
     }
     
     /**
