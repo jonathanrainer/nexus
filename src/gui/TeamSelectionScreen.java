@@ -59,7 +59,7 @@ public class TeamSelectionScreen {
     public TeamSelectionScreen(ArrayList<String> teamNames) {
         template = new Template();
         // Create the main frame with some predecided elements from the template.
-        mainFrame = template.giveTemplatedJFrame("Team Login - NWNE - Nexus");
+        mainFrame = template.giveGridBagTemplatedJFrame("Team Login - NWNE - Nexus");
         String title = template.headingString("Please select the Team you are "
                 + "part of:", 2);
         titleLabel = new JLabel(title, JLabel.CENTER);
