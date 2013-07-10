@@ -4,6 +4,7 @@
  */
 package gui;
 
+import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.GridLayout;
@@ -47,20 +48,11 @@ public class Template {
      * @return A JFrame with the template applied to it, so other components can
      * be added on top.
      */
-    public JFrame giveGridBagTemplatedJFrame(String title) {
+    public JFrame giveTemplatedJFrame(String title) {
         JFrame templatedFrame = new JFrame(title);
         
-        GridBagLayout layout;
-        layout = new GridBagLayout();
-        templatedFrame.setLayout(layout);
-        
-        templatedFrame.setSize(900, 700);
-        
-        JLabel logo = new JLabel(newWineLogo);
-        GridBagConstraints logoConstraints = createGridBagConstraints(
-                0, 0, GridBagConstraints.BOTH, 0, 0, new Insets(0, 0, 0, 0),
-                GridBagConstraints.CENTER, 0.0, 0.0, 1, 5);
-        templatedFrame.add(logo, logoConstraints);
+        Dimension frameDimensions = new Dimension(900,700);
+        templatedFrame.setPreferredSize(frameDimensions);
         
         // Create the menu to go across the top of the frame.
         JMenuBar menuBar = new JMenuBar();
@@ -68,9 +60,25 @@ public class Template {
         menuBar.add(fileMenu);
         templatedFrame.setJMenuBar(menuBar);
         
-        
         templatedFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        templatedFrame.setVisible(true);
         return templatedFrame;
+    }
+    
+    public JPanel giveGridBagTemplatedJPanel() {
+        JPanel templatedPanel = new JPanel();
+        
+        GridBagLayout layout;
+        layout = new GridBagLayout();
+        templatedPanel.setLayout(layout);
+        
+        JLabel logo = new JLabel(newWineLogo);
+        GridBagConstraints logoConstraints = createGridBagConstraints(
+                0, 0, GridBagConstraints.BOTH, 0, 0, new Insets(0, 0, 0, 0),
+                GridBagConstraints.CENTER, 0.0, 0.0, 1, 5);
+        templatedPanel.add(logo, logoConstraints);
+
+        return templatedPanel;
     }
     
 
