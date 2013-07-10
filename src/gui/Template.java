@@ -50,7 +50,7 @@ public class Template {
     public JFrame giveTemplatedJFrame(String title) {
         JFrame templatedFrame = new JFrame(title);
         
-        Dimension frameDimensions = new Dimension(1024,800);
+        Dimension frameDimensions = new Dimension(800,1100);
         templatedFrame.setPreferredSize(frameDimensions);
         
         // Create the menu to go across the top of the frame.
