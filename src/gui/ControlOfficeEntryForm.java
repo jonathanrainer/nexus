@@ -5,14 +5,19 @@
 package gui;
 
 import io.MYSQLEngine;
+import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.Insets;
 import javax.swing.Box;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JList;
+import javax.swing.JPanel;
 import javax.swing.JRadioButton;
+import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
@@ -28,6 +33,7 @@ public class ControlOfficeEntryForm {
     private JFrame mainFrame;
     // The template to give a templated JFrame within which the content can 
     // be placed.
+    private JPanel frameContent;
     private Template template;
     private JLabel introTextLabel;
     private JLabel ticketReferenceLabel;
@@ -51,7 +57,7 @@ public class ControlOfficeEntryForm {
     private JLabel keyWordExplanationLabel;
     private JLabel delegateImpactLabel;
     private JComboBox delegateImpactComboBox;
-    private JComboBox keyWordComboBox;
+    private JScrollPane keyWordScrollPane;
     private JLabel showOnCISLabel;
     private JRadioButton showOnCISRadioButton;
     private JLabel asAtLabel;
@@ -108,7 +114,10 @@ public class ControlOfficeEntryForm {
     private void formCreation(String title)
     {
         // Get initial templated Frame
-        mainFrame = template.giveGridBagTemplatedJFrame(title);
+        mainFrame = template.giveTemplatedJFrame(title);
+        
+        // Get initial content Panel
+        frameContent = template.giveGridBagTemplatedJPanel();
         
         // Create the introText label
         String introText = "<html>This form is to raise Job Tickets for"
@@ -124,7 +133,7 @@ public class ControlOfficeEntryForm {
                 createGridBagConstraints(0, 1, GridBagConstraints.HORIZONTAL, 5, 5,
                 new Insets(0, 0, 0, 0), GridBagConstraints.CENTER, 0.0, 0.0, 1,
                 5);
-        mainFrame.add(introTextLabel,introTextLabelConstraints);
+        frameContent.add(introTextLabel,introTextLabelConstraints);
         
         /**
          * First Row of Form
@@ -136,7 +145,7 @@ public class ControlOfficeEntryForm {
                 createGridBagConstraints(0, 2, GridBagConstraints.BOTH, 5, 5,
                 new Insets(0, 0, 0, 0), GridBagConstraints.WEST, 0.0, 0.0, 1,
                 1);
-        mainFrame.add(ticketReferenceLabel,ticketReferenceLabelConstraints);
+        frameContent.add(ticketReferenceLabel,ticketReferenceLabelConstraints);
         
         //Create the ticket reference text box and constraints
         ticketReferenceTextField = new JTextField("");
@@ -145,14 +154,14 @@ public class ControlOfficeEntryForm {
                 createGridBagConstraints(1, 2, GridBagConstraints.HORIZONTAL, 5, 5,
                 new Insets(0, 0, 0, 0), GridBagConstraints.WEST, 0.0, 0.0, 1,
                 1);
-        mainFrame.add(ticketReferenceTextField, ticketReferenceTextFieldConstraints);
+        frameContent.add(ticketReferenceTextField, ticketReferenceTextFieldConstraints);
         
         //Create a spacer to allow good aesthetic
         GridBagConstraints spacer1Constraints = template.
                 createGridBagConstraints(2, 2, GridBagConstraints.BOTH, 5, 5,
                 new Insets(0, 0, 0, 0), GridBagConstraints.WEST, 0.0, 0.0, 1,
                 1);
-        mainFrame.add(Box.createHorizontalStrut(100),spacer1Constraints);
+        frameContent.add(Box.createHorizontalStrut(100),spacer1Constraints);
         
         //Create the Date/Time label
         dateTimeLabel = new JLabel(template.headingString("Date/Time:", 3));
@@ -160,7 +169,7 @@ public class ControlOfficeEntryForm {
                 createGridBagConstraints(3, 2, GridBagConstraints.BOTH, 5, 5,
                 new Insets(0, 0, 0, 0), GridBagConstraints.WEST, 0.0, 0.0, 1,
                 1);
-        mainFrame.add(dateTimeLabel,dateTimeLabelConstraints);
+        frameContent.add(dateTimeLabel,dateTimeLabelConstraints);
         
         //Create the Date/Time text box and constraints
         dateTimeTextField = new JTextField("");
@@ -169,7 +178,7 @@ public class ControlOfficeEntryForm {
                 createGridBagConstraints(4, 2, GridBagConstraints.HORIZONTAL, 5, 5,
                 new Insets(0, 0, 0, 0), GridBagConstraints.WEST, 0.0, 0.0, 1,
                 1);
-        mainFrame.add(dateTimeTextField, dateTimeTextFieldConstraints);
+        frameContent.add(dateTimeTextField, dateTimeTextFieldConstraints);
         
         /**
          * Second Row Of Form
@@ -181,7 +190,7 @@ public class ControlOfficeEntryForm {
                 createGridBagConstraints(0, 3, GridBagConstraints.BOTH, 5, 5,
                 new Insets(0, 0, 0, 0), GridBagConstraints.WEST, 0.0, 0.0, 1,
                 1);
-        mainFrame.add(ticketWrittenLabel,ticketWrittenLabelConstraints);
+        frameContent.add(ticketWrittenLabel,ticketWrittenLabelConstraints);
         
         //Create the Ticket Written text box and constraints
         ticketWrittenComboBox = new JComboBox();
@@ -189,14 +198,14 @@ public class ControlOfficeEntryForm {
                 createGridBagConstraints(1, 3, GridBagConstraints.HORIZONTAL, 5, 5,
                 new Insets(0, 0, 0, 0), GridBagConstraints.WEST, 0.0, 0.0, 1,
                 1);
-        mainFrame.add(ticketWrittenComboBox, ticketWrittenComboBoxConstraints);
+        frameContent.add(ticketWrittenComboBox, ticketWrittenComboBoxConstraints);
         
         teamMembersComboBox = new JComboBox();
         GridBagConstraints teamMembersComboBoxConstraints = template.
                 createGridBagConstraints(2, 3, GridBagConstraints.HORIZONTAL, 5, 5,
                 new Insets(0, 0, 0, 0), GridBagConstraints.WEST, 0.0, 0.0, 1,
                 1);
-        mainFrame.add(teamMembersComboBox,teamMembersComboBoxConstraints);
+        frameContent.add(teamMembersComboBox,teamMembersComboBoxConstraints);
         
         /**
          * Third Row of Form
@@ -208,7 +217,7 @@ public class ControlOfficeEntryForm {
                 createGridBagConstraints(0, 4, GridBagConstraints.BOTH, 5, 5,
                 new Insets(0, 0, 0, 0), GridBagConstraints.WEST, 0.0, 0.0, 1,
                 1);
-        mainFrame.add(problemLocationLabel,problemLocationLabelConstraints);
+        frameContent.add(problemLocationLabel,problemLocationLabelConstraints);
         
         //Create the Where is the Problem helper Label and constraints
         String helperText = "Choose one of each of the following options.";
@@ -217,7 +226,7 @@ public class ControlOfficeEntryForm {
                 createGridBagConstraints(1, 4, GridBagConstraints.BOTH, 5, 5,
                 new Insets(0, 0, 0, 0), GridBagConstraints.EAST, 0.0, 0.0, 1,
                 4);
-        mainFrame.add(problemLocationHelperLabel,problemLocationHelperLabelConstraints);
+        frameContent.add(problemLocationHelperLabel,problemLocationHelperLabelConstraints);
         
         /**
          * Fourth Row of Form
@@ -228,7 +237,7 @@ public class ControlOfficeEntryForm {
                 createGridBagConstraints(0, 5, GridBagConstraints.BOTH, 5, 5,
                 new Insets(0, 0, 0, 0), GridBagConstraints.WEST, 0.0, 0.0, 1,
                 1);
-        mainFrame.add(Box.createHorizontalStrut(50),spacer2Constraints);
+        frameContent.add(Box.createHorizontalStrut(50),spacer2Constraints);
         
         //Add in ComboBox 1
         problemLocationComboBox1 = new JComboBox();
@@ -236,7 +245,7 @@ public class ControlOfficeEntryForm {
                 createGridBagConstraints(1, 5, GridBagConstraints.HORIZONTAL, 5, 5,
                 new Insets(0, 0, 0, 0), GridBagConstraints.WEST, 0.0, 0.0, 1,
                 1);
-        mainFrame.add(problemLocationComboBox1,problemLocationComboBox1Constraints);
+        frameContent.add(problemLocationComboBox1,problemLocationComboBox1Constraints);
         
         //Add in ComboBox 2
         problemLocationComboBox2 = new JComboBox();
@@ -244,7 +253,7 @@ public class ControlOfficeEntryForm {
                 createGridBagConstraints(2, 5, GridBagConstraints.HORIZONTAL, 5, 5,
                 new Insets(0, 0, 0, 0), GridBagConstraints.WEST, 0.0, 0.0, 1,
                 1);
-        mainFrame.add(problemLocationComboBox2,problemLocationComboBox2Constraints);
+        frameContent.add(problemLocationComboBox2,problemLocationComboBox2Constraints);
         
         //Add in ComboBox 3
         problemLocationComboBox3 = new JComboBox();
@@ -252,7 +261,7 @@ public class ControlOfficeEntryForm {
                 createGridBagConstraints(3, 5, GridBagConstraints.HORIZONTAL, 5, 5,
                 new Insets(0, 0, 0, 0), GridBagConstraints.WEST, 0.0, 0.0, 1,
                 1);
-        mainFrame.add(problemLocationComboBox3,problemLocationComboBox3Constraints);
+        frameContent.add(problemLocationComboBox3,problemLocationComboBox3Constraints);
         
         //Add in ComboBox 4
         problemLocationComboBox4 = new JComboBox();
@@ -260,7 +269,7 @@ public class ControlOfficeEntryForm {
                 createGridBagConstraints(4, 5, GridBagConstraints.HORIZONTAL, 5, 5,
                 new Insets(0, 0, 0, 0), GridBagConstraints.WEST, 0.0, 0.0, 1,
                 1);
-        mainFrame.add(problemLocationComboBox4,problemLocationComboBox4Constraints);
+        frameContent.add(problemLocationComboBox4,problemLocationComboBox4Constraints);
         
         /**
          * Fifth Row of Form
@@ -272,7 +281,7 @@ public class ControlOfficeEntryForm {
                 createGridBagConstraints(0, 6, GridBagConstraints.BOTH, 5, 5,
                 new Insets(0, 0, 0, 0), GridBagConstraints.NORTH, 0.0, 0.0, 1,
                 1);
-        mainFrame.add(problemDescriptionLabel,problemDescriptionLabelConstraints);
+        frameContent.add(problemDescriptionLabel,problemDescriptionLabelConstraints);
         
         //Create Text Area for Problem Description
         problemDescriptionTextArea = new JTextArea();
@@ -280,7 +289,7 @@ public class ControlOfficeEntryForm {
                 createGridBagConstraints(1, 6, GridBagConstraints.HORIZONTAL, 5, 5,
                 new Insets(0, 0, 0, 0), GridBagConstraints.NORTH, 0.0, 0.0, 3,
                 3);
-        mainFrame.add(problemDescriptionTextArea,problemDescriptionTextAreaConstraints);
+        frameContent.add(problemDescriptionTextArea,problemDescriptionTextAreaConstraints);
         
         // Create the helper text next to description 
         problemDescriptionExplanationLabel = new JLabel(template.headingString(" Be brief:"
@@ -289,7 +298,7 @@ public class ControlOfficeEntryForm {
                 createGridBagConstraints(4, 6, GridBagConstraints.HORIZONTAL, 5, 5,
                 new Insets(0, 0, 0, 0), GridBagConstraints.EAST, 0.0, 0.0, 1,
                 1);
-        mainFrame.add(problemDescriptionExplanationLabel,
+        frameContent.add(problemDescriptionExplanationLabel,
                 problemDescriptionExplanationLabelConstraints);
         
         /*
@@ -302,7 +311,7 @@ public class ControlOfficeEntryForm {
                 createGridBagConstraints(0, 7, GridBagConstraints.BOTH, 5, 5,
                 new Insets(0, 0, 0, 0), GridBagConstraints.NORTH, 0.0, 0.0, 4,
                 1);
-        mainFrame.add(forCISLabel,forCISLabelConstraints);
+        frameContent.add(forCISLabel,forCISLabelConstraints);
         
         //Create the Key words label
         keyWordsLabel = new JLabel(template.headingString("Key Words", 3));
@@ -310,7 +319,7 @@ public class ControlOfficeEntryForm {
                 createGridBagConstraints(1, 7, GridBagConstraints.BOTH, 5, 5,
                 new Insets(0, 0, 0, 0), GridBagConstraints.NORTH, 0.0, 0.0, 1,
                 1);
-        mainFrame.add(keyWordsLabel,keyWordsLabelConstraints);
+        frameContent.add(keyWordsLabel,keyWordsLabelConstraints);
         
         //Create the Delegate Impact label
         delegateImpactLabel = new JLabel(template.headingString("Delegate Impact", 3));
@@ -318,7 +327,7 @@ public class ControlOfficeEntryForm {
                 createGridBagConstraints(2, 7, GridBagConstraints.BOTH, 5, 5,
                 new Insets(0, 0, 0, 0), GridBagConstraints.NORTH, 0.0, 0.0, 1,
                 1);
-        mainFrame.add(delegateImpactLabel,delegateImpactLabelConstraints);
+        frameContent.add(delegateImpactLabel,delegateImpactLabelConstraints);
         
         //Create the Key Word Explanation label
         keyWordExplanationLabel = new JLabel(template.headingString("Pick Up to 5 of the following", 5));
@@ -326,15 +335,19 @@ public class ControlOfficeEntryForm {
                 createGridBagConstraints(1, 8, GridBagConstraints.BOTH, 5, 5,
                 new Insets(0, 0, 0, 0), GridBagConstraints.NORTH, 0.0, 0.0, 1,
                 1);
-        mainFrame.add(keyWordExplanationLabel,keyWordExplanationLabelConstraints);
+        frameContent.add(keyWordExplanationLabel,keyWordExplanationLabelConstraints);
         
         //Add in Key Words Combo Box
-        keyWordComboBox = new JComboBox();
+        JList keyWordList = new JList();
+        String[] listData = {"Test 1", "Test 2", "Test 3"};
+        keyWordList.setListData(listData);
+        keyWordScrollPane = new JScrollPane(keyWordList);
+        keyWordScrollPane.setPreferredSize(new Dimension(80,40));
         GridBagConstraints keyWordComboBoxConstraints = template.
-                createGridBagConstraints(1, 9, GridBagConstraints.HORIZONTAL, 5, 5,
-                new Insets(0, 0, 0, 0), GridBagConstraints.WEST, 0.0, 0.0, 2,
+                createGridBagConstraints(1, 9, GridBagConstraints.HORIZONTAL, 10, 10,
+                new Insets(0, 0, 0, 0), GridBagConstraints.NORTHWEST, 0.0, 0.0, 2,
                 1);
-        mainFrame.add(keyWordComboBox, keyWordComboBoxConstraints);
+        frameContent.add(keyWordScrollPane, keyWordComboBoxConstraints);
         
         //Create the Show On CIS label
         showOnCISLabel = new JLabel(template.headingString("Show On CIS?", 3));
@@ -342,7 +355,7 @@ public class ControlOfficeEntryForm {
                 createGridBagConstraints(2, 8, GridBagConstraints.BOTH, 5, 5,
                 new Insets(0, 0, 0, 0), GridBagConstraints.NORTH, 0.0, 0.0, 1,
                 1);
-        mainFrame.add(showOnCISLabel,showOnCISLabelConstraints);
+        frameContent.add(showOnCISLabel,showOnCISLabelConstraints);
         
         //Create the Job Progress label
         jobProgressLabel = new JLabel(template.headingString("Job Progress", 3));
@@ -350,7 +363,7 @@ public class ControlOfficeEntryForm {
                 createGridBagConstraints(2, 9, GridBagConstraints.BOTH, 5, 5,
                 new Insets(0, 0, 0, 0), GridBagConstraints.NORTH, 0.0, 0.0, 1,
                 1);
-        mainFrame.add(jobProgressLabel,jobProgressLabelConstraints);
+        frameContent.add(jobProgressLabel,jobProgressLabelConstraints);
         
         //Add in Delegate Impact Combo Box
         delegateImpactComboBox = new JComboBox();
@@ -358,7 +371,7 @@ public class ControlOfficeEntryForm {
                 createGridBagConstraints(3, 7, GridBagConstraints.HORIZONTAL, 5, 5,
                 new Insets(0, 0, 0, 0), GridBagConstraints.WEST, 0.0, 0.0, 1,
                 1);
-        mainFrame.add(delegateImpactComboBox, delegateImpactComboBoxConstraints);
+        frameContent.add(delegateImpactComboBox, delegateImpactComboBoxConstraints);
         
         //Add in Show on CIS Radio Button
         showOnCISRadioButton = new JRadioButton();
@@ -366,7 +379,7 @@ public class ControlOfficeEntryForm {
                 createGridBagConstraints(3, 8, GridBagConstraints.HORIZONTAL, 5, 5,
                 new Insets(0, 0, 0, 0), GridBagConstraints.WEST, 0.0, 0.0, 1,
                 1);
-        mainFrame.add(showOnCISRadioButton, showOnCISRadioButtonConstraints);
+        frameContent.add(showOnCISRadioButton, showOnCISRadioButtonConstraints);
         
         //Add in Job Progress Combo Box
         jobProgressComboBox = new JComboBox();
@@ -374,7 +387,7 @@ public class ControlOfficeEntryForm {
                 createGridBagConstraints(3, 9, GridBagConstraints.HORIZONTAL, 5, 5,
                 new Insets(0, 0, 0, 0), GridBagConstraints.WEST, 0.0, 0.0, 1,
                 1);
-        mainFrame.add(jobProgressComboBox, jobProgressComboBoxConstraints);
+        frameContent.add(jobProgressComboBox, jobProgressComboBoxConstraints);
         
         //Add in As At Label
         asAtLabel = new JLabel(template.headingString("As At:", 3));
@@ -382,7 +395,7 @@ public class ControlOfficeEntryForm {
                 createGridBagConstraints(4, 8, GridBagConstraints.HORIZONTAL, 5, 5,
                 new Insets(0, 0, 0, 0), GridBagConstraints.CENTER, 0.0, 0.0, 1,
                 1);
-        mainFrame.add(asAtLabel, asAtLabelConstraints);
+        frameContent.add(asAtLabel, asAtLabelConstraints);
         
         //Add in As At Text Field
         asAtTextField = new JTextField();
@@ -391,10 +404,34 @@ public class ControlOfficeEntryForm {
                 createGridBagConstraints(4, 9, GridBagConstraints.HORIZONTAL, 5, 5,
                 new Insets(0, 0, 0, 0), GridBagConstraints.WEST, 0.0, 0.0, 1,
                 1);
-        mainFrame.add(asAtTextField, asAtTextFieldConstraints);
+        frameContent.add(asAtTextField, asAtTextFieldConstraints);
         
+        //Add in Ticket Allocated to Label
+        ticketAllocatedToLabel = new JLabel(template.headingString("Ticket Allocated To:", 3));
+        GridBagConstraints ticketAllocatedToLabelConstraints = template.
+                createGridBagConstraints(0, 10, GridBagConstraints.HORIZONTAL, 5, 5,
+                new Insets(0, 0, 0, 0), GridBagConstraints.CENTER, 0.0, 0.0, 1,
+                1);
+        frameContent.add(ticketAllocatedToLabel, ticketAllocatedToLabelConstraints);
         
+        //Add in Ticket Allocated Combo Box
+        ticketAllocatedToComboBox = new JComboBox();
+        GridBagConstraints ticketAllocatedToComboBoxConstraints = template.
+                createGridBagConstraints(1, 10, GridBagConstraints.HORIZONTAL, 5, 5,
+                new Insets(0, 0, 0, 0), GridBagConstraints.WEST, 0.0, 0.0, 1,
+                1);
+        frameContent.add(ticketAllocatedToComboBox, ticketAllocatedToComboBoxConstraints);
         
+        //Add in Problem Reported By  Label
+        problemReportedByLabel = new JLabel(template.headingString("Problem Reported By:", 3));
+        GridBagConstraints problemReportedByLabelConstraints = template.
+                createGridBagConstraints(0, 11, GridBagConstraints.HORIZONTAL, 5, 5,
+                new Insets(0, 0, 0, 0), GridBagConstraints.CENTER, 0.0, 0.0, 1,
+                1);
+        frameContent.add(problemReportedByLabel, problemReportedByLabelConstraints);
+        
+        mainFrame.getContentPane().add(new JScrollPane(frameContent), BorderLayout.CENTER);
+        mainFrame.pack();
         mainFrame.setVisible(true);
         
         
