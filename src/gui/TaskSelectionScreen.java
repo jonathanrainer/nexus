@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JPanel;
 
 /**
  *
@@ -18,6 +19,7 @@ import javax.swing.JLabel;
 public class TaskSelectionScreen {
 
     private JFrame mainFrame;
+    private JPanel frameContent;
     private Template template;
     private JLabel titleLabel;
     private ArrayList<JButton> buttons;
@@ -25,8 +27,10 @@ public class TaskSelectionScreen {
     public TaskSelectionScreen(String team) {
         buttons = new ArrayList<>();
         template = new Template();
-        mainFrame = template.giveGridBagTemplatedJFrame("Task Selection - " + team
+        mainFrame = template.giveTemplatedJFrame("Task Selection - " + team
                 + "- NWNE - Nexus");
+        frameContent = template.giveGridBagTemplatedJPanel();
+        mainFrame.add(frameContent);
         String title;
         title = template.headingString("Please select the task you wish to "
                 + "perform:", 2);
@@ -35,21 +39,22 @@ public class TaskSelectionScreen {
                 createGridBagConstraints(0, 2, GridBagConstraints.BOTH, 100, 100,
                 new Insets(0, 0, 0, 0), GridBagConstraints.CENTER, 0.0, 0.0, 1,
                 1);
-        mainFrame.add(titleLabel, titleConstraints);
+        frameContent.add(titleLabel, titleConstraints);
         switch (team) {
             case "Administration Team":
-                adminTeamTasks(mainFrame);
+                adminTeamTasks(frameContent);
                 break;
             case "Control Office":
-                controlOfficeTasks(mainFrame);
+                controlOfficeTasks(frameContent);
                 break;
             case "Information Team":
-                infoTeamTasks(mainFrame);
+                infoTeamTasks(frameContent);
                 break;
         }
+        mainFrame.pack();
     }
 
-    private JFrame adminTeamTasks(JFrame mainFrame) {
+    private JPanel adminTeamTasks(JPanel frameContent) {
         JButton writeNewATTicketButton;
         writeNewATTicketButton = new JButton(template.headingString(
                 "Write New Administration Team Job Ticket", 2));
@@ -58,7 +63,7 @@ public class TaskSelectionScreen {
                 new Insets(0, 0, 0, 0), GridBagConstraints.CENTER, 0.0, 0.0, 1,
                 1);
         buttons.add(writeNewATTicketButton);
-        mainFrame.add(writeNewATTicketButton, writeNewATTicketButtonConstraints);
+        frameContent.add(writeNewATTicketButton, writeNewATTicketButtonConstraints);
         JButton writeNewCOTicketButton;
         writeNewCOTicketButton = new JButton(template.headingString(
                 "Write New Control Office Job Ticket", 2));
@@ -67,7 +72,7 @@ public class TaskSelectionScreen {
                 new Insets(0, 0, 0, 0), GridBagConstraints.CENTER, 0.0, 0.0, 1,
                 1);
         buttons.add(writeNewCOTicketButton);
-        mainFrame.add(writeNewCOTicketButton, writeNewCOTicketButtonConstraints);
+        frameContent.add(writeNewCOTicketButton, writeNewCOTicketButtonConstraints);
         JButton viewAmendAOTicketButton;
         viewAmendAOTicketButton = new JButton(template.headingString(
                 "View/Amend Administration Team Job Tickets", 2));
@@ -76,11 +81,11 @@ public class TaskSelectionScreen {
                 new Insets(0, 0, 0, 0), GridBagConstraints.CENTER, 0.0, 0.0, 1,
                 1);
         buttons.add(viewAmendAOTicketButton);
-        mainFrame.add(viewAmendAOTicketButton, viewAmendAOTicketButtonConstraints);
-        return mainFrame;
+        frameContent.add(viewAmendAOTicketButton, viewAmendAOTicketButtonConstraints);
+        return frameContent;
     }
 
-    private JFrame controlOfficeTasks(JFrame mainFrame) {
+    private JPanel controlOfficeTasks(JPanel frameContent) {
         JButton writeNewATTicketButton;
         writeNewATTicketButton = new JButton(template.headingString(
                 "Write New Administration Team Job Ticket", 2));
@@ -89,7 +94,7 @@ public class TaskSelectionScreen {
                 new Insets(0, 0, 0, 0), GridBagConstraints.CENTER, 0.0, 0.0, 1,
                 1);
         buttons.add(writeNewATTicketButton);
-        mainFrame.add(writeNewATTicketButton, writeNewATTicketButtonConstraints);
+        frameContent.add(writeNewATTicketButton, writeNewATTicketButtonConstraints);
         JButton writeNewCOTicketButton;
         writeNewCOTicketButton = new JButton(template.headingString(
                 "Write New Control Office Job Ticket", 2));
@@ -98,7 +103,7 @@ public class TaskSelectionScreen {
                 new Insets(0, 0, 0, 0), GridBagConstraints.CENTER, 0.0, 0.0, 1,
                 1);
         buttons.add(writeNewCOTicketButton);
-        mainFrame.add(writeNewCOTicketButton, writeNewCOTicketButtonConstraints);
+        frameContent.add(writeNewCOTicketButton, writeNewCOTicketButtonConstraints);
         JButton viewAmendCOTicketButton;
         viewAmendCOTicketButton = new JButton(template.headingString(
                 "View/Amend Control Office Job Tickets", 2));
@@ -107,11 +112,11 @@ public class TaskSelectionScreen {
                 new Insets(0, 0, 0, 0), GridBagConstraints.CENTER, 0.0, 0.0, 1,
                 1);
         buttons.add(viewAmendCOTicketButton);
-        mainFrame.add(viewAmendCOTicketButton, viewAmendCOTicketButtonConstraints);
-        return mainFrame;
+        frameContent.add(viewAmendCOTicketButton, viewAmendCOTicketButtonConstraints);
+        return frameContent;
     }
 
-    private JFrame infoTeamTasks(JFrame mainFrame) {
+    private JPanel infoTeamTasks(JPanel frameContent) {
         JButton writeNewATTicketButton;
         writeNewATTicketButton = new JButton(template.headingString(
                 "Write New Administration Team Job Ticket", 2));
@@ -120,7 +125,7 @@ public class TaskSelectionScreen {
                 new Insets(0, 0, 0, 0), GridBagConstraints.CENTER, 0.0, 0.0, 1,
                 1);
         buttons.add(writeNewATTicketButton);
-        mainFrame.add(writeNewATTicketButton, writeNewATTicketButtonConstraints);
+        frameContent.add(writeNewATTicketButton, writeNewATTicketButtonConstraints);
         JButton writeNewCOTicketButton;
         writeNewCOTicketButton = new JButton(template.headingString(
                 "Write New Control Office Job Ticket", 2));
@@ -129,8 +134,8 @@ public class TaskSelectionScreen {
                 new Insets(0, 0, 0, 0), GridBagConstraints.CENTER, 0.0, 0.0, 1,
                 1);
         buttons.add(writeNewCOTicketButton);
-        mainFrame.add(writeNewCOTicketButton, writeNewCOTicketButtonConstraints);
-        return mainFrame;
+        frameContent.add(writeNewCOTicketButton, writeNewCOTicketButtonConstraints);
+        return frameContent;
     }
 
     /**
