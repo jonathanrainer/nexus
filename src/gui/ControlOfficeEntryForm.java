@@ -81,13 +81,13 @@ public class ControlOfficeEntryForm {
     private JLabel ifNotAQuickFixLabel;
     private JTextArea updateTextArea1;
     private JTextField estimatedCompletionByTextField1;
-    private JTextField updatedAtByTextField1;
+    private JTextField updatedAtTextField1;
     private JTextArea updateTextArea2;
     private JTextField estimatedCompletionByTextField2;
-    private JTextField updatedAtByTextField2;
+    private JTextField updatedAtTextField2;
     private JTextArea updateTextArea3;
     private JTextField estimatedCompletionByTextField3;
-    private JTextField updatedAtByTextField3;
+    private JTextField updatedAtTextField3;
     private JLabel jobCompletedLabel;
     private JRadioButton jobCompletedRadioButton;
     private JTextField jobCompletedTextField;
@@ -285,9 +285,10 @@ public class ControlOfficeEntryForm {
         
         //Create Text Area for Problem Description
         problemDescriptionTextArea = new JTextArea();
+        problemDescriptionTextArea.setPreferredSize(new Dimension(450,50));
         GridBagConstraints problemDescriptionTextAreaConstraints = template.
-                createGridBagConstraints(1, 6, GridBagConstraints.HORIZONTAL, 5, 5,
-                new Insets(0, 0, 0, 0), GridBagConstraints.NORTH, 0.0, 0.0, 3,
+                createGridBagConstraints(1, 6, GridBagConstraints.NONE, 5, 5,
+                new Insets(0, 0, 0, 0), GridBagConstraints.NORTHWEST, 0.0, 0.0, 3,
                 3);
         frameContent.add(problemDescriptionTextArea,problemDescriptionTextAreaConstraints);
         
@@ -339,12 +340,10 @@ public class ControlOfficeEntryForm {
         
         //Add in Key Words Combo Box
         JList keyWordList = new JList();
-        String[] listData = {"Test 1", "Test 2", "Test 3"};
-        keyWordList.setListData(listData);
         keyWordScrollPane = new JScrollPane(keyWordList);
-        keyWordScrollPane.setPreferredSize(new Dimension(80,40));
+        keyWordScrollPane.setPreferredSize(new Dimension(135,40));
         GridBagConstraints keyWordComboBoxConstraints = template.
-                createGridBagConstraints(1, 9, GridBagConstraints.HORIZONTAL, 10, 10,
+                createGridBagConstraints(1, 9, GridBagConstraints.NONE, 10, 10,
                 new Insets(0, 0, 0, 0), GridBagConstraints.NORTHWEST, 0.0, 0.0, 2,
                 1);
         frameContent.add(keyWordScrollPane, keyWordComboBoxConstraints);
@@ -429,6 +428,230 @@ public class ControlOfficeEntryForm {
                 new Insets(0, 0, 0, 0), GridBagConstraints.CENTER, 0.0, 0.0, 1,
                 1);
         frameContent.add(problemReportedByLabel, problemReportedByLabelConstraints);
+        
+        //Add in Problem Reported By Text Field
+        problemReportedByTextField = new JTextField();
+        GridBagConstraints problemReportedByTextFieldConstraints = template.
+                createGridBagConstraints(1, 11, GridBagConstraints.HORIZONTAL, 5, 5,
+                new Insets(0, 0, 0, 0), GridBagConstraints.WEST, 0.0, 0.0, 1,
+                2);
+        frameContent.add(problemReportedByTextField, problemReportedByTextFieldConstraints);
+        
+        //Add in Problem Who Is A Label
+        whoIsALabel = new JLabel(template.headingString("Who Is A:", 3));
+        GridBagConstraints whoIsALabelConstraints = template.
+                createGridBagConstraints(3, 11, GridBagConstraints.HORIZONTAL, 5, 5,
+                new Insets(0, 0, 0, 0), GridBagConstraints.CENTER, 0.0, 0.0, 1,
+                1);
+        frameContent.add(whoIsALabel, whoIsALabelConstraints);
+        
+        //Add in Who Is A Combo Box
+        whoIsAComboBox = new JComboBox();
+        GridBagConstraints whoIsAComboBoxConstraints = template.
+                createGridBagConstraints(4, 11, GridBagConstraints.HORIZONTAL, 5, 5,
+                new Insets(0, 0, 0, 0), GridBagConstraints.WEST, 0.0, 0.0, 1,
+                1);
+        frameContent.add(whoIsAComboBox, whoIsAComboBoxConstraints);
+        
+        //Add in Contact Via Label
+        contactViaLabel = new JLabel(template.headingString("Contact Via:", 3));
+        GridBagConstraints contactViaLabelConstraints = template.
+                createGridBagConstraints(0, 12, GridBagConstraints.HORIZONTAL, 5, 5,
+                new Insets(0, 0, 0, 0), GridBagConstraints.CENTER, 0.0, 0.0, 1,
+                1);
+        frameContent.add(contactViaLabel, contactViaLabelConstraints);
+        
+        //Add in Contact Via ComboBox
+        contactViaComboBox = new JComboBox();
+        GridBagConstraints contactViaComboBoxConstraints = template.
+                createGridBagConstraints(1, 12, GridBagConstraints.HORIZONTAL, 5, 5,
+                new Insets(0, 0, 0, 0), GridBagConstraints.CENTER, 0.0, 0.0, 1,
+                1);
+        frameContent.add(contactViaComboBox, contactViaComboBoxConstraints);
+        
+        //Add in Problem Reported By Text Field
+        contactNumberTextField = new JTextField();
+        GridBagConstraints contactNumberTextFieldConstraints = template.
+                createGridBagConstraints(2, 12, GridBagConstraints.HORIZONTAL, 5, 5,
+                new Insets(0, 0, 0, 0), GridBagConstraints.WEST, 0.0, 0.0, 1,
+                1);
+        frameContent.add(contactNumberTextField, contactNumberTextFieldConstraints);
+        
+        //Add in Location/Venue/Village Label
+        locationVenueVillageLabel = new JLabel(template.headingString("Location/Venue/Village:", 3));
+        GridBagConstraints locationVenueVillageLabelConstraints = template.
+                createGridBagConstraints(3, 12, GridBagConstraints.HORIZONTAL, 5, 5,
+                new Insets(0, 0, 0, 0), GridBagConstraints.CENTER, 0.0, 0.0, 1,
+                1);
+        frameContent.add(locationVenueVillageLabel, locationVenueVillageLabelConstraints);
+        
+        //Add in Location/Venue/Village ComboBox
+        locationVenueVillageComboBox = new JComboBox();
+        GridBagConstraints locationVenueVillageComboBoxConstraints = template.
+                createGridBagConstraints(4, 12, GridBagConstraints.HORIZONTAL, 5, 5,
+                new Insets(0, 0, 0, 0), GridBagConstraints.CENTER, 0.0, 0.0, 1,
+                1);
+        frameContent.add(locationVenueVillageComboBox, locationVenueVillageComboBoxConstraints);
+        
+        //Add in Updates Label
+        updatesLabel = new JLabel(template.headingString("Updates", 3));
+        GridBagConstraints updatesLabelConstraints = template.
+                createGridBagConstraints(0, 13, GridBagConstraints.HORIZONTAL, 5, 5,
+                new Insets(0, 0, 0, 0), GridBagConstraints.CENTER, 0.0, 0.0, 1,
+                1);
+        frameContent.add(updatesLabel, updatesLabelConstraints);
+        
+        //Add in Estimataed Completion By Label
+        estimatedCompletionByLabel = new JLabel(template.headingString("Estimated Completion By:", 3));
+        GridBagConstraints estimatedCompletionByLabelConstraints = template.
+                createGridBagConstraints(3, 13, GridBagConstraints.HORIZONTAL, 5, 5,
+                new Insets(0, 0, 0, 0), GridBagConstraints.CENTER, 0.0, 0.0, 1,
+                1);
+        frameContent.add(estimatedCompletionByLabel, estimatedCompletionByLabelConstraints);
+        
+        //Add in Updated At Label
+        updatedAtLabel = new JLabel(template.headingString("Updated At:", 3));
+        GridBagConstraints updatedAtLabelConstraints = template.
+                createGridBagConstraints(4, 13, GridBagConstraints.HORIZONTAL, 5, 5,
+                new Insets(0, 0, 0, 0), GridBagConstraints.WEST, 0.0, 0.0, 1,
+                1);
+        frameContent.add(updatedAtLabel, updatedAtLabelConstraints);
+        
+        //Add in if Not Quick Fix Label
+        ifNotAQuickFixLabel = new JLabel(template.headingString("If Not A Quick Fix", 3));
+        GridBagConstraints ifNotAQuickFixLabelConstraints = template.
+                createGridBagConstraints(0, 14, GridBagConstraints.HORIZONTAL, 5, 5,
+                new Insets(0, 0, 0, 0), GridBagConstraints.CENTER, 0.0, 0.0, 1,
+                1);
+        frameContent.add(ifNotAQuickFixLabel, ifNotAQuickFixLabelConstraints);
+        
+        //Add in the first Problem Updated Text Field
+        updateTextArea1 = new JTextArea();
+        updateTextArea1.setPreferredSize(new Dimension(250,25));
+        GridBagConstraints updateTextArea1Constraints = template.
+                createGridBagConstraints(1, 14, GridBagConstraints.NONE, 5, 5,
+                new Insets(0, 0, 0, 0), GridBagConstraints.NORTH, 0.0, 0.0, 2,
+                2);
+        frameContent.add(updateTextArea1,updateTextArea1Constraints);
+        
+        //Add in Estimated Completion By Text Field
+        estimatedCompletionByTextField1 = new JTextField();
+        GridBagConstraints estimatedCompletionByTextField1Constraints = template.
+                createGridBagConstraints(3, 14, GridBagConstraints.HORIZONTAL, 5, 5,
+                new Insets(0, 0, 0, 0), GridBagConstraints.WEST, 0.0, 0.0, 2,
+                1);
+        frameContent.add(estimatedCompletionByTextField1, estimatedCompletionByTextField1Constraints);
+
+        //Add in Updated At Text Field
+        updatedAtTextField1 = new JTextField();
+        updatedAtTextField1.setBackground(Color.YELLOW);
+        GridBagConstraints  updatedAtTextField1Constraints = template.
+                createGridBagConstraints(4, 14, GridBagConstraints.HORIZONTAL, 5, 5,
+                new Insets(0, 0, 0, 0), GridBagConstraints.WEST, 0.0, 0.0, 2,
+                1);
+        frameContent.add(updatedAtTextField1,  updatedAtTextField1Constraints);
+        
+        //Add in the second Problem Updated Text Field
+        updateTextArea2 = new JTextArea();
+        updateTextArea2.setPreferredSize(new Dimension(250,25));
+        GridBagConstraints updateTextArea2Constraints = template.
+                createGridBagConstraints(1, 16, GridBagConstraints.NONE, 5, 5,
+                new Insets(0, 0, 0, 0), GridBagConstraints.NORTH, 0.0, 0.0, 2,
+                2);
+        frameContent.add(updateTextArea2,updateTextArea2Constraints);
+        
+        //Add in the second Estimated Completion By Text Field
+        estimatedCompletionByTextField2 = new JTextField();
+        GridBagConstraints estimatedCompletionByTextField2Constraints = template.
+                createGridBagConstraints(3, 16, GridBagConstraints.HORIZONTAL, 5, 5,
+                new Insets(0, 0, 0, 0), GridBagConstraints.WEST, 0.0, 0.0, 2,
+                1);
+        frameContent.add(estimatedCompletionByTextField2, estimatedCompletionByTextField2Constraints);
+
+        //Add in the second Updated At Text Field
+        updatedAtTextField2 = new JTextField();
+        updatedAtTextField2.setBackground(Color.YELLOW);
+        GridBagConstraints  updatedAtTextField2Constraints = template.
+                createGridBagConstraints(4, 16, GridBagConstraints.HORIZONTAL, 5, 5,
+                new Insets(0, 0, 0, 0), GridBagConstraints.WEST, 0.0, 0.0, 2,
+                1);
+        frameContent.add(updatedAtTextField2,  updatedAtTextField2Constraints);
+        
+        //Add in the third Problem Updated Text Field
+        updateTextArea3 = new JTextArea();
+        updateTextArea3.setPreferredSize(new Dimension(250,25));
+        GridBagConstraints updateTextArea3Constraints = template.
+                createGridBagConstraints(1, 18, GridBagConstraints.NONE, 5, 5,
+                new Insets(0, 0, 0, 0), GridBagConstraints.NORTH, 0.0, 0.0, 2,
+                2);
+        frameContent.add(updateTextArea3,updateTextArea3Constraints);
+        
+        //Add in the second Estimated Completion By Text Field
+        estimatedCompletionByTextField3 = new JTextField();
+        GridBagConstraints estimatedCompletionByTextField3Constraints = template.
+                createGridBagConstraints(3, 18, GridBagConstraints.HORIZONTAL, 5, 5,
+                new Insets(0, 0, 0, 0), GridBagConstraints.WEST, 0.0, 0.0, 2,
+                1);
+        frameContent.add(estimatedCompletionByTextField3, estimatedCompletionByTextField3Constraints);
+
+        //Add in the second Updated At Text Field
+        updatedAtTextField3 = new JTextField();
+        updatedAtTextField3.setBackground(Color.YELLOW);
+        GridBagConstraints  updatedAtTextField3Constraints = template.
+                createGridBagConstraints(4, 18, GridBagConstraints.HORIZONTAL, 5, 5,
+                new Insets(0, 0, 0, 0), GridBagConstraints.WEST, 0.0, 0.0, 2,
+                1);
+        frameContent.add(updatedAtTextField3,  updatedAtTextField3Constraints);
+        
+        //Add in if Not Quick Fix Label
+        jobCompletedLabel = new JLabel(template.headingString("Job Completed:", 3));
+        GridBagConstraints jobCompletedLabelConstraints = template.
+                createGridBagConstraints(0, 20, GridBagConstraints.HORIZONTAL, 5, 5,
+                new Insets(0, 0, 0, 0), GridBagConstraints.CENTER, 0.0, 0.0, 1,
+                1);
+        frameContent.add(jobCompletedLabel, jobCompletedLabelConstraints);
+        
+        //Add in Show on CIS Radio Button
+        jobCompletedRadioButton = new JRadioButton();
+        GridBagConstraints jobCompletedRadioButtonConstraints = template.
+                createGridBagConstraints(1, 20, GridBagConstraints.HORIZONTAL, 5, 5,
+                new Insets(0, 0, 0, 0), GridBagConstraints.WEST, 0.0, 0.0, 1,
+                1);
+        frameContent.add(jobCompletedRadioButton, jobCompletedRadioButtonConstraints);
+        
+         //Add in the Job Completed Text Field
+        jobCompletedTextField = new JTextField();
+        jobCompletedTextField.setBackground(Color.YELLOW);
+        GridBagConstraints  jobCompletedTextFieldConstraints = template.
+                createGridBagConstraints(4, 20, GridBagConstraints.HORIZONTAL, 5, 5,
+                new Insets(0, 0, 0, 0), GridBagConstraints.WEST, 0.0, 0.0, 1,
+                1);
+        frameContent.add(jobCompletedTextField,  jobCompletedTextFieldConstraints);
+        
+        //Add in if Job Not Completed Label
+        ifJobNotCompletedLabel = new JLabel(template.headingString("If Job Not Completed:", 3));
+        GridBagConstraints ifJobNotCompletedLabelConstraints = template.
+                createGridBagConstraints(0, 21, GridBagConstraints.HORIZONTAL, 5, 5,
+                new Insets(0, 0, 0, 0), GridBagConstraints.CENTER, 0.0, 0.0, 1,
+                1);
+        frameContent.add(ifJobNotCompletedLabel, ifJobNotCompletedLabelConstraints);
+        
+        //Add in if Job Not Completed Label
+        nextUpdateDueLabel = new JLabel(template.headingString("Next Update Due", 3));
+        GridBagConstraints nextUpdateDueLabelConstraints = template.
+                createGridBagConstraints(1, 21, GridBagConstraints.HORIZONTAL, 5, 5,
+                new Insets(0, 0, 0, 0), GridBagConstraints.CENTER, 0.0, 0.0, 1,
+                1);
+        frameContent.add(nextUpdateDueLabel, nextUpdateDueLabelConstraints);
+        
+         //Add in the Job Completed Text Field
+        nextUpdateDueTextField = new JTextField();
+        nextUpdateDueTextField.setBackground(Color.yellow);
+        GridBagConstraints  nextUpdateDueTextFieldConstraints = template.
+                createGridBagConstraints(2, 21, GridBagConstraints.HORIZONTAL, 5, 5,
+                new Insets(0, 0, 0, 0), GridBagConstraints.WEST, 0.0, 0.0, 1,
+                1);
+        frameContent.add(nextUpdateDueTextField,  nextUpdateDueTextFieldConstraints);
         
         mainFrame.getContentPane().add(new JScrollPane(frameContent), BorderLayout.CENTER);
         mainFrame.pack();
