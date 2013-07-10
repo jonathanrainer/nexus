@@ -18,6 +18,7 @@ import javax.swing.*;
 public class WelcomeScreen {
 
     private JFrame mainFrame;
+    private JPanel frameContent;
     private JLabel titleLabel;
     private JLabel subtitleLabel;
     private JLabel welcomeTextLabel;
@@ -34,7 +35,9 @@ public class WelcomeScreen {
     public WelcomeScreen() {
         template = new Template();
         // Create mainv templated frame to place content into
-        mainFrame = template.giveGridBagTemplatedJFrame("Welcome to NWNE - NEXUS");
+        mainFrame = template.giveTemplatedJFrame("Welcome to NWNE - NEXUS");
+        // Create main Panel to go in Frame
+        frameContent = template.giveGridBagTemplatedJPanel();
         // Create the text to go in the title 
         String title;
         title = template.headingString("Welcome to NWNE - NEXUS", 1);
@@ -70,22 +73,24 @@ public class WelcomeScreen {
                 createGridBagConstraints(0, 1, GridBagConstraints.BOTH, 0, 0,
                 new Insets(0, 0, 0, 0), GridBagConstraints.CENTER, 0.0, 0.0, 1,
                 1);
-        mainFrame.add(titleLabel, titleConstraints);
+        frameContent.add(titleLabel, titleConstraints);
         GridBagConstraints subtitleConstraints = template.
                 createGridBagConstraints(0, 2, GridBagConstraints.BOTH, 0, 0,
                 new Insets(0, 0, 0, 0), GridBagConstraints.CENTER, 0.0, 0.0, 1,
                 1);
-        mainFrame.add(subtitleLabel, subtitleConstraints);
+        frameContent.add(subtitleLabel, subtitleConstraints);
         GridBagConstraints welcomeTextConstraints = template.
                 createGridBagConstraints(0, 3, GridBagConstraints.BOTH, 0, 0,
                 new Insets(0, 0, 0, 0), GridBagConstraints.CENTER, 0.0, 0.0, 1,
                 1);
-        mainFrame.add(welcomeTextLabel, welcomeTextConstraints);
+        frameContent.add(welcomeTextLabel, welcomeTextConstraints);
         GridBagConstraints continueButtonConstraints = template.
                 createGridBagConstraints(0, 4, GridBagConstraints.NORTH, 0, 0,
                 new Insets(0, 0, 0, 0), GridBagConstraints.CENTER, 0.0, 0.0, 1,
                 1);
-        mainFrame.add(continueButton, continueButtonConstraints);
+        frameContent.add(continueButton, continueButtonConstraints);
+        mainFrame.add(frameContent);
+        mainFrame.pack();
     }
 
     /**
