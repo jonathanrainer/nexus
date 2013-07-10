@@ -32,11 +32,11 @@ public class MainSystem {
      */
     public MainSystem()
     {
-        mysqlEngine = new MYSQLEngine("localhost", "Nexus","nexus","nexus2713");
-//        teamNames = mysqlEngine.enumerateTeamNames();
-//        initialGUI = new InitialGUI(teamNames);
-//        addActionListenersInitialGUI();
-        ControlOfficeEntryForm cofe = new ControlOfficeEntryForm(mysqlEngine,true);
+       mysqlEngine = new MYSQLEngine("localhost", "Nexus","nexus","nexus2713");
+       teamNames = mysqlEngine.enumerateTeamNames();
+       initialGUI = new InitialGUI(teamNames);
+       addActionListenersInitialGUI();
+       ControlOfficeEntryForm cofe = new ControlOfficeEntryForm(mysqlEngine,true);
     }
     
     /**
