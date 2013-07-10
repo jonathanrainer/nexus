@@ -7,7 +7,6 @@ package gui;
 import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
-import java.awt.GridLayout;
 import java.awt.Insets;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
@@ -51,7 +50,7 @@ public class Template {
     public JFrame giveTemplatedJFrame(String title) {
         JFrame templatedFrame = new JFrame(title);
         
-        Dimension frameDimensions = new Dimension(900,700);
+        Dimension frameDimensions = new Dimension(1024,800);
         templatedFrame.setPreferredSize(frameDimensions);
         
         // Create the menu to go across the top of the frame.
@@ -61,7 +60,6 @@ public class Template {
         templatedFrame.setJMenuBar(menuBar);
         
         templatedFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        templatedFrame.setVisible(true);
         return templatedFrame;
     }
     
