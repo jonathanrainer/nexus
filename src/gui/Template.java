@@ -14,6 +14,7 @@ import javax.swing.JLabel;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JPanel;
+import javax.swing.JSeparator;
 
 
 /**
@@ -29,8 +30,10 @@ public class Template {
      * sources.
      */
     ClassLoader cldr = this.getClass().getClassLoader();
-    java.net.URL nwlogo = cldr.getResource("gui/nwlogo.png");
-    ImageIcon newWineLogo = new ImageIcon(nwlogo);
+    java.net.URL nwlogoBig = cldr.getResource("gui/nwlogo.png");
+    java.net.URL nwlogoSmall = cldr.getResource("gui/nwsmalllogo.png");
+    ImageIcon newWineLogoSmall = new ImageIcon(nwlogoSmall);
+    ImageIcon newWineLogoBig = new ImageIcon(nwlogoBig);
 
     /**
      * Empty constructor, the object is only instantiated for the methods it
@@ -50,7 +53,7 @@ public class Template {
     public JFrame giveTemplatedJFrame(String title) {
         JFrame templatedFrame = new JFrame(title);
         
-        Dimension frameDimensions = new Dimension(800,1100);
+        Dimension frameDimensions = new Dimension(1024, 768);
         templatedFrame.setPreferredSize(frameDimensions);
         
         // Create the menu to go across the top of the frame.
@@ -63,18 +66,46 @@ public class Template {
         return templatedFrame;
     }
     
-    public JPanel giveGridBagTemplatedJPanel() {
+    public JPanel giveMenuTemplatedJPanel(String title){
         JPanel templatedPanel = new JPanel();
         
         GridBagLayout layout;
         layout = new GridBagLayout();
         templatedPanel.setLayout(layout);
         
-        JLabel logo = new JLabel(newWineLogo);
+        JLabel logo = new JLabel(newWineLogoBig);
         GridBagConstraints logoConstraints = createGridBagConstraints(
                 0, 0, GridBagConstraints.BOTH, 0, 0, new Insets(0, 0, 0, 0),
                 GridBagConstraints.CENTER, 0.0, 0.0, 1, 5);
         templatedPanel.add(logo, logoConstraints);
+
+        return templatedPanel;
+    }
+    
+    public JPanel giveFormTemplatedJPanel(String title) {
+        JPanel templatedPanel = new JPanel();
+        
+        GridBagLayout layout;
+        layout = new GridBagLayout();
+        templatedPanel.setLayout(layout);
+        
+        JLabel logoLeft = new JLabel(newWineLogoSmall);
+        JLabel logoRight = new JLabel(newWineLogoSmall);
+        GridBagConstraints logoLeftConstraints = createGridBagConstraints(
+                0, 0, GridBagConstraints.NONE, 0, 0, new Insets(0, 0, 0, 0),
+                GridBagConstraints.WEST, 0.0, 0.0, 1, 1);
+        GridBagConstraints logoRightConstraints = createGridBagConstraints(
+                4, 0, GridBagConstraints.NONE, 0, 0, new Insets(0, 0, 0, 0),
+                GridBagConstraints.EAST, 0.0, 0.0, 1, 1);
+        templatedPanel.add(logoLeft, logoLeftConstraints);
+        templatedPanel.add(logoRight, logoRightConstraints);
+        
+        JLabel titleLabel = new JLabel("<html><b><center><font size = \"50\">" + title);
+        GridBagConstraints titleConstraints = createGridBagConstraints(
+                1, 0, GridBagConstraints.NONE, 0, 0, new Insets(0, 0, 15, 0),
+                GridBagConstraints.CENTER, 0.0, 0.0, 1, 3);
+        templatedPanel.add(titleLabel,titleConstraints);
+        
 
         return templatedPanel;
     }
