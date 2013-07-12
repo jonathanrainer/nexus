@@ -35,16 +35,15 @@ public class WelcomeScreen {
     public WelcomeScreen() {
         template = new Template();
         // Create mainv templated frame to place content into
-        mainFrame = template.giveTemplatedJFrame("Welcome to NWNE - NEXUS");
+        String title = "Welcome to NWNE - NEXUS";
+        mainFrame = template.giveTemplatedJFrame(title);
         // Create main Panel to go in Frame
-        frameContent = template.giveGridBagTemplatedJPanel();
+        frameContent = template.giveMenuTemplatedJPanel((template.
+                headingString(title, 1)));
         // Create the text to go in the title 
-        String title;
-        title = template.headingString("Welcome to NWNE - NEXUS", 1);
         String subtitle;
         subtitle = template.headingString("Project Version 1.0 (Kuuga)", 3);
         // Create the label itself, adding in the text
-        titleLabel = new JLabel(title, JLabel.CENTER);
         subtitleLabel = new JLabel(subtitle, JLabel.CENTER);
         //Add in the logo here
         // Create the text to fill out the rest of the welcome screen
@@ -69,25 +68,21 @@ public class WelcomeScreen {
         // continueButton.setFont(rockwell);
         // Create the various constraints such that the parts are laid out 
         // correctly
-        GridBagConstraints titleConstraints = template.
-                createGridBagConstraints(0, 1, GridBagConstraints.BOTH, 0, 0,
-                new Insets(0, 0, 0, 0), GridBagConstraints.CENTER, 0.0, 0.0, 1,
-                1);
-        frameContent.add(titleLabel, titleConstraints);
+
         GridBagConstraints subtitleConstraints = template.
-                createGridBagConstraints(0, 2, GridBagConstraints.BOTH, 0, 0,
+                createGridBagConstraints(0, 3, GridBagConstraints.NONE, 0, 0,
                 new Insets(0, 0, 0, 0), GridBagConstraints.CENTER, 0.0, 0.0, 1,
-                1);
+                4);
         frameContent.add(subtitleLabel, subtitleConstraints);
         GridBagConstraints welcomeTextConstraints = template.
-                createGridBagConstraints(0, 3, GridBagConstraints.BOTH, 0, 0,
-                new Insets(0, 0, 0, 0), GridBagConstraints.CENTER, 0.0, 0.0, 1,
-                1);
+                createGridBagConstraints(0, 4, GridBagConstraints.NONE, 0, 0,
+                new Insets(0, 70, 0, 0), GridBagConstraints.CENTER, 0.0, 0.0, 1,
+                4);
         frameContent.add(welcomeTextLabel, welcomeTextConstraints);
         GridBagConstraints continueButtonConstraints = template.
-                createGridBagConstraints(0, 4, GridBagConstraints.NORTH, 0, 0,
+                createGridBagConstraints(0, 5, GridBagConstraints.NONE, 0, 0,
                 new Insets(0, 0, 0, 0), GridBagConstraints.CENTER, 0.0, 0.0, 1,
-                1);
+                4);
         frameContent.add(continueButton, continueButtonConstraints);
         mainFrame.add(frameContent);
         mainFrame.pack();
