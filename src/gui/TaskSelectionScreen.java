@@ -7,6 +7,7 @@ package gui;
 import java.awt.GridBagConstraints;
 import java.awt.Insets;
 import java.util.ArrayList;
+import java.util.HashMap;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -22,14 +23,14 @@ public class TaskSelectionScreen {
     private JPanel frameContent;
     private Template template;
     private JLabel titleLabel;
-    private ArrayList<JButton> buttons;
+    private HashMap<String,JButton> buttons;
 
     public TaskSelectionScreen(String team) {
-        buttons = new ArrayList<>();
+        buttons = new HashMap<>();
         template = new Template();
         mainFrame = template.giveTemplatedJFrame("Task Selection - " + team
                 + "- NWNE - Nexus");
-        frameContent = template.giveGridBagTemplatedJPanel();
+        frameContent = template.giveMenuTemplatedJPanel("Task Selection Screen");
         mainFrame.add(frameContent);
         String title;
         title = template.headingString("Please select the task you wish to "
@@ -62,7 +63,7 @@ public class TaskSelectionScreen {
                 createGridBagConstraints(0, 3, GridBagConstraints.BOTH, 0, 0,
                 new Insets(0, 0, 0, 0), GridBagConstraints.CENTER, 0.0, 0.0, 1,
                 1);
-        buttons.add(writeNewATTicketButton);
+        buttons.put("writeNewATTicketButton", writeNewATTicketButton);
         frameContent.add(writeNewATTicketButton, writeNewATTicketButtonConstraints);
         JButton writeNewCOTicketButton;
         writeNewCOTicketButton = new JButton(template.headingString(
@@ -71,7 +72,7 @@ public class TaskSelectionScreen {
                 createGridBagConstraints(0, 4, GridBagConstraints.BOTH, 0, 0,
                 new Insets(0, 0, 0, 0), GridBagConstraints.CENTER, 0.0, 0.0, 1,
                 1);
-        buttons.add(writeNewCOTicketButton);
+        buttons.put("writeNewCOTicketButton", writeNewCOTicketButton);
         frameContent.add(writeNewCOTicketButton, writeNewCOTicketButtonConstraints);
         JButton viewAmendAOTicketButton;
         viewAmendAOTicketButton = new JButton(template.headingString(
@@ -80,7 +81,7 @@ public class TaskSelectionScreen {
                 createGridBagConstraints(0, 5, GridBagConstraints.BOTH, 0, 0,
                 new Insets(0, 0, 0, 0), GridBagConstraints.CENTER, 0.0, 0.0, 1,
                 1);
-        buttons.add(viewAmendAOTicketButton);
+        buttons.put("viewAmendAOTicketButton", viewAmendAOTicketButton);
         frameContent.add(viewAmendAOTicketButton, viewAmendAOTicketButtonConstraints);
         return frameContent;
     }
@@ -93,7 +94,7 @@ public class TaskSelectionScreen {
                 createGridBagConstraints(0, 3, GridBagConstraints.BOTH, 0, 0,
                 new Insets(0, 0, 0, 0), GridBagConstraints.CENTER, 0.0, 0.0, 1,
                 1);
-        buttons.add(writeNewATTicketButton);
+        buttons.put("writeNewATTicketButton",writeNewATTicketButton);
         frameContent.add(writeNewATTicketButton, writeNewATTicketButtonConstraints);
         JButton writeNewCOTicketButton;
         writeNewCOTicketButton = new JButton(template.headingString(
@@ -102,7 +103,7 @@ public class TaskSelectionScreen {
                 createGridBagConstraints(0, 4, GridBagConstraints.BOTH, 0, 0,
                 new Insets(0, 0, 0, 0), GridBagConstraints.CENTER, 0.0, 0.0, 1,
                 1);
-        buttons.add(writeNewCOTicketButton);
+        buttons.put("writeNewCOTicketButton", writeNewCOTicketButton);
         frameContent.add(writeNewCOTicketButton, writeNewCOTicketButtonConstraints);
         JButton viewAmendCOTicketButton;
         viewAmendCOTicketButton = new JButton(template.headingString(
@@ -111,7 +112,7 @@ public class TaskSelectionScreen {
                 createGridBagConstraints(0, 5, GridBagConstraints.BOTH, 0, 0,
                 new Insets(0, 0, 0, 0), GridBagConstraints.CENTER, 0.0, 0.0, 1,
                 1);
-        buttons.add(viewAmendCOTicketButton);
+        buttons.put("viewAmendCOTicketButton", viewAmendCOTicketButton);
         frameContent.add(viewAmendCOTicketButton, viewAmendCOTicketButtonConstraints);
         return frameContent;
     }
@@ -124,7 +125,7 @@ public class TaskSelectionScreen {
                 createGridBagConstraints(0, 3, GridBagConstraints.BOTH, 0, 0,
                 new Insets(0, 0, 0, 0), GridBagConstraints.CENTER, 0.0, 0.0, 1,
                 1);
-        buttons.add(writeNewATTicketButton);
+        buttons.put("writeNewATTicketButton", writeNewATTicketButton);
         frameContent.add(writeNewATTicketButton, writeNewATTicketButtonConstraints);
         JButton writeNewCOTicketButton;
         writeNewCOTicketButton = new JButton(template.headingString(
@@ -133,7 +134,7 @@ public class TaskSelectionScreen {
                 createGridBagConstraints(0, 4, GridBagConstraints.BOTH, 0, 0,
                 new Insets(0, 0, 0, 0), GridBagConstraints.CENTER, 0.0, 0.0, 1,
                 1);
-        buttons.add(writeNewCOTicketButton);
+        buttons.put("writeNewCOTicketButton", writeNewCOTicketButton);
         frameContent.add(writeNewCOTicketButton, writeNewCOTicketButtonConstraints);
         return frameContent;
     }
@@ -151,7 +152,7 @@ public class TaskSelectionScreen {
      * A method to return the ArrayList of buttons accessible to the user.
      * @return The ArrayList of buttons accessible to the user.
      */
-    public ArrayList<JButton> getButtons() {
+    public HashMap<String,JButton> getButtons() {
         return buttons;
     }
     
