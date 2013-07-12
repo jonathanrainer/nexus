@@ -66,7 +66,7 @@ public class TeamSelectionScreen {
         template = new Template();
         // Create the main frame with some predecided elements from the template.
         mainFrame = template.giveTemplatedJFrame("Team Login - NWNE - Nexus");
-        frameContent = template.giveGridBagTemplatedJPanel();
+        frameContent = template.giveMenuTemplatedJPanel("Team Selection Screen");
         String title = template.headingString("Please select the Team you are "
                 + "part of:", 2);
         titleLabel = new JLabel(title, JLabel.CENTER);
