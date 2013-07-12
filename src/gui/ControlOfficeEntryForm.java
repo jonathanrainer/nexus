@@ -702,7 +702,7 @@ public class ControlOfficeEntryForm {
         GridLayout sixRowsFourColumns = new GridLayout(2, 6);
         keyWordGrid.setLayout(sixRowsFourColumns);
         buttonsInGrid = new ArrayList<>();
-        ArrayList<String> labelsForButtons = new ArrayList<String>();
+        ArrayList<String> labelsForButtons = new ArrayList<>();
         labelsForButtons.add("KeyWord1");
         labelsForButtons.add("KeyWord2");
         labelsForButtons.add("KeyWord3");
@@ -1086,4 +1086,62 @@ public class ControlOfficeEntryForm {
         mainFrame.setVisible(true);
 
     }
+
+    public JTextField getTicketReferenceTextField() {
+        return ticketReferenceTextField;
+    }
+
+    public JTextField getDateTimeTextField() {
+        return dateTimeTextField;
+    }
+
+    public JComboBox getTicketWrittenComboBox() {
+        return ticketWrittenComboBox;
+    }
+
+    public JComboBox getTeamMembersComboBox() {
+        return teamMembersComboBox;
+    }
+
+    public JComboBox getProblemLocationComboBox1() {
+        return problemLocationComboBox1;
+    }
+
+    public JComboBox getProblemLocationComboBox2() {
+        return problemLocationComboBox2;
+    }
+
+    public JComboBox getProblemLocationComboBox3() {
+        return problemLocationComboBox3;
+    }
+
+    public JComboBox getProblemLocationComboBox4() {
+        return problemLocationComboBox4;
+    }
+
+    public ArrayList<JRadioButton> getButtonsInGrid() {
+        return buttonsInGrid;
+    }
+
+    public JTextField getProblemReportedByTextField() {
+        return problemReportedByTextField;
+    }
+
+    public JComboBox getWhoIsAComboBox() {
+        return whoIsAComboBox;
+    }
+
+    public JComboBox getContactViaComboBox() {
+        return contactViaComboBox;
+    }
+
+    public JTextField getContactNumberTextField() {
+        return contactNumberTextField;
+    }
+
+    public JComboBox getLocationVenueVillageComboBox() {
+        return locationVenueVillageComboBox;
+    }
+    
+    
 }
