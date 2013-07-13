@@ -283,13 +283,10 @@ public class MainSystem {
         Collections.addAll(site, "Car Park (Day)", "Car Park (Main)", "Runway",
                 "Bays", "BunkerBins", "Freezer Packs", "Hospitality", "Kitchens"
                 , "Ticket Office (Blue)", "Ticket Office (Red)");
-        //Showground ArrayList
-        ArrayList<String> showGround = new ArrayList<>();
-        Collections.addAll(showGround, "Bandstand", "Compound", "Pond", "SG Office");
         
         ArrayList<ArrayList<String>> listOfLists = new ArrayList<>();
         Collections.addAll(listOfLists, villageColour, gateColour, venueType, 
-                site, showGround);
+                site);
         
         ArrayList<String> listOfAllPotentialItems = new ArrayList<>();
         
@@ -313,23 +310,76 @@ public class MainSystem {
         ArrayList<String> blue = new ArrayList<>();
         Collections.addAll(blue, "1","2","3","4","5","6","7","8","9","10");
         ArrayList<String> green = new ArrayList<>();
-        Collections.addAll(green, "1","2","3","4","5","6","7","8","9","10");
+        Collections.addAll(green, "1","2","3","4","5","6","7");
         ArrayList<String> purple = new ArrayList<>();
-        Collections.addAll(purple, "1","2","3","4","5","6","7","8","9","10");
+        Collections.addAll(purple, "1","2","3","4");
         ArrayList<String> red = new ArrayList<>();
-        Collections.addAll(red, "1","2","3","4","5","6","7","8","9","10");
+        Collections.addAll(red, "1","2","3","4","5","6","7");
         ArrayList<String> yellow = new ArrayList<>();
-        Collections.addAll(yellow, "1","2","3","4","5","6","7","8","9","10");
+        Collections.addAll(yellow, "0","1","2","3","4","5","6");
         
         //Gates Options
         ArrayList<String> nextBox = new ArrayList<>();
         nextBox.add("See Next Box -->");
-       
+        
+        //Adults options
+        ArrayList<String> adultsVenues = new ArrayList<>();
+        Collections.addAll(adultsVenues, "Meeting Place (inc. Café)",
+                "Impact", "Burn", "Leaders' Lounge", "Pastoral Prayer",
+                "Sanctuary", "Arts 3:16", "Manifest", "Renovate", "Synergy",
+                "Upper Room", "Tearfun (inc. Café)");
+        //Childrens and Youth Options
+        ArrayList<String> childrensYouthVenues = new ArrayList<>();
+        Collections.addAll(childrensYouthVenues, "Gems", "Pebbles", 
+                "Stepping Stones", "Ground Breakers", "Rock Solid",
+                "Boulder Gang", "Fridge", "Club One", "Thirst", "Flava",
+                "Sports Field", "Our Place");
+        //General Venues Options
+        ArrayList<String> generalVenues = new ArrayList<>();
+        Collections.addAll(generalVenues, "Food Court", "Marketplace (inc. Café)",
+                "Medical Centre", "New Wine FM");
+        
+        //Site Options
+        ArrayList<String> carParkDaySite = new ArrayList<>();
+        Collections.addAll(carParkDaySite, "NA");
+        ArrayList<String> carParkMainSite = new ArrayList<>();
+        Collections.addAll(carParkMainSite, "NA");
+        ArrayList<String> runwaySite = new ArrayList<>();
+        Collections.addAll(runwaySite, "NA");
+        ArrayList<String> baysSite = new ArrayList<>();
+        Collections.addAll(baysSite, "Bay 1", "Bay 2", "Bay 3", "Bay 4", "Bay 5");
+        ArrayList<String> bunkerBinsSite = new ArrayList<>();
+        Collections.addAll(bunkerBinsSite, "End of Sheds", "Red Gate", "WigWam");
+        ArrayList<String> freezerPacksSite = new ArrayList<>();
+        Collections.addAll(freezerPacksSite, "NA");
+        ArrayList<String> hallamBuildingSite = new ArrayList<>();
+        Collections.addAll(hallamBuildingSite, "Admin", "Control Office", 
+                "Finance", "Information", "Production", "Kitchen", "Team Lounge"
+                , "General");
+        ArrayList<String> hospitalitySite = new ArrayList<>();
+        Collections.addAll(hospitalitySite, "NA");
+        ArrayList<String> kitchensSite = new ArrayList<>();
+        Collections.addAll(kitchensSite, "NA");
+        ArrayList<String> ticketOfficeBlueSite = new ArrayList<>();
+        Collections.addAll(ticketOfficeBlueSite, "NA");
+        ArrayList<String> ticketOfficeRedSite = new ArrayList<>();
+        Collections.addAll(ticketOfficeRedSite, "NA");
+        ArrayList<String> BandStandSite = new ArrayList<>();
+        Collections.addAll(BandStandSite, "NA");
+        ArrayList<String> fencingSite = new ArrayList<>();
+        Collections.addAll(fencingSite, "NA");
+        ArrayList<String> pondSite = new ArrayList<>();
+        Collections.addAll(pondSite, "NA");
         
         ArrayList<ArrayList<String>> listOfLists = new ArrayList<>();
         Collections.addAll(listOfLists, blue, green, purple, red, yellow,
                 nextBox, nextBox, nextBox, nextBox, nextBox, nextBox,
-                nextBox, nextBox, nextBox, nextBox);
+                nextBox, nextBox, nextBox, nextBox, adultsVenues, 
+                childrensYouthVenues, generalVenues, carParkDaySite, 
+                carParkMainSite, runwaySite, baysSite, bunkerBinsSite,
+                freezerPacksSite, hallamBuildingSite, hospitalitySite, kitchensSite,
+                ticketOfficeBlueSite, ticketOfficeRedSite, BandStandSite, fencingSite
+                , pondSite);
         
         ArrayList<String> listOfAllPotentialItems = new ArrayList<>();
         
