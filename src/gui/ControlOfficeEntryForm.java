@@ -102,9 +102,7 @@ public class ControlOfficeEntryForm {
     private JButton submitFormButton;
     private JButton resetFormButton;
 
-    public ControlOfficeEntryForm(MYSQLEngine mysqlEngine, boolean entry) {
-        // Create Record in Database that relates to this form
-        mysqlEngine = this.mysqlEngine;
+    public ControlOfficeEntryForm(boolean entry) {
         //
         template = new Template();
         // Define a blank JLabel so that layout can more easily be specified
@@ -192,8 +190,8 @@ public class ControlOfficeEntryForm {
         //Create the Date/Time label
         dateTimeLabel = new JLabel(template.headingString("Date/Time:", 3));
         GridBagConstraints dateTimeLabelConstraints = template.
-                createGridBagConstraints(3, 3, GridBagConstraints.BOTH, 5, 5,
-                new Insets(0, 0, 0, 0), GridBagConstraints.WEST, 0.0, 0.0, 1,
+                createGridBagConstraints(3, 3, GridBagConstraints.NONE, 5, 5,
+                new Insets(0, 0, 0, 0), GridBagConstraints.EAST, 0.0, 0.0, 1,
                 1);
         frameContent.add(dateTimeLabel, dateTimeLabelConstraints);
 
@@ -406,8 +404,8 @@ public class ControlOfficeEntryForm {
         //Add in Who Is A Label
         whoIsALabel = new JLabel(template.headingString("Who Is A:", 3));
         GridBagConstraints whoIsALabelConstraints = template.
-                createGridBagConstraints(3, 16, GridBagConstraints.HORIZONTAL, 5, 5,
-                new Insets(0, 0, 0, 0), GridBagConstraints.CENTER, 0.0, 0.0, 1,
+                createGridBagConstraints(3, 16, GridBagConstraints.NONE, 5, 5,
+                new Insets(0, 0, 0, 0), GridBagConstraints.EAST, 0.0, 0.0, 1,
                 1);
         frameContent.add(whoIsALabel, whoIsALabelConstraints);
 
@@ -446,8 +444,8 @@ public class ControlOfficeEntryForm {
         //Add in Location/Venue/Village Label
         locationVenueVillageLabel = new JLabel(template.headingString("Location/Venue/Village:", 3));
         GridBagConstraints locationVenueVillageLabelConstraints = template.
-                createGridBagConstraints(3, 17, GridBagConstraints.HORIZONTAL, 5, 5,
-                new Insets(0, 0, 0, 0), GridBagConstraints.CENTER, 0.0, 0.0, 1,
+                createGridBagConstraints(3, 17, GridBagConstraints.NONE, 5, 5,
+                new Insets(0, 0, 0, 0), GridBagConstraints.EAST, 0.0, 0.0, 1,
                 1);
         frameContent.add(locationVenueVillageLabel, locationVenueVillageLabelConstraints);
 
