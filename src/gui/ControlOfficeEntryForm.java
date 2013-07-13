@@ -123,7 +123,7 @@ public class ControlOfficeEntryForm {
         mainFrame = template.giveTemplatedJFrame(title);
 
         // Get initial content Panel
-        frameContent = template.giveFormTemplatedJPanel("Control Office Job Ticket <br> Updating Screen");
+        frameContent = template.giveFormTemplatedJPanel("Control Office Job Ticket <br> Input Screen");
 
         // Create the introText label
         String introText = "<html>This Form is to raise Jobs Tickets for the "
@@ -307,7 +307,7 @@ public class ControlOfficeEntryForm {
         problemDescriptionTextArea = new JTextArea();
         problemDescriptionTextArea.setLineWrap(true);
         problemDescriptionTextArea.setMargin(new Insets(5, 5, 5, 5));
-        problemDescriptionTextArea.setPreferredSize(new Dimension(530, 70));
+        problemDescriptionTextArea.setPreferredSize(new Dimension(520, 70));
         GridBagConstraints problemDescriptionTextAreaConstraints = template.
                 createGridBagConstraints(1, 7, GridBagConstraints.NONE, 5, 5,
                 new Insets(10, 0, 0, 0), GridBagConstraints.NORTHWEST, 0.0, 0.0, 4,
@@ -319,7 +319,7 @@ public class ControlOfficeEntryForm {
                 + " You only <br> have 256 <br> characters.", 4));
         GridBagConstraints problemDescriptionExplanationLabelConstraints = template.
                 createGridBagConstraints(4, 7, GridBagConstraints.NONE, 5, 5,
-                new Insets(0, 0, 0, 0), GridBagConstraints.EAST, 0.0, 0.0, 1,
+                new Insets(0, 0, 0, 0), GridBagConstraints.WEST, 0.0, 0.0, 1,
                 1);
         frameContent.add(problemDescriptionExplanationLabel,
                 problemDescriptionExplanationLabelConstraints);
