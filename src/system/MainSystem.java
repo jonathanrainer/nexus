@@ -11,6 +11,7 @@ import io.MYSQLEngine;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Iterator;
 
 /**
@@ -124,18 +125,16 @@ public class MainSystem {
         }
     }
     
-    private void addActionListenersAdminTaskSelection(){
+    private void addActionListenersAdminTaskSelection() {
         mainGUI.getTaskSelectionScreen().getButtons().
                 get("writeNewCOTicketButton").addActionListener(
-                new ActionListener()
-                {
-                    @Override
-                    public void actionPerformed(ActionEvent e)
-                    {
-                        ControlOfficeEntryForm cofe = createLimitedEntryForm();
-                    }
-                }
-                );
+                new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                ControlOfficeEntryForm cofe = createLimitedEntryForm();
+                
+            }
+        });
     }
     
     private void addActionListenersInfoTaskSelection(){
@@ -173,19 +172,130 @@ public class MainSystem {
      */
     private ControlOfficeEntryForm createLimitedEntryForm()
     {
-        ControlOfficeEntryForm cofe = new ControlOfficeEntryForm(true);
+        final ControlOfficeEntryForm cofe = new ControlOfficeEntryForm(true);
+        //Set the text in the two automated fields and make them unwriteable
         cofe.getTicketReferenceTextField().setText("Automated");
+        cofe.getTicketReferenceTextField().setEditable(false);
         cofe.getDateTimeTextField().setText("Automated");
+        cofe.getDateTimeTextField().setEditable(false);
+        
+        //Add to the ticket written combo box with the team the user is from
         cofe.getTicketWrittenComboBox().addItem(user.getTeam());
         cofe.getTicketWrittenComboBox().setSelectedIndex(0);
+        cofe.getTicketWrittenComboBox().setEnabled(false);
+        
+        //Iterate over the team members to give a choice
         ArrayList<String> teamMembers = mysqlEngine.
                 enumerateTeamMembers(user.getTeam());
         Iterator<String> it1 = teamMembers.iterator();
         while (it1.hasNext()){
             cofe.getTeamMembersComboBox().addItem(it1.next());
         }
+        
+        //Add data to first combo box to describe the problem
+        ArrayList<String> mainList = new ArrayList<>();
+        mainList.add("Village");
+        mainList.add("Gate");
+        mainList.add("Venue");
+        mainList.add("Site");
+        mainList.add("ShowGround");
+        Iterator it2 = mainList.iterator();
+        while(it2.hasNext()){
+            cofe.getProblemLocationComboBox1().addItem(it2.next());
+        }
+        
+        //Create HashMap for ComboBox 2 it should link together the string
+        //selected in the previous box with the new set of strings for the next
+        //combo box.
+        final HashMap<String,ArrayList<String>> masterBox2 = 
+                generateMasterListBox2(mainList);
+        final HashMap<String,ArrayList<String>> masterBox3 = 
+                generateMasterListBox3(cofe.getProblemLocationComboBox2().
+                getSelectedItem());
+        
+            
+        cofe.getProblemLocationComboBox1().addActionListener(
+                new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if(e.getActionCommand().equals("comboBoxChanged")){
+                    ArrayList<String> secondBoxOptions = masterBox2.get
+                            (cofe.getProblemLocationComboBox1().getSelectedItem());
+                    cofe.getProblemLocationComboBox2().removeAllItems();
+                    cofe.getProblemLocationComboBox3().removeAllItems();
+                    cofe.getProblemLocationComboBox4().removeAllItems();
+                    Iterator<String> secondBoxIterator = secondBoxOptions.iterator();
+                    while(secondBoxIterator.hasNext()){
+                        cofe.getProblemLocationComboBox2().addItem(secondBoxIterator.next());
+                    }
+                }
+            }
+        });
+        
         return cofe;
         
+    }
+    
+    private HashMap<String,ArrayList<String>> generateMasterListBox2(ArrayList<String> fieldsBox1)
+    {
+        HashMap<String,ArrayList<String>> masterListBox2 = new HashMap<>();
+        // Village Colour ArrayList
+        ArrayList<String> villageColour = new ArrayList<>();
+        villageColour.add("Blue");
+        villageColour.add("Green");
+        villageColour.add("Purple");
+        villageColour.add("Red");
+        villageColour.add("Yellow");
+        //Gate Colour ArrayList
+        ArrayList<String> gateColour = new ArrayList<>();
+        gateColour.add("Blue (Outer)");
+        gateColour.add("Blue (Inner)");
+        gateColour.add("Green");
+        gateColour.add("White (Outer)");
+        gateColour.add("Red");
+        gateColour.add("Yellow");
+        gateColour.add("H.F.G");
+        gateColour.add("Black (Ped)");
+        gateColour.add("Brown (Ped)");
+        //Venue Type ArrayList
+        ArrayList<String> venueType = new ArrayList<>();
+        venueType.add("Grown Ups");
+        venueType.add("Children/Youth");
+        venueType.add("General");
+        // Site ArrayList
+        ArrayList<String> site = new ArrayList<>();
+        site.add("Car Park (Day)");
+        site.add("Car Park (Main");
+        site.add("Runway");
+        site.add("Bays");
+        site.add("BunkerBins");
+        site.add("Freezer Packs");
+        site.add("Hospitality");
+        site.add("Kitchens");
+        site.add("Ticket Office (Blue)");
+        site.add("Ticket Office (Red)");
+        //Showground ArrayList
+        ArrayList<String> showGround = new ArrayList<>();
+        showGround.add("Bandstand");
+        showGround.add("Compound");
+        showGround.add("Pond");
+        showGround.add("SG Office");
+        
+        ArrayList<ArrayList<String>> listOfLists2 = new ArrayList<>();
+        listOfLists2.add(villageColour);
+        listOfLists2.add(gateColour);
+        listOfLists2.add(venueType);
+        listOfLists2.add(site);
+        listOfLists2.add(showGround);
+        
+        int i = 0;
+        while(i < listOfLists2.size())
+        {
+            masterListBox2.put(fieldsBox1.get(i), listOfLists2.get(i));
+            i++;
+        }
+        
+        return masterListBox2;
     }
     
     public InitialGUI getInitialGUI() {
