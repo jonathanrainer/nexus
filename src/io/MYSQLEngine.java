@@ -126,4 +126,54 @@ public class MYSQLEngine {
         }
         return results;
     }
+    
+    public ArrayList<String> enumerateTeamMembers(String team) {
+        // Set up the initial connection and statement objects
+        Connection conn = null;
+        Statement stmt = null;
+        // Create a new ArrayList to store the results of the MYSQL query.
+        ArrayList<String> results = new ArrayList<>();
+        // Begin try block so SQL Exceptions can be handled later
+        try {
+            // Register JDBC driver
+            Class.forName("com.mysql.jdbc.Driver");
+            // Open a connection
+            conn = DriverManager.getConnection(DB_URL, USER, PASS);
+
+            // Create and Execute the SQL Query
+            stmt = conn.createStatement();
+            /**
+             * Query states: Select all the users in a particular team
+             */
+            String sql;
+            sql = "SELECT `name` FROM `Users` WHERE `team` = '" + team + "'";
+            try (ResultSet rs = stmt.executeQuery(sql)) {
+                while (rs.next()) {
+                    results.add(rs.getString(1));
+                }
+            }
+            stmt.close();
+            conn.close();
+        } catch (SQLException se) {
+            //Handle errors for JDBC
+        } catch (Exception e) {
+            //Handle errors for Class.forName
+        } finally {
+            //finally block used to close resources should all else fail
+            try {
+                if (stmt != null) {
+                    stmt.close();
+                }
+            } catch (SQLException se2) {
+            }// nothing we can do
+
+            try {
+                if (conn != null) {
+                    conn.close();
+                }
+            } catch (SQLException se) {
+            }
+        }
+        return results;
+    }
 }
