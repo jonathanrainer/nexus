@@ -199,7 +199,7 @@ public class MainSystem {
         
         //Generate master lists
         masterListBox1 = new ArrayList<>();
-        Collections.addAll(masterListBox1, "Village", "Gate", "Venue", "Site", "ShowGround");
+        Collections.addAll(masterListBox1, "Village", "Gate", "Venue", "Site");
         Iterator it2 = masterListBox1.iterator();
         cofe.getProblemLocationComboBox1().addItem("Select a Location");
         while(it2.hasNext()){
@@ -246,7 +246,7 @@ public class MainSystem {
                         cofe.getProblemLocationComboBox3().removeAllItems();
                         cofe.getProblemLocationComboBox4().removeAllItems();
                         Iterator<String> thirdBoxIterator = thirdBoxOptions.iterator();
-                        if (!(cofe.getProblemLocationComboBox1().getSelectedItem().equals("Gate"))) {
+                        if (!(thirdBoxOptions.size() == 1)) {
                             cofe.getProblemLocationComboBox3().addItem("Select a Location");
                         }
                         while (thirdBoxIterator.hasNext()) {
@@ -281,8 +281,9 @@ public class MainSystem {
         // Site ArrayList
         ArrayList<String> site = new ArrayList<>();
         Collections.addAll(site, "Car Park (Day)", "Car Park (Main)", "Runway",
-                "Bays", "BunkerBins", "Freezer Packs", "Hospitality", "Kitchens"
-                , "Ticket Office (Blue)", "Ticket Office (Red)");
+                "Bays", "BunkerBins", "Freezer Packs", "Hallam Building",
+                "Hospitality", "Kitchens", "Ticket Office (Blue)", 
+                "Ticket Office (Red)", "Band Stand", "Fencing", "Pond");
         
         ArrayList<ArrayList<String>> listOfLists = new ArrayList<>();
         Collections.addAll(listOfLists, villageColour, gateColour, venueType, 
@@ -384,7 +385,7 @@ public class MainSystem {
         ArrayList<String> listOfAllPotentialItems = new ArrayList<>();
         
         int i = 0;
-        while(i < 15){
+        while(i < listOfLists.size()){
             masterListBox3.put(fieldsBox2.get(i), listOfLists.get(i));
             listOfAllPotentialItems.addAll(listOfLists.get(i));
             i++;
