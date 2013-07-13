@@ -235,24 +235,29 @@ public class MainSystem {
         
         cofe.getProblemLocationComboBox2().addActionListener(
                 new ActionListener() {
-                    public void actionPerformed(ActionEvent e) {
-                        if(e.getActionCommand().equals("comboBoxChanged") &&
-                                !(cofe.getProblemLocationComboBox2().
-                                getSelectedItem() == null)
-                                && !(cofe.getProblemLocationComboBox2().
-                                getSelectedItem().equals("Select a Location"))){
-                    ArrayList<String> thirdBoxOptions = masterListBox3.get
-                            (cofe.getProblemLocationComboBox2().getSelectedItem());
-                    cofe.getProblemLocationComboBox3().removeAllItems();
-                    cofe.getProblemLocationComboBox4().removeAllItems();
-                    Iterator<String> thirdBoxIterator = thirdBoxOptions.iterator();
-                    cofe.getProblemLocationComboBox3().addItem("Select a Location");
-                    while(thirdBoxIterator.hasNext()){
-                        cofe.getProblemLocationComboBox3().addItem(thirdBoxIterator.next());
+            public void actionPerformed(ActionEvent e) {
+                if (e.getActionCommand().equals("comboBoxChanged")) {
+                    if (!(cofe.getProblemLocationComboBox2().
+                            getSelectedItem() == null)
+                            && !(cofe.getProblemLocationComboBox2().
+                            getSelectedItem().equals("Select a Location"))) {
+                        ArrayList<String> thirdBoxOptions = masterListBox3.get(
+                                cofe.getProblemLocationComboBox2().getSelectedItem());
+                        cofe.getProblemLocationComboBox3().removeAllItems();
+                        cofe.getProblemLocationComboBox4().removeAllItems();
+                        Iterator<String> thirdBoxIterator = thirdBoxOptions.iterator();
+                        if (!(cofe.getProblemLocationComboBox1().getSelectedItem().equals("Gate"))) {
+                            cofe.getProblemLocationComboBox3().addItem("Select a Location");
+                        }
+                        while (thirdBoxIterator.hasNext()) {
+                            cofe.getProblemLocationComboBox3().addItem(thirdBoxIterator.next());
+                        }
+
                     }
+
                 }
-                    }
-                });
+            }
+        });
         
         return cofe;
         
@@ -265,7 +270,7 @@ public class MainSystem {
         ArrayList<String> villageColour = new ArrayList<>();
         Collections.addAll(villageColour, "Blue", "Green", "Purple", "Red", "Yellow");
         //Gate Colour ArrayList (To differentiate gates from Villages,
-        //there are spaces at the end of common names).
+        //there are spaces at the end of common names
         ArrayList<String> gateColour = new ArrayList<>();
         Collections.addAll(gateColour, "Blue (Outer)", "Blue (Inner)", "Green ",
                 "White (Outer)", "White (Inner)", "Red ", "Yellow ", "H.F.G",
