@@ -11,6 +11,7 @@ import io.MYSQLEngine;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Iterator;
 
@@ -27,6 +28,10 @@ public class MainSystem {
     private InitialGUI initialGUI;
     private MainGUI mainGUI;
     private User user;
+    private ArrayList<String> masterListBox1;
+    private HashMap<String,ArrayList<String>> masterListBox2;
+    private HashMap<String,ArrayList<String>> masterListBox3;
+    private HashMap<String,ArrayList<String>> masterListBox4;
     
     /**
      * Construct all the components of the Main System and such that it can have
@@ -192,110 +197,153 @@ public class MainSystem {
             cofe.getTeamMembersComboBox().addItem(it1.next());
         }
         
-        //Add data to first combo box to describe the problem
-        ArrayList<String> mainList = new ArrayList<>();
-        mainList.add("Village");
-        mainList.add("Gate");
-        mainList.add("Venue");
-        mainList.add("Site");
-        mainList.add("ShowGround");
-        Iterator it2 = mainList.iterator();
+        //Generate master lists
+        masterListBox1 = new ArrayList<>();
+        Collections.addAll(masterListBox1, "Village", "Gate", "Venue", "Site", "ShowGround");
+        Iterator it2 = masterListBox1.iterator();
+        cofe.getProblemLocationComboBox1().addItem("Select a Location");
         while(it2.hasNext()){
             cofe.getProblemLocationComboBox1().addItem(it2.next());
         }
-        
+        generateMasterLists();
         //Create HashMap for ComboBox 2 it should link together the string
         //selected in the previous box with the new set of strings for the next
         //combo box.
-        final HashMap<String,ArrayList<String>> masterBox2 = 
-                generateMasterListBox2(mainList);
-        final HashMap<String,ArrayList<String>> masterBox3 = 
-                generateMasterListBox3(cofe.getProblemLocationComboBox2().
-                getSelectedItem());
         
             
         cofe.getProblemLocationComboBox1().addActionListener(
                 new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                if(e.getActionCommand().equals("comboBoxChanged")){
-                    ArrayList<String> secondBoxOptions = masterBox2.get
+                if(e.getActionCommand().equals("comboBoxChanged") &&
+                        !(cofe.getProblemLocationComboBox1().getSelectedItem().
+                        equals("Select a Location"))){
+                    ArrayList<String> secondBoxOptions = masterListBox2.get
                             (cofe.getProblemLocationComboBox1().getSelectedItem());
                     cofe.getProblemLocationComboBox2().removeAllItems();
                     cofe.getProblemLocationComboBox3().removeAllItems();
                     cofe.getProblemLocationComboBox4().removeAllItems();
                     Iterator<String> secondBoxIterator = secondBoxOptions.iterator();
+                    cofe.getProblemLocationComboBox2().addItem("Select a Location");
                     while(secondBoxIterator.hasNext()){
                         cofe.getProblemLocationComboBox2().addItem(secondBoxIterator.next());
                     }
+                    cofe.getProblemLocationComboBox2().setSelectedIndex(0);
                 }
             }
         });
+        
+        cofe.getProblemLocationComboBox2().addActionListener(
+                new ActionListener() {
+                    public void actionPerformed(ActionEvent e) {
+                        if(e.getActionCommand().equals("comboBoxChanged") &&
+                                !(cofe.getProblemLocationComboBox2().
+                                getSelectedItem() == null)
+                                && !(cofe.getProblemLocationComboBox2().
+                                getSelectedItem().equals("Select a Location"))){
+                    ArrayList<String> thirdBoxOptions = masterListBox3.get
+                            (cofe.getProblemLocationComboBox2().getSelectedItem());
+                    cofe.getProblemLocationComboBox3().removeAllItems();
+                    cofe.getProblemLocationComboBox4().removeAllItems();
+                    Iterator<String> thirdBoxIterator = thirdBoxOptions.iterator();
+                    cofe.getProblemLocationComboBox3().addItem("Select a Location");
+                    while(thirdBoxIterator.hasNext()){
+                        cofe.getProblemLocationComboBox3().addItem(thirdBoxIterator.next());
+                    }
+                }
+                    }
+                });
         
         return cofe;
         
     }
     
-    private HashMap<String,ArrayList<String>> generateMasterListBox2(ArrayList<String> fieldsBox1)
+    private ArrayList<String> generateMasterListBox2(ArrayList<String> fieldsBox1)
     {
-        HashMap<String,ArrayList<String>> masterListBox2 = new HashMap<>();
+        masterListBox2 = new HashMap<>();
         // Village Colour ArrayList
         ArrayList<String> villageColour = new ArrayList<>();
-        villageColour.add("Blue");
-        villageColour.add("Green");
-        villageColour.add("Purple");
-        villageColour.add("Red");
-        villageColour.add("Yellow");
-        //Gate Colour ArrayList
+        Collections.addAll(villageColour, "Blue", "Green", "Purple", "Red", "Yellow");
+        //Gate Colour ArrayList (To differentiate gates from Villages,
+        //there are spaces at the end of common names).
         ArrayList<String> gateColour = new ArrayList<>();
-        gateColour.add("Blue (Outer)");
-        gateColour.add("Blue (Inner)");
-        gateColour.add("Green");
-        gateColour.add("White (Outer)");
-        gateColour.add("Red");
-        gateColour.add("Yellow");
-        gateColour.add("H.F.G");
-        gateColour.add("Black (Ped)");
-        gateColour.add("Brown (Ped)");
+        Collections.addAll(gateColour, "Blue (Outer)", "Blue (Inner)", "Green ",
+                "White (Outer)", "White (Inner)", "Red ", "Yellow ", "H.F.G",
+                "Black (Ped)", "Brown (Ped)");
         //Venue Type ArrayList
         ArrayList<String> venueType = new ArrayList<>();
-        venueType.add("Grown Ups");
-        venueType.add("Children/Youth");
-        venueType.add("General");
+        Collections.addAll(venueType, "Grown Ups", "Children/Youth", "General");
         // Site ArrayList
         ArrayList<String> site = new ArrayList<>();
-        site.add("Car Park (Day)");
-        site.add("Car Park (Main");
-        site.add("Runway");
-        site.add("Bays");
-        site.add("BunkerBins");
-        site.add("Freezer Packs");
-        site.add("Hospitality");
-        site.add("Kitchens");
-        site.add("Ticket Office (Blue)");
-        site.add("Ticket Office (Red)");
+        Collections.addAll(site, "Car Park (Day)", "Car Park (Main)", "Runway",
+                "Bays", "BunkerBins", "Freezer Packs", "Hospitality", "Kitchens"
+                , "Ticket Office (Blue)", "Ticket Office (Red)");
         //Showground ArrayList
         ArrayList<String> showGround = new ArrayList<>();
-        showGround.add("Bandstand");
-        showGround.add("Compound");
-        showGround.add("Pond");
-        showGround.add("SG Office");
+        Collections.addAll(showGround, "Bandstand", "Compound", "Pond", "SG Office");
         
-        ArrayList<ArrayList<String>> listOfLists2 = new ArrayList<>();
-        listOfLists2.add(villageColour);
-        listOfLists2.add(gateColour);
-        listOfLists2.add(venueType);
-        listOfLists2.add(site);
-        listOfLists2.add(showGround);
+        ArrayList<ArrayList<String>> listOfLists = new ArrayList<>();
+        Collections.addAll(listOfLists, villageColour, gateColour, venueType, 
+                site, showGround);
+        
+        ArrayList<String> listOfAllPotentialItems = new ArrayList<>();
         
         int i = 0;
-        while(i < listOfLists2.size())
+        while(i < listOfLists.size())
         {
-            masterListBox2.put(fieldsBox1.get(i), listOfLists2.get(i));
+            masterListBox2.put(fieldsBox1.get(i), listOfLists.get(i));
+            listOfAllPotentialItems.addAll(listOfLists.get(i));
             i++;
         }
         
-        return masterListBox2;
+        return listOfAllPotentialItems;
+
+        
+    }
+    
+    private ArrayList<String> generateMasterListBox3(ArrayList<String> fieldsBox2)
+    {
+        masterListBox3 = new HashMap<>();
+        //Villages Options
+        ArrayList<String> blue = new ArrayList<>();
+        Collections.addAll(blue, "1","2","3","4","5","6","7","8","9","10");
+        ArrayList<String> green = new ArrayList<>();
+        Collections.addAll(green, "1","2","3","4","5","6","7","8","9","10");
+        ArrayList<String> purple = new ArrayList<>();
+        Collections.addAll(purple, "1","2","3","4","5","6","7","8","9","10");
+        ArrayList<String> red = new ArrayList<>();
+        Collections.addAll(red, "1","2","3","4","5","6","7","8","9","10");
+        ArrayList<String> yellow = new ArrayList<>();
+        Collections.addAll(yellow, "1","2","3","4","5","6","7","8","9","10");
+        
+        //Gates Options
+        ArrayList<String> nextBox = new ArrayList<>();
+        nextBox.add("See Next Box -->");
+       
+        
+        ArrayList<ArrayList<String>> listOfLists = new ArrayList<>();
+        Collections.addAll(listOfLists, blue, green, purple, red, yellow,
+                nextBox, nextBox, nextBox, nextBox, nextBox, nextBox,
+                nextBox, nextBox, nextBox, nextBox);
+        
+        ArrayList<String> listOfAllPotentialItems = new ArrayList<>();
+        
+        int i = 0;
+        while(i < 15){
+            masterListBox3.put(fieldsBox2.get(i), listOfLists.get(i));
+            listOfAllPotentialItems.addAll(listOfLists.get(i));
+            i++;
+        }
+        
+        return listOfAllPotentialItems;
+    }
+    
+    private void generateMasterLists()
+    {
+        ArrayList<String> potentialFieldsBox2 = generateMasterListBox2
+                (masterListBox1);
+        ArrayList<String> potentialFieldsBox3 = generateMasterListBox3
+                (potentialFieldsBox2);
     }
     
     public InitialGUI getInitialGUI() {
@@ -313,3 +361,45 @@ public class MainSystem {
         return user;
     }
 }
+
+// //Gates Options
+//        ArrayList<String> blueOuterGate = new ArrayList<>();
+//        Collections.addAll(blueOuterGate, "Toilet (Male)", "Toilet(Female)", "Shower"
+//                , "Elsan Point", "Water Supply", "GF 06", "GF 07", "GF 08",
+//                "GF 09", "GF 10");
+//        ArrayList<String> blueInnerGate = new ArrayList<>();
+//        Collections.addAll(blueInnerGate, "Toilet (Male)", "Toilet(Female)", "Shower"
+//                , "Elsan Point", "Water Supply",  "GF 06", "GF 07", "GF 08",
+//                "GF 09", "GF 10");
+//        ArrayList<String> greenGate = new ArrayList<>();
+//        Collections.addAll(greenGate, "Toilet (Male)", "Toilet(Female)", "Shower"
+//                , "Elsan Point", "Water Supply",  "GF 06", "GF 07", "GF 08",
+//                "GF 09", "GF 10");
+//        ArrayList<String> whiteOuterGate = new ArrayList<>();
+//        Collections.addAll(whiteOuterGate, "Toilet (Male)", "Toilet(Female)", "Shower"
+//                , "Elsan Point", "Water Supply",  "GF 06", "GF 07", "GF 08",
+//                "GF 09", "GF 10");
+//        ArrayList<String> whiteInnerGate = new ArrayList<>();
+//        Collections.addAll(whiteInnerGate, "Toilet (Male)", "Toilet(Female)", "Shower"
+//                , "Elsan Point", "Water Supply",  "GF 06", "GF 07", "GF 08",
+//                "GF 09", "GF 10");
+//        ArrayList<String> redGate = new ArrayList<>();
+//        Collections.addAll(redGate, "Toilet (Male)", "Toilet(Female)", "Shower"
+//                , "Elsan Point", "Water Supply",  "GF 06", "GF 07", "GF 08",
+//                "GF 09", "GF 10");
+//        ArrayList<String> yellowGate = new ArrayList<>();
+//        Collections.addAll(yellowGate, "Toilet (Male)", "Toilet(Female)", "Shower"
+//                , "Elsan Point", "Water Supply",  "GF 06", "GF 07", "GF 08",
+//                "GF 09", "GF 10");
+//        ArrayList<String> hfgGate = new ArrayList<>();
+//        Collections.addAll(hfgGate, "Toilet (Male)", "Toilet(Female)", "Shower"
+//                , "Elsan Point", "Water Supply",  "GF 06", "GF 07", "GF 08",
+//                "GF 09", "GF 10");
+//        ArrayList<String> blackPedGate = new ArrayList<>();
+//        Collections.addAll(blackPedGate, "Toilet (Male)", "Toilet(Female)", "Shower"
+//                , "Elsan Point", "Water Supply",  "GF 06", "GF 07", "GF 08",
+//                "GF 09", "GF 10");
+//        ArrayList<String> brownPedGate = new ArrayList<>();
+//        Collections.addAll(brownPedGate, "Toilet (Male)", "Toilet(Female)", "Shower"
+//                , "Elsan Point", "Water Supply",  "GF 06", "GF 07", "GF 08",
+//                "GF 09", "GF 10");
