@@ -11,6 +11,7 @@ import io.MYSQLEngine;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
+import java.util.Iterator;
 
 /**
  * The highest level of the system as a whole, all major functionality will,
@@ -36,7 +37,6 @@ public class MainSystem {
        teamNames = mysqlEngine.enumerateTeamNames();
        initialGUI = new InitialGUI(teamNames);
        addActionListenersInitialGUI();
-       ControlOfficeEntryForm cofe = new ControlOfficeEntryForm(mysqlEngine,true);
     }
     
     /**
@@ -47,7 +47,7 @@ public class MainSystem {
     public static void main(String[] args)
     {
         MainSystem mainSystem  = new MainSystem(); 
-        //mainSystem.getInitialGUI().getWelcomeScreen().getMainFrame().setVisible(true);
+        mainSystem.getInitialGUI().getWelcomeScreen().getMainFrame().setVisible(true);
     }
     
     /**
@@ -88,7 +88,8 @@ public class MainSystem {
                 user = new User(initialGUI.getTeamSelectionScreen().
                         getTeamComboBox().getSelectedItem().toString());
                 initialGUI.getTeamSelectionScreen().getMainFrame().dispose();
-                mainGUI = new MainGUI(user.getTeam());
+                mainGUI = new MainGUI(user.getTeam(), teamNames);
+                addActionListenersMainGUI();
             }
         }
                 );
@@ -108,14 +109,90 @@ public class MainSystem {
        
     }
     
-    /**
-     * Get the initial GUI object out of the Main System.
-     * @return The initial GUI
-     */
-    private InitialGUI getInitialGUI()
+    private void addActionListenersMainGUI()
     {
+        switch(user.getTeam()){
+            case "Administration Team":
+                addActionListenersAdminTaskSelection();
+                break;
+            case "Information Team":
+                addActionListenersInfoTaskSelection();
+                break;   
+            case "Control Office":
+                addActionListenersControlOfficeTaskSelection();
+                break;    
+        }
+    }
+    
+    private void addActionListenersAdminTaskSelection(){
+        mainGUI.getTaskSelectionScreen().getButtons().
+                get("writeNewCOTicketButton").addActionListener(
+                new ActionListener()
+                {
+                    @Override
+                    public void actionPerformed(ActionEvent e)
+                    {
+                        ControlOfficeEntryForm cofe = createLimitedEntryForm();
+                    }
+                }
+                );
+    }
+    
+    private void addActionListenersInfoTaskSelection(){
+        mainGUI.getTaskSelectionScreen().getButtons().
+                get("writeNewCOTicketButton").addActionListener(
+                new ActionListener()
+                {
+                    @Override
+                    public void actionPerformed(ActionEvent e)
+                    {
+                        System.out.println("Place Holder");
+                    }
+                }
+                );
+    }
+    
+    private void addActionListenersControlOfficeTaskSelection(){
+        mainGUI.getTaskSelectionScreen().getButtons().
+                get("writeNewCOTicketButton").addActionListener(
+                new ActionListener()
+                {
+                    @Override
+                    public void actionPerformed(ActionEvent e)
+                    {
+                        System.out.println("Place Holder");
+                    }
+                }
+                );
+    }
+    
+    /**
+     * Create the form, with some data prefilled, so that it can be entered into
+     * the database.
+     * @return The form ready to be filled in
+     */
+    private ControlOfficeEntryForm createLimitedEntryForm()
+    {
+        ControlOfficeEntryForm cofe = new ControlOfficeEntryForm(true);
+        cofe.getTicketReferenceTextField().setText("Automated");
+        cofe.getDateTimeTextField().setText("Automated");
+        cofe.getTicketWrittenComboBox().addItem(user.getTeam());
+        cofe.getTicketWrittenComboBox().setSelectedIndex(0);
+        ArrayList<String> teamMembers = mysqlEngine.
+                enumerateTeamMembers(user.getTeam());
+        Iterator<String> it1 = teamMembers.iterator();
+        while (it1.hasNext()){
+            cofe.getTeamMembersComboBox().addItem(it1.next());
+        }
+        return cofe;
+        
+    }
+    
+    public InitialGUI getInitialGUI() {
         return initialGUI;
     }
+    
+    
     
     /**
      * Return the user object from the Main System.
