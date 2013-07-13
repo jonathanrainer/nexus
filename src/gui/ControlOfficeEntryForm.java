@@ -12,6 +12,7 @@ import java.awt.GridBagConstraints;
 import java.awt.GridLayout;
 import java.awt.Insets;
 import java.util.ArrayList;
+import java.util.Collections;
 import javax.swing.BorderFactory;
 import javax.swing.Box;
 import javax.swing.JButton;
@@ -356,19 +357,10 @@ public class ControlOfficeEntryForm {
         GridLayout sixRowsFourColumns = new GridLayout(2, 6);
         keyWordGrid.setLayout(sixRowsFourColumns);
         buttonsInGrid = new ArrayList<>();
-        ArrayList<String> labelsForButtons = new ArrayList<String>();
-        labelsForButtons.add("KeyWord1");
-        labelsForButtons.add("KeyWord2");
-        labelsForButtons.add("KeyWord3");
-        labelsForButtons.add("KeyWord4");
-        labelsForButtons.add("KeyWord5");
-        labelsForButtons.add("KeyWord6");
-        labelsForButtons.add("KeyWord7");
-        labelsForButtons.add("KeyWord8");
-        labelsForButtons.add("KeyWord9");
-        labelsForButtons.add("KeyWord10");
-        labelsForButtons.add("KeyWord11");
-        labelsForButtons.add("KeyWord12");
+        ArrayList<String> labelsForButtons = new ArrayList<>();
+        Collections.addAll(labelsForButtons, "KeyWord1","KeyWord2",
+                "KeyWord3","KeyWord4","KeyWord5","KeyWord6","KeyWord7",
+                "KeyWord8","KeyWord9","KeyWord10", "KeyWord11", "KeyWord12");
         int i;
         for (i = 0; i < 12; i++) {
             JRadioButton buttonToAdd = new JRadioButton(labelsForButtons.get(i));
