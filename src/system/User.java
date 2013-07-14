@@ -33,5 +33,15 @@ public class User {
     {
         return team;
     }
+    
+    public void setName(String name)
+    {
+        this.name = name;
+    }
+    
+    public String getName()
+    {
+        return name;
+    }
             
 }

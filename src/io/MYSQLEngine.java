@@ -11,6 +11,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Arrays;
+import system.Ticket;
 
 /**
  * A class to encapsulate the connectivity to the MYSQL database.
@@ -207,10 +208,7 @@ public class MYSQLEngine
         return results;
     }
 
-    public boolean submitTicket(String team, String member, String 
-            problemLocation, String problemDescription, String keyWords,
-            String problemReportedBy, String whoIsA, String contactVia, String 
-                    contactNumber, String locationVenueVillage)
+    public boolean submitTicket(Ticket ticket)
     {
         // Set up the initial connection and statement objects
         Connection conn = null;
@@ -230,20 +228,26 @@ public class MYSQLEngine
              * Query states: Select all the users in a particular team
              */
             String sql;
-            sql = "INSERT INTO `Tickets` VALUES (NULL, NOW(), " + "'" + team + "', "
-                    + "'" + member + "', " + "'" + problemLocation + "', " 
-                    + "'" + problemDescription + "', " + "'" + keyWords + "', "
-                    + "'" + problemReportedBy + "', " + "'" + whoIsA + "', "
-                    + "'" + contactVia + "', " + "'" + contactNumber + "', "
-                    + "'" + locationVenueVillage + "', "
-                    + "'Low', '0', NULL, 'Issue Reported', NULL, NULL, NULL, "
-                    + "NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL)";
+            sql = "INSERT INTO `Tickets` VALUES (NULL, NOW(), " + "'" + 
+                    ticket.getTicketRaisedBy().getTeam() + "', "
+                    + "'" + ticket.getTicketRaisedBy().getName() + "', " + "'" 
+                    + ticket.getProblemLocation() + "', " 
+                    + "'" + ticket.getProblemDescription() + "', " + "'" + 
+                    ticket.getCISKeywordsAsString() + "', "
+                    + "'" + ticket.getReportedBy() + "', " + "'" + 
+                    ticket.getWhoIsA()+ "', " + "'" + ticket.getContactVia() + 
+                    "', " + ticket.getContactNumber() + ", " + "'" + 
+                    ticket.getLocationVenueVillage() + "', " + "'Low', '0', NULL,"
+                    + " 'Issue Reported', NULL, NULL, NULL, NULL, NULL, NULL, "
+                    + "NULL, NULL, NULL, NULL, NULL);";
             stmt.executeUpdate(sql);
             success = true;
             stmt.close();
             conn.close();
         } catch (SQLException se)
         {
+            System.out.println(se.getSQLState());
+            System.out.println(se.getErrorCode());
             //Handle errors for JDBC
         } catch (Exception e)
         {

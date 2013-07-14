@@ -45,6 +45,7 @@ public class MainSystem
         initialGUI = new InitialGUI(teamNames);
         dataStructures = new DataStructures();
         addActionListenersInitialGUI();
+        
     }
 
     /**
@@ -348,21 +349,22 @@ public class MainSystem
                     public void actionPerformed(ActionEvent e)
                     {
                         String team = user.getTeam();
-                        String member = (String) cofe.getTeamMembersComboBox().getSelectedItem();
+                        user.setName(cofe.getTeamMembersComboBox().getSelectedItem().toString());
+                        String member = user.getName();
                         String problemLocation = cofe.
                                 getProblemLocationComboBox1().getSelectedItem()
-                                + "->" + cofe.getProblemLocationComboBox2().getSelectedItem()
-                                + "->" + cofe.getProblemLocationComboBox3().getSelectedItem()
-                                + "->" + cofe.getProblemLocationComboBox4().getSelectedItem();
+                                + "-" + cofe.getProblemLocationComboBox2().getSelectedItem()
+                                + "-" + cofe.getProblemLocationComboBox3().getSelectedItem()
+                                + "-" + cofe.getProblemLocationComboBox4().getSelectedItem();
                         String problemDescription = cofe.getProblemDescriptionTextArea().getText();
                         Iterator<JRadioButton> buttonsIterator = cofe.getButtonsInGrid().iterator();
-                        String keyWords = "";
+                        ArrayList<String> keyWords = new ArrayList<String>();
                         while (buttonsIterator.hasNext())
                         {
                             JRadioButton buttonUnderConsideration = buttonsIterator.next();
                             if(buttonUnderConsideration.isSelected())
                             {
-                                keyWords = keyWords + buttonUnderConsideration.getName() + "-";
+                                keyWords.add(buttonUnderConsideration.getName());
                             }
                         }
                         String problemReportedBy = cofe.getProblemReportedByTextField().getText();
@@ -371,9 +373,13 @@ public class MainSystem
                         String contactNumber = cofe.getContactNumberTextField().getText();
                         String locationVenueVillage = (String) cofe.getLocationVenueVillageComboBox().
                                 getSelectedItem().toString();
-                        if(mysqlEngine.submitTicket(team, member, problemLocation,
-                                problemDescription, keyWords, problemReportedBy,
-                                whoIsA, contactVia, contactNumber, locationVenueVillage))
+                        Ticket ticket = new Ticket(0, null, user, 
+                                problemLocation, problemDescription, keyWords, 
+                                problemReportedBy, whoIsA, contactVia, contactNumber,
+                                locationVenueVillage, "Low", false, null, null,
+                                null, null, null);
+                        ticket.dataValidationEntry();
+                        if(mysqlEngine.submitTicket(ticket))
                         {
                             JOptionPane.showMessageDialog(cofe.getMainFrame(), "It seems to have worked");
                         }
@@ -409,7 +415,6 @@ public class MainSystem
         
         return cofe;
     }
-    
 
     public InitialGUI getInitialGUI()
     {
