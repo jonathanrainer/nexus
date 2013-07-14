@@ -14,8 +14,6 @@ import javax.swing.JLabel;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JPanel;
-import javax.swing.JSeparator;
-
 
 /**
  * A class to deal with the fact that a lot of the screens are going to be, to
@@ -23,7 +21,8 @@ import javax.swing.JSeparator;
  *
  * @author jonathanrainer
  */
-public class Template {
+public class Template
+{
 
     /**
      * Code to load in the logos necessary for the template from external
@@ -39,7 +38,8 @@ public class Template {
      * Empty constructor, the object is only instantiated for the methods it
      * contains as opposed to being useful as an object in its own right.
      */
-    public Template() {
+    public Template()
+    {
     }
 
     /**
@@ -50,29 +50,31 @@ public class Template {
      * @return A JFrame with the template applied to it, so other components can
      * be added on top.
      */
-    public JFrame giveTemplatedJFrame(String title) {
+    public JFrame giveTemplatedJFrame(String title)
+    {
         JFrame templatedFrame = new JFrame(title);
-        
+
         Dimension frameDimensions = new Dimension(1024, 768);
         templatedFrame.setPreferredSize(frameDimensions);
-        
+
         // Create the menu to go across the top of the frame.
         JMenuBar menuBar = new JMenuBar();
         JMenu fileMenu = new JMenu("File");
         menuBar.add(fileMenu);
         templatedFrame.setJMenuBar(menuBar);
-        
+
         templatedFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         return templatedFrame;
     }
-    
-    public JPanel giveMenuTemplatedJPanel(String title){
+
+    public JPanel giveMenuTemplatedJPanel(String title)
+    {
         JPanel templatedPanel = new JPanel();
-        
+
         GridBagLayout layout;
         layout = new GridBagLayout();
         templatedPanel.setLayout(layout);
-        
+
         JLabel logo = new JLabel(newWineLogoBig);
         GridBagConstraints logoConstraints = createGridBagConstraints(
                 0, 0, GridBagConstraints.BOTH, 0, 0, new Insets(0, 0, 0, 0),
@@ -81,14 +83,15 @@ public class Template {
 
         return templatedPanel;
     }
-    
-    public JPanel giveFormTemplatedJPanel(String title) {
+
+    public JPanel giveFormTemplatedJPanel(String title)
+    {
         JPanel templatedPanel = new JPanel();
-        
+
         GridBagLayout layout;
         layout = new GridBagLayout();
         templatedPanel.setLayout(layout);
-        
+
         JLabel logoLeft = new JLabel(newWineLogoSmall);
         JLabel logoRight = new JLabel(newWineLogoSmall);
         GridBagConstraints logoLeftConstraints = createGridBagConstraints(
@@ -99,17 +102,16 @@ public class Template {
                 GridBagConstraints.EAST, 0.0, 0.0, 1, 1);
         templatedPanel.add(logoLeft, logoLeftConstraints);
         templatedPanel.add(logoRight, logoRightConstraints);
-        
+
         JLabel titleLabel = new JLabel("<html><b><center><font size = \"50\">" + title);
         GridBagConstraints titleConstraints = createGridBagConstraints(
                 1, 0, GridBagConstraints.NONE, 0, 0, new Insets(0, 0, 15, 0),
                 GridBagConstraints.CENTER, 0.0, 0.0, 1, 3);
-        templatedPanel.add(titleLabel,titleConstraints);
-        
+        templatedPanel.add(titleLabel, titleConstraints);
+
 
         return templatedPanel;
     }
-    
 
     /**
      * This function removes the tedious process of setting each part of the
@@ -134,7 +136,8 @@ public class Template {
      */
     public GridBagConstraints createGridBagConstraints(int gridx, int gridy,
             int fill, int ipadx, int ipady, Insets insets, int anchor,
-            double weightx, double weighty, int gridheight, int gridwidth) {
+            double weightx, double weighty, int gridheight, int gridwidth)
+    {
         GridBagConstraints constraints = new GridBagConstraints();
         constraints.gridx = gridx;
         constraints.gridy = gridy;
@@ -161,11 +164,14 @@ public class Template {
      * @return The input string, correctly formatted for display. If the number
      * entered for size was invalid then the original string is returned.
      */
-    public String headingString(String input, int size) {
+    public String headingString(String input, int size)
+    {
         // Check if the input size is between 1 and 6
-        if (size <= 0 || size > 6) {
+        if (size <= 0 || size > 6)
+        {
             return input;
-        } else {
+        } else
+        {
             return "<html><h" + size + "><b>" + input + "</b></h" + size
                     + "</html>";
         }
