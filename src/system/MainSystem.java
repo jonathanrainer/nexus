@@ -338,7 +338,7 @@ public class MainSystem
         // Site ArrayList
         ArrayList<String> site = new ArrayList<>();
         Collections.addAll(site, "Car Park (Day)", "Car Park (Main)", "Runway",
-                "Bays", "BunkerBins", "Freezer Packs", "Hallam Building",
+                "Bays", "BunkerBins", "Hallam Building", "Freezer Packs",
                 "Hospitality", "Kitchens", "Ticket Office (Blue)",
                 "Ticket Office (Red)", "Band Stand", "Fencing", "Pond");
 
@@ -366,7 +366,7 @@ public class MainSystem
         masterListBox3 = new HashMap<>();
         //Villages Options
         ArrayList<String> blue = new ArrayList<>();
-        Collections.addAll(blue, " Blue 1", "Blue 2", "Blue 3", "Blue 4", "Blue 5",
+        Collections.addAll(blue, "Blue 1", "Blue 2", "Blue 3", "Blue 4", "Blue 5",
                 "Blue 6", "Blue 7", "Blue 8", "Blue 9", "Blue 10");
         ArrayList<String> green = new ArrayList<>();
         Collections.addAll(green, "Green 1", "Green 2", "Green 3", "Green 4",
@@ -412,11 +412,11 @@ public class MainSystem
         Collections.addAll(baysSite, "Bay 1", "Bay 2", "Bay 3", "Bay 4", "Bay 5");
         ArrayList<String> bunkerBinsSite = new ArrayList<>();
         Collections.addAll(bunkerBinsSite, "End of Sheds", "Red Gate", "WigWam");
-        ArrayList<String> freezerPacksSite = new ArrayList<>();
-        Collections.addAll(freezerPacksSite, "NA");
         ArrayList<String> hallamBuildingSite = new ArrayList<>();
         Collections.addAll(hallamBuildingSite, "Admin", "Control Office",
                 "Finance", "Information", "Production", "Kitchen", "Team Lounge", "General");
+        ArrayList<String> freezerPacksSite = new ArrayList<>();
+        Collections.addAll(freezerPacksSite, "NA");
         ArrayList<String> hospitalitySite = new ArrayList<>();
         Collections.addAll(hospitalitySite, "NA");
         ArrayList<String> kitchensSite = new ArrayList<>();
@@ -438,7 +438,7 @@ public class MainSystem
                 nextBox, nextBox, nextBox, nextBox, adultsVenues,
                 childrensYouthVenues, generalVenues, carParkDaySite,
                 carParkMainSite, runwaySite, baysSite, bunkerBinsSite,
-                freezerPacksSite, hallamBuildingSite, hospitalitySite, kitchensSite,
+                hallamBuildingSite, freezerPacksSite, hospitalitySite, kitchensSite,
                 ticketOfficeBlueSite, ticketOfficeRedSite, BandStandSite, fencingSite, pondSite);
 
         ArrayList<String> listOfAllPotentialItems = new ArrayList<>();
@@ -455,10 +455,10 @@ public class MainSystem
     }
 
     private void generateMasterListBox4(ArrayList<String> fieldsBox3, 
-            ArrayList<String> potentialFieldsBox2)
+            ArrayList<String> fieldsBox2)
     {
         masterListBox4 = new HashMap<String,ArrayList<String>>();
-        //Blue Villages ArrayList
+        //Blue Villages ArrayLists
         ArrayList<String> blue1 = new ArrayList<>();
         Collections.addAll(blue1, "Toilet (Male)", "Toilet (Female)", 
         "Toilet (Disabled)", "Shower", "Elsan Point", "Fire Point", "Water Supply",
@@ -499,16 +499,385 @@ public class MainSystem
         Collections.addAll(blue10, "Toilet (Male)", "Toilet (Female)", 
         "Toilet (Disabled)", "Shower", "Elsan Point", "Fire Point", "Water Supply",
         "Electrical Hook-Up", "Lighting", "ViF 9", "Other");
+        // Green Villages ArrayLists
+        ArrayList<String> green1 = new ArrayList<>();
+        Collections.addAll(green1, "Toilet (Male)", "Toilet (Female)", 
+        "Toilet (Disabled)", "Shower", "Elsan Point", "Fire Point", "Water Supply",
+        "Electrical Hook-Up", "Lighting", "ViF 9", "Other");
+        ArrayList<String> green2 = new ArrayList<>();
+        Collections.addAll(green2, "Toilet (Male)", "Toilet (Female)", 
+        "Toilet (Disabled)", "Shower", "Elsan Point", "Fire Point", "Water Supply",
+        "Electrical Hook-Up", "Lighting", "ViF 9", "Other");
+        ArrayList<String> green3 = new ArrayList<>();
+        Collections.addAll(green3, "Toilet (Male)", "Toilet (Female)", 
+        "Toilet (Disabled)", "Shower", "Elsan Point", "Fire Point", "Water Supply",
+        "Electrical Hook-Up", "Lighting", "ViF 9", "Other");
+        ArrayList<String> green4 = new ArrayList<>();
+        Collections.addAll(green4, "Toilet (Male)", "Toilet (Female)", 
+        "Toilet (Disabled)", "Shower", "Elsan Point", "Fire Point", "Water Supply",
+        "Electrical Hook-Up", "Lighting", "ViF 9", "Other");
+        ArrayList<String> green5 = new ArrayList<>();
+        Collections.addAll(green5, "Toilet (Male)", "Toilet (Female)", 
+        "Toilet (Disabled)", "Shower", "Elsan Point", "Fire Point", "Water Supply",
+        "Electrical Hook-Up", "Lighting", "ViF 9", "Other");
+        ArrayList<String> green6 = new ArrayList<>();
+        Collections.addAll(green6, "Toilet (Male)", "Toilet (Female)", 
+        "Toilet (Disabled)", "Shower", "Elsan Point", "Fire Point", "Water Supply",
+        "Electrical Hook-Up", "Lighting", "ViF 9", "Other");
+        ArrayList<String> green7 = new ArrayList<>();
+        Collections.addAll(green7, "Toilet (Male)", "Toilet (Female)", 
+        "Toilet (Disabled)", "Shower", "Elsan Point", "Fire Point", "Water Supply",
+        "Electrical Hook-Up", "Lighting", "ViF 9", "Other");
+        //Purple Villages ArrayList
+        ArrayList<String> purple1 = new ArrayList<>();
+        Collections.addAll(purple1, "Toilet (Male)", "Toilet (Female)", 
+        "Toilet (Disabled)", "Shower", "Elsan Point", "Fire Point", "Water Supply",
+        "Electrical Hook-Up", "Lighting", "ViF 9", "Other");
+        ArrayList<String> purple2 = new ArrayList<>();
+        Collections.addAll(purple2, "Toilet (Male)", "Toilet (Female)", 
+        "Toilet (Disabled)", "Shower", "Elsan Point", "Fire Point", "Water Supply",
+        "Electrical Hook-Up", "Lighting", "ViF 9", "Other");
+        ArrayList<String> purple3 = new ArrayList<>();
+        Collections.addAll(purple3, "Toilet (Male)", "Toilet (Female)", 
+        "Toilet (Disabled)", "Shower", "Elsan Point", "Fire Point", "Water Supply",
+        "Electrical Hook-Up", "Lighting", "ViF 9", "Other");
+        ArrayList<String> purple4 = new ArrayList<>();
+        Collections.addAll(purple4, "Toilet (Male)", "Toilet (Female)", 
+        "Toilet (Disabled)", "Shower", "Elsan Point", "Fire Point", "Water Supply",
+        "Electrical Hook-Up", "Lighting", "ViF 9", "Other");
+        //Red Villages
+        ArrayList<String> red1 = new ArrayList<>();
+        Collections.addAll(red1, "Toilet (Male)", "Toilet (Female)", 
+        "Toilet (Disabled)", "Shower", "Elsan Point", "Fire Point", "Water Supply",
+        "Electrical Hook-Up", "Lighting", "ViF 9", "Other");
+        ArrayList<String> red2 = new ArrayList<>();
+        Collections.addAll(red2, "Toilet (Male)", "Toilet (Female)", 
+        "Toilet (Disabled)", "Shower", "Elsan Point", "Fire Point", "Water Supply",
+        "Electrical Hook-Up", "Lighting", "ViF 9", "Other");
+        ArrayList<String> red3 = new ArrayList<>();
+        Collections.addAll(red3, "Toilet (Male)", "Toilet (Female)", 
+        "Toilet (Disabled)", "Shower", "Elsan Point", "Fire Point", "Water Supply",
+        "Electrical Hook-Up", "Lighting", "ViF 9", "Other");
+        ArrayList<String> red4 = new ArrayList<>();
+        Collections.addAll(red4, "Toilet (Male)", "Toilet (Female)", 
+        "Toilet (Disabled)", "Shower", "Elsan Point", "Fire Point", "Water Supply",
+        "Electrical Hook-Up", "Lighting", "ViF 9", "Other");
+        ArrayList<String> red5 = new ArrayList<>();
+        Collections.addAll(red5, "Toilet (Male)", "Toilet (Female)", 
+        "Toilet (Disabled)", "Shower", "Elsan Point", "Fire Point", "Water Supply",
+        "Electrical Hook-Up", "Lighting", "ViF 9", "Other");
+        ArrayList<String> red6 = new ArrayList<>();
+        Collections.addAll(red6, "Toilet (Male)", "Toilet (Female)", 
+        "Toilet (Disabled)", "Shower", "Elsan Point", "Fire Point", "Water Supply",
+        "Electrical Hook-Up", "Lighting", "ViF 9", "Other");
+        ArrayList<String> red7 = new ArrayList<>();
+        Collections.addAll(red7, "Toilet (Male)", "Toilet (Female)", 
+        "Toilet (Disabled)", "Shower", "Elsan Point", "Fire Point", "Water Supply",
+        "Electrical Hook-Up", "Lighting", "ViF 9", "Other");
+        //Yellow Vilages
+        ArrayList<String> yellow0 = new ArrayList<>();
+        Collections.addAll(yellow0, "Toilet (Male)", "Toilet (Female)", 
+        "Toilet (Disabled)", "Shower", "Elsan Point", "Fire Point", "Water Supply",
+        "Electrical Hook-Up", "Lighting", "ViF 9", "Other");
+        ArrayList<String> yellow1 = new ArrayList<>();
+        Collections.addAll(yellow1, "Toilet (Male)", "Toilet (Female)", 
+        "Toilet (Disabled)", "Shower", "Elsan Point", "Fire Point", "Water Supply",
+        "Electrical Hook-Up", "Lighting", "ViF 9", "Other");
+        ArrayList<String> yellow2 = new ArrayList<>();
+        Collections.addAll(yellow2, "Toilet (Male)", "Toilet (Female)", 
+        "Toilet (Disabled)", "Shower", "Elsan Point", "Fire Point", "Water Supply",
+        "Electrical Hook-Up", "Lighting", "ViF 9", "Other");
+        ArrayList<String> yellow3 = new ArrayList<>();
+        Collections.addAll(yellow3, "Toilet (Male)", "Toilet (Female)", 
+        "Toilet (Disabled)", "Shower", "Elsan Point", "Fire Point", "Water Supply",
+        "Electrical Hook-Up", "Lighting", "ViF 9", "Other");
+        ArrayList<String> yellow4 = new ArrayList<>();
+        Collections.addAll(yellow4, "Toilet (Male)", "Toilet (Female)", 
+        "Toilet (Disabled)", "Shower", "Elsan Point", "Fire Point", "Water Supply",
+        "Electrical Hook-Up", "Lighting", "ViF 9", "Other");
+        ArrayList<String> yellow5 = new ArrayList<>();
+        Collections.addAll(yellow5, "Toilet (Male)", "Toilet (Female)", 
+        "Toilet (Disabled)", "Shower", "Elsan Point", "Fire Point", "Water Supply",
+        "Electrical Hook-Up", "Lighting", "ViF 9", "Other");
+        ArrayList<String> yellow6 = new ArrayList<>();
+        Collections.addAll(yellow6, "Toilet (Male)", "Toilet (Female)", 
+        "Toilet (Disabled)", "Shower", "Elsan Point", "Fire Point", "Water Supply",
+        "Electrical Hook-Up", "Lighting", "ViF 9", "Other");
+        
+         //Gates Options
+        ArrayList<String> blueOuterGate = new ArrayList<>();
+        Collections.addAll(blueOuterGate, "Toilet (Male)", "Toilet(Female)", "Toilet (Disabled)", "Shower"
+                , "Elsan Point", "Water Supply", "Ticket Office", "Gate", "Lighting",
+                "Power Supply", "Other");
+        ArrayList<String> blueInnerGate = new ArrayList<>();
+        Collections.addAll(blueInnerGate, "Toilet (Male)", "Toilet(Female)", "Toilet (Disabled)", "Shower"
+                , "Elsan Point", "Water Supply",  "Ticket Office", "Gate", "Lighting",
+                "Power Supply", "Other");
+        ArrayList<String> greenGate = new ArrayList<>();
+        Collections.addAll(greenGate, "Toilet (Male)", "Toilet(Female)", "Toilet (Disabled)", "Shower"
+                , "Elsan Point", "Water Supply",  "Ticket Office", "Gate", "Lighting",
+                "Power Supply", "Other");
+        ArrayList<String> whiteOuterGate = new ArrayList<>();
+        Collections.addAll(whiteOuterGate, "Toilet (Male)", "Toilet(Female)", "Toilet (Disabled)", "Shower"
+                , "Elsan Point", "Water Supply",  "Ticket Office", "Gate", "Lighting",
+                "Power Supply", "Other");
+        ArrayList<String> whiteInnerGate = new ArrayList<>();
+        Collections.addAll(whiteInnerGate, "Toilet (Male)", "Toilet(Female)", "Toilet (Disabled)", "Shower"
+                , "Elsan Point", "Water Supply",  "Ticket Office", "Gate", "Lighting",
+                "Power Supply", "Other");
+        ArrayList<String> redGate = new ArrayList<>();
+        Collections.addAll(redGate, "Toilet (Male)", "Toilet(Female)", "Toilet (Disabled)", "Shower"
+                , "Elsan Point", "Water Supply",  "Ticket Office", "Gate", "Lighting",
+                "Power Supply", "Other");
+        ArrayList<String> yellowGate = new ArrayList<>();
+        Collections.addAll(yellowGate, "Toilet (Male)", "Toilet(Female)", "Toilet (Disabled)", "Shower"
+                , "Elsan Point", "Water Supply",  "Ticket Office", "Gate", "Lighting",
+                "Power Supply", "Other");
+        ArrayList<String> hfgGate = new ArrayList<>();
+        Collections.addAll(hfgGate, "Toilet (Male)", "Toilet(Female)", "Toilet (Disabled)", "Shower"
+                , "Elsan Point", "Water Supply",  "Ticket Office", "Gate", "Lighting",
+                "Power Supply", "Other");
+        ArrayList<String> blackPedGate = new ArrayList<>();
+        Collections.addAll(blackPedGate, "Toilet (Male)", "Toilet(Female)", "Toilet (Disabled)", "Shower"
+                , "Elsan Point", "Water Supply",  "Ticket Office", "Gate", "Lighting",
+                "Power Supply", "Other");
+        ArrayList<String> brownPedGate = new ArrayList<>();
+        Collections.addAll(brownPedGate, "Toilet (Male)", "Toilet(Female)", "Toilet (Disabled)", "Shower"
+                , "Elsan Point", "Water Supply",  "Ticket Office", "Gate", "Lighting",
+                "Power Supply", "Other");
+        
+        //Venues Options
+        //Adult Venues Facilities
+        ArrayList<String> meetingPlace = new ArrayList<>();
+        Collections.addAll(meetingPlace, "Toilet (Male)", "Toilet (Female)", 
+                "Toilet (Disabled)", "Shower (Male)", "Shower (Female)", 
+                "Shower (Disabled)", "Kitchen", "Stage", "Café", "Lighting",
+                "Power Supply", "Other");
+        ArrayList<String> impact = new ArrayList<>();
+        Collections.addAll(impact, "Toilet (Male)", "Toilet (Female)", 
+                "Toilet (Disabled)", "Shower (Male)", "Shower (Female)", 
+                "Shower (Disabled)", "Kitchen", "Stage", "Café", "Lighting",
+                "Power Supply", "Other");
+        ArrayList<String> burn = new ArrayList<>();
+        Collections.addAll(burn, "Toilet (Male)", "Toilet (Female)", 
+                "Toilet (Disabled)", "Shower (Male)", "Shower (Female)", 
+                "Shower (Disabled)", "Kitchen", "Stage", "Café", "Lighting",
+                "Power Supply", "Other");
+        ArrayList<String> leadersLounge = new ArrayList<>();
+        Collections.addAll(leadersLounge, "Toilet (Male)", "Toilet (Female)", 
+                "Toilet (Disabled)", "Shower (Male)", "Shower (Female)", 
+                "Shower (Disabled)", "Kitchen", "Stage", "Café", "Lighting",
+                "Power Supply", "Other");
+        ArrayList<String> pastoralPrayer = new ArrayList<>();
+        Collections.addAll(pastoralPrayer, "Toilet (Male)", "Toilet (Female)", 
+                "Toilet (Disabled)", "Shower (Male)", "Shower (Female)", 
+                "Shower (Disabled)", "Kitchen", "Stage", "Café", "Lighting",
+                "Power Supply", "Other");
+        ArrayList<String> sanctuary = new ArrayList<>();
+        Collections.addAll(sanctuary, "Toilet (Male)", "Toilet (Female)", 
+                "Toilet (Disabled)", "Shower (Male)", "Shower (Female)", 
+                "Shower (Disabled)", "Kitchen", "Stage", "Café", "Lighting",
+                "Power Supply", "Other");
+        ArrayList<String> arts316 = new ArrayList<>();
+        Collections.addAll(arts316, "Toilet (Male)", "Toilet (Female)", 
+                "Toilet (Disabled)", "Shower (Male)", "Shower (Female)", 
+                "Shower (Disabled)", "Kitchen", "Stage", "Café", "Lighting",
+                "Power Supply", "Other");
+        ArrayList<String> manifest = new ArrayList<>();
+        Collections.addAll(manifest, "Toilet (Male)", "Toilet (Female)", 
+                "Toilet (Disabled)", "Shower (Male)", "Shower (Female)", 
+                "Shower (Disabled)", "Kitchen", "Stage", "Café", "Lighting",
+                "Power Supply", "Other");
+        ArrayList<String> renovate = new ArrayList<>();
+        Collections.addAll(renovate, "Toilet (Male)", "Toilet (Female)", 
+                "Toilet (Disabled)", "Shower (Male)", "Shower (Female)", 
+                "Shower (Disabled)", "Kitchen", "Stage", "Café", "Lighting",
+                "Power Supply", "Other");
+        ArrayList<String> synergy = new ArrayList<>();
+        Collections.addAll(synergy, "Toilet (Male)", "Toilet (Female)", 
+                "Toilet (Disabled)", "Shower (Male)", "Shower (Female)", 
+                "Shower (Disabled)", "Kitchen", "Stage", "Café", "Lighting",
+                "Power Supply", "Other");
+        ArrayList<String> upperRoom = new ArrayList<>();
+        Collections.addAll(upperRoom, "Toilet (Male)", "Toilet (Female)", 
+                "Toilet (Disabled)", "Shower (Male)", "Shower (Female)", 
+                "Shower (Disabled)", "Kitchen", "Stage", "Café", "Lighting",
+                "Power Supply", "Other");
+        ArrayList<String> tearfund = new ArrayList<>();
+        Collections.addAll(tearfund, "Toilet (Male)", "Toilet (Female)", 
+                "Toilet (Disabled)", "Shower (Male)", "Shower (Female)", 
+                "Shower (Disabled)", "Kitchen", "Stage", "Café", "Lighting",
+                "Power Supply", "Other");
+        //Children/Youth Venues Facilties
+        ArrayList<String> gems = new ArrayList<>();
+        Collections.addAll(gems, "Toilet (Male)", "Toilet (Female)", 
+                "Toilet (Disabled)", "Shower", "Kitchen", "Stage", "Lighting",
+                "Power Supply", "CYF 09", "Other");
+        ArrayList<String> pebbles = new ArrayList<>();
+        Collections.addAll(pebbles, "Toilet (Male)", "Toilet (Female)", 
+                "Toilet (Disabled)", "Shower", "Kitchen", "Stage", "Lighting",
+                "Power Supply", "CYF 09", "Other");
+        ArrayList<String> steppingStones = new ArrayList<>();
+        Collections.addAll(steppingStones, "Toilet (Male)", "Toilet (Female)", 
+                "Toilet (Disabled)", "Shower", "Kitchen", "Stage", "Lighting",
+                "Power Supply", "CYF 09", "Other");
+        ArrayList<String> groundBreakers = new ArrayList<>();
+        Collections.addAll(groundBreakers, "Toilet (Male)", "Toilet (Female)", 
+                "Toilet (Disabled)", "Shower", "Kitchen", "Stage", "Lighting",
+                "Power Supply", "CYF 09", "Other");
+        ArrayList<String> rockSolid = new ArrayList<>();
+        Collections.addAll(rockSolid, "Toilet (Male)", "Toilet (Female)", 
+                "Toilet (Disabled)", "Shower", "Kitchen", "Stage", "Lighting",
+                "Power Supply", "CYF 09", "Other");
+        ArrayList<String> boulderGang = new ArrayList<>();
+        Collections.addAll(boulderGang, "Toilet (Male)", "Toilet (Female)", 
+                "Toilet (Disabled)", "Shower", "Kitchen", "Stage", "Lighting",
+                "Power Supply", "CYF 09", "Other");
+        ArrayList<String> fridge = new ArrayList<>();
+        Collections.addAll(fridge, "Toilet (Male)", "Toilet (Female)", 
+                "Toilet (Disabled)", "Shower", "Kitchen", "Stage", "Lighting",
+                "Power Supply", "CYF 09", "Other");
+        ArrayList<String> clubOne = new ArrayList<>();
+        Collections.addAll(clubOne, "Toilet (Male)", "Toilet (Female)", 
+                "Toilet (Disabled)", "Shower", "Kitchen", "Stage", "Lighting",
+                "Power Supply", "CYF 09", "Other");
+        ArrayList<String> thirst = new ArrayList<>();
+        Collections.addAll(thirst, "Toilet (Male)", "Toilet (Female)", 
+                "Toilet (Disabled)", "Shower", "Kitchen", "Stage", "Lighting",
+                "Power Supply", "CYF 09", "Other");
+        ArrayList<String> flava = new ArrayList<>();
+        Collections.addAll(flava, "Toilet (Male)", "Toilet (Female)", 
+                "Toilet (Disabled)", "Shower", "Kitchen", "Stage", "Lighting",
+                "Power Supply", "CYF 09", "Other");
+        ArrayList<String> sportsField = new ArrayList<>();
+        Collections.addAll(sportsField, "Toilet (Male)", "Toilet (Female)", 
+                "Toilet (Disabled)", "Shower", "Kitchen", "Stage", "Lighting",
+                "Power Supply", "CYF 09", "Other");
+        ArrayList<String> ourPlace = new ArrayList<>();
+        Collections.addAll(ourPlace, "Toilet (Male)", "Toilet (Female)", 
+                "Toilet (Disabled)", "Shower", "Kitchen", "Stage", "Lighting",
+                "Power Supply", "CYF 09", "Other");
+        //General Venues Facilities
+        ArrayList<String> foodCourt = new ArrayList<>();
+        Collections.addAll(foodCourt, "NA");
+        ArrayList<String> marketPlace = new ArrayList<>();
+        Collections.addAll(marketPlace, "Toilet (Male)", "Toilet (Female)", 
+                "Toilet (Disabled)", "Shower", "Kitchen", "Lighting",
+                "Power Supply", "MPF 08", "MPF 09", "Other");
+        ArrayList<String> medicalCentre = new ArrayList<>();
+        Collections.addAll(medicalCentre, "NA");
+        ArrayList<String> newWineFM = new ArrayList<>();
+        Collections.addAll(newWineFM, "NA");
+        
+        //Site Facilities
+        ArrayList<String> carParkDay = new ArrayList<>();
+        Collections.addAll(carParkDay, "NA");
+        ArrayList<String> carParkMain = new ArrayList<>();
+        Collections.addAll(carParkMain, "NA");
+        ArrayList<String> runway = new ArrayList<>();
+        Collections.addAll(runway, "NA");
+        ArrayList<String> bay1 = new ArrayList<>();
+        Collections.addAll(bay1, "Bays Faciltiies");
+        ArrayList<String> bay2 = new ArrayList<>();
+        Collections.addAll(bay2, "Bays Faciltiies");
+        ArrayList<String> bay3 = new ArrayList<>();
+        Collections.addAll(bay3, "Bays Faciltiies");
+        ArrayList<String> bay4 = new ArrayList<>();
+        Collections.addAll(bay4, "Bays Faciltiies");
+        ArrayList<String> bay5 = new ArrayList<>();
+        Collections.addAll(bay5, "Bays Faciltiies");
+        ArrayList<String> endOfShedsBB = new ArrayList<>();
+        Collections.addAll(endOfShedsBB, "Toilet", "Shower");
+        ArrayList<String> redGateBB = new ArrayList<>();
+        Collections.addAll(redGateBB, "Toilet", "Shower");
+        ArrayList<String> wigWamBB = new ArrayList<>();
+        Collections.addAll(wigWamBB, "Toilet", "Shower");
+        ArrayList<String> admin = new ArrayList<>();
+        Collections.addAll(admin, "Toilet (Male)", "Toilet(Female)",
+                "Toilet (Disabled)", "Shower (Male)", "Shower (Female)");
+        ArrayList<String> controlOffice = new ArrayList<>();
+        Collections.addAll(controlOffice, "Toilet (Male)", "Toilet(Female)",
+                "Toilet (Disabled)", "Shower (Male)", "Shower (Female)");
+        ArrayList<String> finance = new ArrayList<>();
+        Collections.addAll(finance, "Toilet (Male)", "Toilet(Female)",
+                "Toilet (Disabled)", "Shower (Male)", "Shower (Female)");
+        ArrayList<String> information = new ArrayList<>();
+        Collections.addAll(information, "Toilet (Male)", "Toilet(Female)",
+                "Toilet (Disabled)", "Shower (Male)", "Shower (Female)");
+        ArrayList<String> production = new ArrayList<>();
+        Collections.addAll(production, "Toilet (Male)", "Toilet(Female)",
+                "Toilet (Disabled)", "Shower (Male)", "Shower (Female)");
+        ArrayList<String> kitchen = new ArrayList<>();
+        Collections.addAll(kitchen, "Toilet (Male)", "Toilet(Female)",
+                "Toilet (Disabled)", "Shower (Male)", "Shower (Female)");
+        ArrayList<String> teamLounge = new ArrayList<>();
+        Collections.addAll(teamLounge, "Toilet (Male)", "Toilet(Female)",
+                "Toilet (Disabled)", "Shower (Male)", "Shower (Female)");
+        ArrayList<String> general = new ArrayList<>();
+        Collections.addAll(general, "Toilet (Male)", "Toilet(Female)",
+                "Toilet (Disabled)", "Shower (Male)", "Shower (Female)");
+        ArrayList<String> freezerPacks = new ArrayList<>();
+        Collections.addAll(freezerPacks, "NA");
+        ArrayList<String> hospitality = new ArrayList<>();
+        Collections.addAll(hospitality, "NA");
+        ArrayList<String> kitchens = new ArrayList<>();
+        Collections.addAll(kitchens, "NA");
+        ArrayList<String> ticketOfficeBlue = new ArrayList<>();
+        Collections.addAll(ticketOfficeBlue, "NA");
+        ArrayList<String> ticketOfficeRed = new ArrayList<>();
+        Collections.addAll(ticketOfficeRed, "NA");
+        ArrayList<String> bandStand = new ArrayList<>();
+        Collections.addAll(bandStand, "NA");
+        ArrayList<String> fencing = new ArrayList<>();
+        Collections.addAll(fencing, "NA");
+        ArrayList<String> pond = new ArrayList<>();
+        Collections.addAll(pond, "NA");
         
         ArrayList<ArrayList<String>> listOfLists = new ArrayList<>();
         Collections.addAll(listOfLists, blue1, blue2, blue3, blue4, blue5,
-                blue6, blue7, blue8, blue9, blue10);
+                blue6, blue7, blue8, blue9, blue10, green1, green2, green3, 
+                green4, green5, green6, green7, purple1, purple2, purple3,
+                purple4, red1, red2, red3, red4, red5, red6, red7, yellow0,
+                yellow1, yellow2, yellow3, yellow4, yellow5, yellow6, blueOuterGate,
+                blueInnerGate, greenGate, whiteOuterGate, whiteInnerGate, redGate,
+                yellowGate, hfgGate, blackPedGate, brownPedGate, meetingPlace,
+                impact, burn, leadersLounge, pastoralPrayer, sanctuary, arts316,
+                manifest, renovate, synergy, upperRoom, tearfund, gems, pebbles,
+                steppingStones, groundBreakers, rockSolid, boulderGang, fridge,
+                clubOne, thirst, flava, sportsField, ourPlace, foodCourt, marketPlace,
+                medicalCentre, newWineFM, carParkDay, carParkMain, runway,
+                bay1, bay2, bay3, bay4, bay5, endOfShedsBB, redGateBB, wigWamBB,
+                admin, controlOffice, finance, information, production, kitchen,
+                teamLounge, general, freezerPacks, hospitality, kitchens, ticketOfficeBlue,
+                ticketOfficeRed, bandStand, fencing, pond);
 
         int i = 0;
-        while (i < 10)
+        while (i < listOfLists.size())
         {
-            masterListBox4.put(fieldsBox3.get(i), listOfLists.get(i));
-            i++;
+            if(fieldsBox3.get(i).equals("NA") && i < 45)
+            {
+                int marker = i - 35;
+                masterListBox4.put(fieldsBox2.get(marker) + "-" + fieldsBox3.get(i), listOfLists.get(i));
+                i++;
+            }
+            else if(fieldsBox3.get(i).equals("NA") && (i > 45 && i < 77))
+            {
+                int marker = i - 55;
+                masterListBox4.put(fieldsBox2.get(marker) + "-" + fieldsBox3.get(i), listOfLists.get(i));
+                i++;
+            }
+            else if(fieldsBox3.get(i).equals("NA") && (i > 91))
+            {
+                int marker = i - 68;
+                masterListBox4.put(fieldsBox2.get(marker) + "-" + fieldsBox3.get(i), listOfLists.get(i));
+                i++;
+            }
+            else
+            {
+                masterListBox4.put(fieldsBox3.get(i), listOfLists.get(i));
+                i++;
+
+            }
         }
     }
     
@@ -534,44 +903,3 @@ public class MainSystem
         return user;
     }
 }
-// //Gates Options
-//        ArrayList<String> blueOuterGate = new ArrayList<>();
-//        Collections.addAll(blueOuterGate, "Toilet (Male)", "Toilet(Female)", "Shower"
-//                , "Elsan Point", "Water Supply", "GF 06", "GF 07", "GF 08",
-//                "GF 09", "GF 10");
-//        ArrayList<String> blueInnerGate = new ArrayList<>();
-//        Collections.addAll(blueInnerGate, "Toilet (Male)", "Toilet(Female)", "Shower"
-//                , "Elsan Point", "Water Supply",  "GF 06", "GF 07", "GF 08",
-//                "GF 09", "GF 10");
-//        ArrayList<String> greenGate = new ArrayList<>();
-//        Collections.addAll(greenGate, "Toilet (Male)", "Toilet(Female)", "Shower"
-//                , "Elsan Point", "Water Supply",  "GF 06", "GF 07", "GF 08",
-//                "GF 09", "GF 10");
-//        ArrayList<String> whiteOuterGate = new ArrayList<>();
-//        Collections.addAll(whiteOuterGate, "Toilet (Male)", "Toilet(Female)", "Shower"
-//                , "Elsan Point", "Water Supply",  "GF 06", "GF 07", "GF 08",
-//                "GF 09", "GF 10");
-//        ArrayList<String> whiteInnerGate = new ArrayList<>();
-//        Collections.addAll(whiteInnerGate, "Toilet (Male)", "Toilet(Female)", "Shower"
-//                , "Elsan Point", "Water Supply",  "GF 06", "GF 07", "GF 08",
-//                "GF 09", "GF 10");
-//        ArrayList<String> redGate = new ArrayList<>();
-//        Collections.addAll(redGate, "Toilet (Male)", "Toilet(Female)", "Shower"
-//                , "Elsan Point", "Water Supply",  "GF 06", "GF 07", "GF 08",
-//                "GF 09", "GF 10");
-//        ArrayList<String> yellowGate = new ArrayList<>();
-//        Collections.addAll(yellowGate, "Toilet (Male)", "Toilet(Female)", "Shower"
-//                , "Elsan Point", "Water Supply",  "GF 06", "GF 07", "GF 08",
-//                "GF 09", "GF 10");
-//        ArrayList<String> hfgGate = new ArrayList<>();
-//        Collections.addAll(hfgGate, "Toilet (Male)", "Toilet(Female)", "Shower"
-//                , "Elsan Point", "Water Supply",  "GF 06", "GF 07", "GF 08",
-//                "GF 09", "GF 10");
-//        ArrayList<String> blackPedGate = new ArrayList<>();
-//        Collections.addAll(blackPedGate, "Toilet (Male)", "Toilet(Female)", "Shower"
-//                , "Elsan Point", "Water Supply",  "GF 06", "GF 07", "GF 08",
-//                "GF 09", "GF 10");
-//        ArrayList<String> brownPedGate = new ArrayList<>();
-//        Collections.addAll(brownPedGate, "Toilet (Male)", "Toilet(Female)", "Shower"
-//                , "Elsan Point", "Water Supply",  "GF 06", "GF 07", "GF 08",
-//                "GF 09", "GF 10");
