@@ -207,7 +207,7 @@ public class MYSQLEngine
         return results;
     }
 
-    public void submitTicket(String team, String member, String 
+    public boolean submitTicket(String team, String member, String 
             problemLocation, String problemDescription, String keyWords,
             String problemReportedBy, String whoIsA, String contactVia, String 
                     contactNumber, String locationVenueVillage)
@@ -215,8 +215,7 @@ public class MYSQLEngine
         // Set up the initial connection and statement objects
         Connection conn = null;
         Statement stmt = null;
-        // Create a new ArrayList to store the results of the MYSQL query.
-        ArrayList<String> results = new ArrayList<>();
+        boolean success = false;
         // Begin try block so SQL Exceptions can be handled later
         try
         {
@@ -237,9 +236,10 @@ public class MYSQLEngine
                     + "'" + problemReportedBy + "', " + "'" + whoIsA + "', "
                     + "'" + contactVia + "', " + "'" + contactNumber + "', "
                     + "'" + locationVenueVillage + "', "
-                    + "'Low', '0', NULL, 'Issue Reported', NULL, NULL, NULL"
+                    + "'Low', '0', NULL, 'Issue Reported', NULL, NULL, NULL, "
                     + "NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL)";
             stmt.executeUpdate(sql);
+            success = true;
             stmt.close();
             conn.close();
         } catch (SQLException se)
@@ -271,5 +271,6 @@ public class MYSQLEngine
             {
             }
         }
+        return success;
     }
 }

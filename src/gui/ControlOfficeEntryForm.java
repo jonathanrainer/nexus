@@ -1157,6 +1157,11 @@ public class ControlOfficeEntryForm {
     {
         return problemDescriptionTextArea;
     }
+
+    public JFrame getMainFrame()
+    {
+        return mainFrame;
+    }
     
     
     

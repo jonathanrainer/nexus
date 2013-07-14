@@ -14,6 +14,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Iterator;
 import javax.swing.JButton;
+import javax.swing.JOptionPane;
 import javax.swing.JRadioButton;
 
 /**
@@ -358,9 +359,10 @@ public class MainSystem
                         String keyWords = "";
                         while (buttonsIterator.hasNext())
                         {
-                            if(buttonsIterator.next().isSelected())
+                            JRadioButton buttonUnderConsideration = buttonsIterator.next();
+                            if(buttonUnderConsideration.isSelected())
                             {
-                                keyWords = keyWords + "-";
+                                keyWords = keyWords + buttonUnderConsideration.getName() + "-";
                             }
                         }
                         String problemReportedBy = cofe.getProblemReportedByTextField().getText();
@@ -369,9 +371,17 @@ public class MainSystem
                         String contactNumber = cofe.getContactNumberTextField().getText();
                         String locationVenueVillage = (String) cofe.getLocationVenueVillageComboBox().
                                 getSelectedItem().toString();
-                        mysqlEngine.submitTicket(team, member, problemLocation,
+                        if(mysqlEngine.submitTicket(team, member, problemLocation,
                                 problemDescription, keyWords, problemReportedBy,
-                                whoIsA, contactVia, contactNumber, locationVenueVillage);
+                                whoIsA, contactVia, contactNumber, locationVenueVillage))
+                        {
+                            JOptionPane.showMessageDialog(cofe.getMainFrame(), "It seems to have worked");
+                        }
+                        else
+                        {
+                            JOptionPane.showMessageDialog(cofe.getMainFrame(), "It don't work :(");
+                        }
+                        ;
                     }
                 });
         
