@@ -13,6 +13,8 @@ import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Iterator;
+import javax.swing.JButton;
+import javax.swing.JRadioButton;
 
 /**
  * The highest level of the system as a whole, all major functionality will, at
@@ -192,6 +194,7 @@ public class MainSystem
         //Iterate over the team members to give a choice
         ArrayList<String> teamMembers = mysqlEngine.
                 enumerateTeamMembers(user.getTeam());
+        cofe.getTeamMembersComboBox().addItem("Choose One");
         Iterator<String> it1 = teamMembers.iterator();
         while (it1.hasNext())
         {
@@ -232,6 +235,13 @@ public class MainSystem
                     }
                     cofe.getProblemLocationComboBox2().setSelectedIndex(0);
                 }
+                else if(cofe.getProblemLocationComboBox1().getSelectedItem().
+                        equals("Select a Location"))
+                {
+                    cofe.getProblemLocationComboBox2().removeAllItems();
+                    cofe.getProblemLocationComboBox3().removeAllItems();
+                    cofe.getProblemLocationComboBox4().removeAllItems();
+                }
             }
         });
 
@@ -240,12 +250,9 @@ public class MainSystem
         {
             public void actionPerformed(ActionEvent e)
             {
-                if (e.getActionCommand().equals("comboBoxChanged"))
-                {
-                    if (!(cofe.getProblemLocationComboBox2().
-                            getSelectedItem() == null)
-                            && !(cofe.getProblemLocationComboBox2().
-                            getSelectedItem().equals("Select a Location")))
+                if (e.getActionCommand().equals("comboBoxChanged") 
+                        && !(cofe.getProblemLocationComboBox2().getSelectedItem() == null)
+                        && !(cofe.getProblemLocationComboBox2().getSelectedItem().equals("Select a Location")))
                     {
                         ArrayList<String> thirdBoxOptions = dataStructures.getMasterListBox3().get(
                                 cofe.getProblemLocationComboBox2().getSelectedItem());
@@ -262,7 +269,11 @@ public class MainSystem
                         }
 
                     }
-
+                if (!(cofe.getProblemLocationComboBox2().getSelectedItem() == null)
+                        && (cofe.getProblemLocationComboBox2().getSelectedItem().equals("Select a Location")))
+                {
+                    cofe.getProblemLocationComboBox3().removeAllItems();
+                    cofe.getProblemLocationComboBox4().removeAllItems();
                 }
             }
         });
@@ -272,12 +283,9 @@ public class MainSystem
         {
             public void actionPerformed(ActionEvent e)
             {
-                if (e.getActionCommand().equals("comboBoxChanged"))
-                {
-                    if (!(cofe.getProblemLocationComboBox3().
-                            getSelectedItem() == null
-                            || cofe.getProblemLocationComboBox3().
-                            getSelectedItem().equals("Select a Location")))
+                if (e.getActionCommand().equals("comboBoxChanged") 
+                        && !(cofe.getProblemLocationComboBox3().getSelectedItem() == null 
+                        || cofe.getProblemLocationComboBox3().getSelectedItem().equals("Select a Location")))
                     {
                         ArrayList<String> fourthBoxOptions = new ArrayList<>();
                         if (cofe.getProblemLocationComboBox3().getSelectedItem().equals("NA"))
@@ -306,11 +314,89 @@ public class MainSystem
                             cofe.getProblemLocationComboBox4().addItem(fourthBoxIterator.next());
                         }
                     }
+                if (!(cofe.getProblemLocationComboBox3().getSelectedItem() == null)
+                        && (cofe.getProblemLocationComboBox3().getSelectedItem().equals("Select a Location")))
+                {
+                    cofe.getProblemLocationComboBox4().removeAllItems();
+                }
 
                 }
-            }
-        });
+            });
 
+        cofe.getWhoIsAComboBox().addItem("Choose One");
+        cofe.getWhoIsAComboBox().addItem("Delegate");
+        cofe.getWhoIsAComboBox().addItem("Speaker");
+        cofe.getWhoIsAComboBox().addItem("Team Member");
+        
+        cofe.getContactViaComboBox().addItem("Choose One");
+        cofe.getContactViaComboBox().addItem("Mobile");
+        cofe.getContactViaComboBox().addItem("Radio");
+        cofe.getContactViaComboBox().addItem("Village Host");
+        cofe.getContactViaComboBox().addItem("Village");
+        cofe.getContactViaComboBox().addItem("Not Required");
+        
+        cofe.getLocationVenueVillageComboBox().addItem("Choose One");
+        cofe.getLocationVenueVillageComboBox().addItem("Venue");
+        cofe.getLocationVenueVillageComboBox().addItem("Village");
+        cofe.getLocationVenueVillageComboBox().addItem("Not Required");
+ 
+        cofe.getSubmitFormButton().addActionListener(
+                new ActionListener()
+                {
+                    @Override
+                    public void actionPerformed(ActionEvent e)
+                    {
+                        String team = user.getTeam();
+                        String member = (String) cofe.getTeamMembersComboBox().getSelectedItem();
+                        String problemLocation = cofe.
+                                getProblemLocationComboBox1().getSelectedItem()
+                                + "->" + cofe.getProblemLocationComboBox2().getSelectedItem()
+                                + "->" + cofe.getProblemLocationComboBox3().getSelectedItem()
+                                + "->" + cofe.getProblemLocationComboBox4().getSelectedItem();
+                        String problemDescription = cofe.getProblemDescriptionTextArea().getText();
+                        Iterator<JRadioButton> buttonsIterator = cofe.getButtonsInGrid().iterator();
+                        String keyWords = "";
+                        while (buttonsIterator.hasNext())
+                        {
+                            if(buttonsIterator.next().isSelected())
+                            {
+                                keyWords = keyWords + "-";
+                            }
+                        }
+                        String problemReportedBy = cofe.getProblemReportedByTextField().getText();
+                        String whoIsA = cofe.getWhoIsAComboBox().getSelectedItem().toString();
+                        String contactVia = cofe.getContactViaComboBox().getSelectedItem().toString();
+                        String contactNumber = cofe.getContactNumberTextField().getText();
+                        String locationVenueVillage = (String) cofe.getLocationVenueVillageComboBox().
+                                getSelectedItem().toString();
+                        mysqlEngine.submitTicket(team, member, problemLocation,
+                                problemDescription, keyWords, problemReportedBy,
+                                whoIsA, contactVia, contactNumber, locationVenueVillage);
+                    }
+                });
+        
+        cofe.getResetFormButton().addActionListener(
+                new ActionListener()
+                {
+                    @Override
+                    public void actionPerformed(ActionEvent e)
+                    {
+                        cofe.getTicketWrittenComboBox().setSelectedIndex(0);
+                        cofe.getProblemLocationComboBox1().setSelectedIndex(0);
+                        cofe.getProblemDescriptionTextArea().setText("");
+                        Iterator<JRadioButton> buttonsIterator = cofe.getButtonsInGrid().iterator();
+                        while(buttonsIterator.hasNext())
+                        {
+                            buttonsIterator.next().setSelected(false);
+                        }
+                        cofe.getProblemReportedByTextField().setText("");
+                        cofe.getWhoIsAComboBox().setSelectedIndex(0);
+                        cofe.getContactViaComboBox().setSelectedIndex(0);
+                        cofe.getContactNumberTextField().setText("");
+                        cofe.getLocationVenueVillageComboBox().setSelectedIndex(0);
+                    }
+                });
+        
         return cofe;
     }
     

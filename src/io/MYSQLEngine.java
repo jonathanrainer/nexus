@@ -17,7 +17,8 @@ import java.util.Arrays;
  *
  * @author jonathanrainer
  */
-public class MYSQLEngine {
+public class MYSQLEngine
+{
 
     // JDBC driver name and database URL
     private String JDBC_DRIVER;
@@ -37,7 +38,8 @@ public class MYSQLEngine {
      * @param mysqluser Username for the MYSQL database.
      * @param mysqlpassword Password for the above use on the MYSQL database.
      */
-    public MYSQLEngine(String mysqlhost, String mysqldatabase, String mysqluser, String mysqlpassword) {
+    public MYSQLEngine(String mysqlhost, String mysqldatabase, String mysqluser, String mysqlpassword)
+    {
         JDBC_DRIVER = "com.mysql.jdbc.Driver";
         DB_URL = "jdbc:mysql://" + mysqlhost + "/" + mysqldatabase;
         USER = mysqluser;
@@ -54,14 +56,16 @@ public class MYSQLEngine {
      *
      * @return An ArrayList of the team names as dictated by the database.
      */
-    public ArrayList<String> enumerateTeamNames() {
+    public ArrayList<String> enumerateTeamNames()
+    {
         // Set up the initial connection and statement objects
         Connection conn = null;
         Statement stmt = null;
         // Create a new ArrayList to store the results of the MYSQL query.
         ArrayList<String> results = new ArrayList<>();
         // Begin try block so SQL Exceptions can be handled later
-        try {
+        try
+        {
             // Register JDBC driver
             Class.forName("com.mysql.jdbc.Driver");
             // Open a connection
@@ -79,7 +83,8 @@ public class MYSQLEngine {
             ResultSet rs = stmt.executeQuery(sql);
 
             // Extract the resulting data from the ResultSet
-            while (rs.next()) {
+            while (rs.next())
+            {
                 String stringToSplit = rs.getString(1);
                 // Remove junk characters
                 stringToSplit = stringToSplit.replaceAll("[(\"\')]", "");
@@ -91,10 +96,13 @@ public class MYSQLEngine {
                  * Remove Super Users from the list since login in as a Super
                  * User will be dealt with seperately.
                  */
-                while (i < argumentArray.length) {
-                    if (argumentArray[i].equals("Super Users")) {
+                while (i < argumentArray.length)
+                {
+                    if (argumentArray[i].equals("Super Users"))
+                    {
                         i++;
-                    } else {
+                    } else
+                    {
                         results.add(argumentArray[i]);
                         i++;
                     }
@@ -104,37 +112,48 @@ public class MYSQLEngine {
             rs.close();
             stmt.close();
             conn.close();
-        } catch (SQLException se) {
+        } catch (SQLException se)
+        {
             //Handle errors for JDBC
-        } catch (Exception e) {
+        } catch (Exception e)
+        {
             //Handle errors for Class.forName
-        } finally {
+        } finally
+        {
             //finally block used to close resources should all else fail
-            try {
-                if (stmt != null) {
+            try
+            {
+                if (stmt != null)
+                {
                     stmt.close();
                 }
-            } catch (SQLException se2) {
+            } catch (SQLException se2)
+            {
             }// nothing we can do
 
-            try {
-                if (conn != null) {
+            try
+            {
+                if (conn != null)
+                {
                     conn.close();
                 }
-            } catch (SQLException se) {
+            } catch (SQLException se)
+            {
             }
         }
         return results;
     }
-    
-    public ArrayList<String> enumerateTeamMembers(String team) {
+
+    public ArrayList<String> enumerateTeamMembers(String team)
+    {
         // Set up the initial connection and statement objects
         Connection conn = null;
         Statement stmt = null;
         // Create a new ArrayList to store the results of the MYSQL query.
         ArrayList<String> results = new ArrayList<>();
         // Begin try block so SQL Exceptions can be handled later
-        try {
+        try
+        {
             // Register JDBC driver
             Class.forName("com.mysql.jdbc.Driver");
             // Open a connection
@@ -147,33 +166,110 @@ public class MYSQLEngine {
              */
             String sql;
             sql = "SELECT `name` FROM `Users` WHERE `team` = '" + team + "'";
-            try (ResultSet rs = stmt.executeQuery(sql)) {
-                while (rs.next()) {
+            try (ResultSet rs = stmt.executeQuery(sql))
+            {
+                while (rs.next())
+                {
                     results.add(rs.getString(1));
                 }
             }
             stmt.close();
             conn.close();
-        } catch (SQLException se) {
+        } catch (SQLException se)
+        {
             //Handle errors for JDBC
-        } catch (Exception e) {
+        } catch (Exception e)
+        {
             //Handle errors for Class.forName
-        } finally {
+        } finally
+        {
             //finally block used to close resources should all else fail
-            try {
-                if (stmt != null) {
+            try
+            {
+                if (stmt != null)
+                {
                     stmt.close();
                 }
-            } catch (SQLException se2) {
+            } catch (SQLException se2)
+            {
             }// nothing we can do
 
-            try {
-                if (conn != null) {
+            try
+            {
+                if (conn != null)
+                {
                     conn.close();
                 }
-            } catch (SQLException se) {
+            } catch (SQLException se)
+            {
             }
         }
         return results;
+    }
+
+    public void submitTicket(String team, String member, String 
+            problemLocation, String problemDescription, String keyWords,
+            String problemReportedBy, String whoIsA, String contactVia, String 
+                    contactNumber, String locationVenueVillage)
+    {
+        // Set up the initial connection and statement objects
+        Connection conn = null;
+        Statement stmt = null;
+        // Create a new ArrayList to store the results of the MYSQL query.
+        ArrayList<String> results = new ArrayList<>();
+        // Begin try block so SQL Exceptions can be handled later
+        try
+        {
+            // Register JDBC driver
+            Class.forName("com.mysql.jdbc.Driver");
+            // Open a connection
+            conn = DriverManager.getConnection(DB_URL, USER, PASS);
+
+            // Create and Execute the SQL Query
+            stmt = conn.createStatement();
+            /**
+             * Query states: Select all the users in a particular team
+             */
+            String sql;
+            sql = "INSERT INTO `Tickets` VALUES (NULL, NOW(), " + "'" + team + "', "
+                    + "'" + member + "', " + "'" + problemLocation + "', " 
+                    + "'" + problemDescription + "', " + "'" + keyWords + "', "
+                    + "'" + problemReportedBy + "', " + "'" + whoIsA + "', "
+                    + "'" + contactVia + "', " + "'" + contactNumber + "', "
+                    + "'" + locationVenueVillage + "', "
+                    + "'Low', '0', NULL, 'Issue Reported', NULL, NULL, NULL"
+                    + "NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL)";
+            stmt.executeUpdate(sql);
+            stmt.close();
+            conn.close();
+        } catch (SQLException se)
+        {
+            //Handle errors for JDBC
+        } catch (Exception e)
+        {
+            //Handle errors for Class.forName
+        } finally
+        {
+            //finally block used to close resources should all else fail
+            try
+            {
+                if (stmt != null)
+                {
+                    stmt.close();
+                }
+            } catch (SQLException se2)
+            {
+            }// nothing we can do
+
+            try
+            {
+                if (conn != null)
+                {
+                    conn.close();
+                }
+            } catch (SQLException se)
+            {
+            }
+        }
     }
 }

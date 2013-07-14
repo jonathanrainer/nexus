@@ -354,20 +354,21 @@ public class ControlOfficeEntryForm {
         frameContent.add(keyWordExplanationLabel, keyWordExplanationLabelConstraints);
 
         keyWordGrid = new JPanel();
-        GridLayout sixRowsFourColumns = new GridLayout(2, 6);
-        keyWordGrid.setLayout(sixRowsFourColumns);
+        GridLayout twoRowsEightColumns = new GridLayout(3, 6);
+        keyWordGrid.setLayout(twoRowsEightColumns);
         buttonsInGrid = new ArrayList<>();
         ArrayList<String> labelsForButtons = new ArrayList<>();
-        Collections.addAll(labelsForButtons, "KeyWord1","KeyWord2",
-                "KeyWord3","KeyWord4","KeyWord5","KeyWord6","KeyWord7",
-                "KeyWord8","KeyWord9","KeyWord10", "KeyWord11", "KeyWord12");
+        Collections.addAll(labelsForButtons, "Gas Bottle","Hand Towels",
+                "Shower","Sink","Soap","Toilet/Urinal","Toilet Paper",
+                "Water","Blocked","Broken", "Cold", "Dirty", "Flooded",
+                "None", "Too Hot", "Other");
         int i;
-        for (i = 0; i < 12; i++) {
+        for (i = 0; i < 16; i++) {
             JRadioButton buttonToAdd = new JRadioButton(labelsForButtons.get(i));
             buttonToAdd.setName(labelsForButtons.get(i));
             buttonsInGrid.add(buttonToAdd);
         }
-        for (i = 0; i < 12; i++) {
+        for (i = 0; i < 16; i++) {
             keyWordGrid.add(buttonsInGrid.get(i));
         }
         GridBagConstraints keyWordGridConstraints = template.
@@ -448,6 +449,23 @@ public class ControlOfficeEntryForm {
                 new Insets(0, 0, 0, 0), GridBagConstraints.CENTER, 0.0, 0.0, 1,
                 1);
         frameContent.add(locationVenueVillageComboBox, locationVenueVillageComboBoxConstraints);
+        
+        //Add in submit and reset buttons
+        //Add in the Submit Form Button
+        submitFormButton = new JButton("Submit Form");
+        GridBagConstraints submitFormButtonConstraints = template.
+                createGridBagConstraints(0, 18, GridBagConstraints.HORIZONTAL, 5, 5,
+                new Insets(10, 0, 0, 0), GridBagConstraints.WEST, 0.0, 0.0, 1,
+                1);
+        frameContent.add(submitFormButton, submitFormButtonConstraints);
+        
+        //Add in a reset form Button
+        resetFormButton = new JButton("Reset Form");
+        GridBagConstraints resetFormButtonConstraints = template.
+                createGridBagConstraints(1, 18, GridBagConstraints.HORIZONTAL, 5, 5,
+                new Insets(10, 0, 0, 0), GridBagConstraints.WEST, 0.0, 0.0, 1,
+                1);
+        frameContent.add(resetFormButton, resetFormButtonConstraints);
         
         mainFrame.getContentPane().add(new JScrollPane(frameContent), BorderLayout.CENTER);
         mainFrame.pack();
@@ -689,29 +707,21 @@ public class ControlOfficeEntryForm {
         frameContent.add(keyWordExplanationLabel, keyWordExplanationLabelConstraints);
 
         keyWordGrid = new JPanel();
-        GridLayout sixRowsFourColumns = new GridLayout(2, 6);
-        keyWordGrid.setLayout(sixRowsFourColumns);
+        GridLayout twoRowsEightColumns = new GridLayout(3, 6);
+        keyWordGrid.setLayout(twoRowsEightColumns);
         buttonsInGrid = new ArrayList<>();
         ArrayList<String> labelsForButtons = new ArrayList<>();
-        labelsForButtons.add("KeyWord1");
-        labelsForButtons.add("KeyWord2");
-        labelsForButtons.add("KeyWord3");
-        labelsForButtons.add("KeyWord4");
-        labelsForButtons.add("KeyWord5");
-        labelsForButtons.add("KeyWord6");
-        labelsForButtons.add("KeyWord7");
-        labelsForButtons.add("KeyWord8");
-        labelsForButtons.add("KeyWord9");
-        labelsForButtons.add("KeyWord10");
-        labelsForButtons.add("KeyWord11");
-        labelsForButtons.add("KeyWord12");
+        Collections.addAll(labelsForButtons, "Gas Bottle","Hand Towels",
+                "Shower","Sink","Soap","Toilet/Urinal","Toilet Paper",
+                "Water","Blocked","Broken", "Cold", "Dirty", "Flooded",
+                "None", "None", "Too Hot", "Other");
         int i;
-        for (i = 0; i < 12; i++) {
+        for (i = 0; i < 16; i++) {
             JRadioButton buttonToAdd = new JRadioButton(labelsForButtons.get(i));
             buttonToAdd.setName(labelsForButtons.get(i));
             buttonsInGrid.add(buttonToAdd);
         }
-        for (i = 0; i < 12; i++) {
+        for (i = 0; i < 16; i++) {
             keyWordGrid.add(buttonsInGrid.get(i));
         }
         GridBagConstraints keyWordGridConstraints = template.
@@ -1132,6 +1142,22 @@ public class ControlOfficeEntryForm {
     public JComboBox getLocationVenueVillageComboBox() {
         return locationVenueVillageComboBox;
     }
+
+    public JButton getSubmitFormButton()
+    {
+        return submitFormButton;
+    }
+
+    public JButton getResetFormButton()
+    {
+        return resetFormButton;
+    }
+
+    public JTextArea getProblemDescriptionTextArea()
+    {
+        return problemDescriptionTextArea;
+    }
+    
     
     
 }

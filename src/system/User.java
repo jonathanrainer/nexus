@@ -14,6 +14,7 @@ public class User {
      * A string that describes the team the user belongs to. 
      */
     private String team;
+    private String name;
     
     /**
      * Construct the user object
