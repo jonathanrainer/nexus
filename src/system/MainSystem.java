@@ -154,7 +154,7 @@ public class MainSystem
             @Override
             public void actionPerformed(ActionEvent e)
             {
-                System.out.println("Place Holder");
+                ControlOfficeEntryForm cofe = createLimitedEntryForm();
             }
         });
     }
@@ -168,7 +168,7 @@ public class MainSystem
             @Override
             public void actionPerformed(ActionEvent e)
             {
-                System.out.println("Place Holder");
+                ControlOfficeEntryForm cofe = createLimitedEntryForm();
             }
         });
     }
@@ -410,7 +410,7 @@ public class MainSystem
                                     JOptionPane.showMessageDialog(cofe.getMainFrame(),
                                             "The Job Ticket has been submitted. \n"
                                             + "The Job ID is: " + ticket.getJobRefId()
-                                            + "\nIt was submitted at: " + ticket.getDateTime().toString("H-m-s - d-M-y"));
+                                            + "\nIt was submitted at: " + ticket.getDateTime().toString("H:m:s - d/M/y"));
                                 }
                                 else
                                 {
