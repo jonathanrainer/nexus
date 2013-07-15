@@ -337,6 +337,28 @@ public class MainSystem
         cofe.getContactViaComboBox().addItem("Village");
         cofe.getContactViaComboBox().addItem("Not Required");
         
+        cofe.getContactViaComboBox().addActionListener(new ActionListener()
+                {
+                   @Override
+                   public void actionPerformed(ActionEvent e)
+                   {
+                       if(e.getActionCommand().equals("comboBoxChanged") &&
+                               !(cofe.getContactViaComboBox().getSelectedItem().
+                               toString().equals("Choose One")) && 
+                               !(cofe.getContactViaComboBox().getSelectedItem().
+                               toString().equals("Mobile")))
+                       {
+                           cofe.getContactNumberTextField().setText(
+                                   cofe.getContactViaComboBox().
+                                   getSelectedItem().toString());
+                       }
+                       else
+                       {
+                           cofe.getContactNumberTextField().setText("");
+                       }
+                   }
+                });
+        
         cofe.getLocationVenueVillageComboBox().addItem("Choose One");
         cofe.getLocationVenueVillageComboBox().addItem("Venue");
         cofe.getLocationVenueVillageComboBox().addItem("Village");
@@ -378,15 +400,23 @@ public class MainSystem
                                 problemReportedBy, whoIsA, contactVia, contactNumber,
                                 locationVenueVillage, "Low", false, null, null,
                                 null, null, null);
-                        ticket.dataValidationEntry();
-                        if(mysqlEngine.submitTicket(ticket))
+                        String validationResult = ticket.dataValidationEntry();
+                        if(validationResult.equals("Passed"))
                         {
-                            JOptionPane.showMessageDialog(cofe.getMainFrame(), "It seems to have worked");
+                            if(mysqlEngine.submitTicket(ticket))
+                            {
+                                JOptionPane.showMessageDialog(cofe.getMainFrame(), "It seems to have worked");
+                            }
+                            else
+                            {
+                                JOptionPane.showMessageDialog(cofe.getMainFrame(), "It don't work :(");
+                            }
                         }
                         else
                         {
-                            JOptionPane.showMessageDialog(cofe.getMainFrame(), "It don't work :(");
+                            JOptionPane.showMessageDialog(cofe.getMainFrame(), validationResult);
                         }
+                        
                         ;
                     }
                 });

@@ -36,8 +36,8 @@ public class Ticket
     public Ticket(int jobRefId, DateTime dateTime, User ticketRaisedBy, 
             String problemLocation, String problemDescription, 
             ArrayList<String> CISKeywords, String reportedBy, 
-            String whoIsA, String contactVia, String locationVenueVillage,
-            String contactNumber, String delegateImpact, boolean showOnCIS, 
+            String whoIsA, String contactVia, String contactNumber, 
+            String locationVenueVillage, String delegateImpact, boolean showOnCIS, 
             ArrayList<String> updateDescriptions, 
             ArrayList<DateTime> estimatedCompletions, 
             ArrayList<DateTime> updatedAt, DateTime jobClosed, 
@@ -63,20 +63,58 @@ public class Ticket
         this.nextUpdateDue = nextUpdateDue;
     }
     
-    public void dataValidationEntry()
+    public String dataValidationEntry()
     {
         problemDescription = textValidation(problemDescription);
         reportedBy = textValidation(reportedBy);
+        if(ticketRaisedBy.getName().equals("Choose One"))
+        {
+            return "No team name selected";
+        }
+        if(problemLocation.contains("Select a Location") || problemLocation.
+                contains("Select a Facility"))
+        {
+            return "Location not specified correctly";
+        }
+        if(problemDescription.length() > 256)
+        {
+            return "Over 256 characters in description field";
+        }
+        if(problemDescription.equals(""))
+        {
+            return "Description must be specified";
+        }
+        if(CISKeywords.size() > 5)
+        {
+            return "Too many keywords specified";
+        }
+        if(whoIsA.equals("Choose One"))
+        {
+            return "Role of person reporting is not specified";
+        }
+        if(contactVia.equals("Choose One"))
+        {
+            return "Contact method must be decided, choose \"None required\""
+                    + "if the person doesn't need contacting.";
+        }
+        if(contactNumber.equals(""))
+        {
+            return "A number must be entered as a contact number";
+        }
+        if(locationVenueVillage.equals("Choose One"))
+        {
+            return "A Location, Venue or Village must be specified.";
+        }
         
+        return "Passed";
     }
     
     public String textValidation(String unvalidatedText)
     {
-        unvalidatedText = unvalidatedText.replace("'", "\\'");
+        System.out.println(unvalidatedText);
         unvalidatedText = unvalidatedText.replace("\"", "\\\"");
         unvalidatedText = unvalidatedText.replace("\\" , "\\\\");
         unvalidatedText = unvalidatedText.replace("%", "\\%");
-        unvalidatedText = unvalidatedText.replace("_", "\\_");
         return unvalidatedText;
     }
 
@@ -116,7 +154,7 @@ public class Ticket
         String keyWords = "";
         while(it1.hasNext())
         {
-            keyWords = keyWords + it1.next() + "-";
+            keyWords = keyWords + it1.next() + ";";
         }
         return keyWords;
     }
@@ -178,14 +216,7 @@ public class Ticket
     
     public String getContactNumber()
     {
-        if(contactNumber.equals(""))
-        {
-            return "NULL";
-        }
-        else
-        {
-            return "'" + contactNumber + "'";
-        }
+        return contactNumber;
     }
     
 }

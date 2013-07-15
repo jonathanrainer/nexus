@@ -228,7 +228,7 @@ public class MYSQLEngine
              * Query states: Select all the users in a particular team
              */
             String sql;
-            sql = "INSERT INTO `Tickets` VALUES (NULL, NOW(), " + "'" + 
+            sql = "INSERT INTO `Tickets` VALUES (NULL, NOW(), '" + 
                     ticket.getTicketRaisedBy().getTeam() + "', "
                     + "'" + ticket.getTicketRaisedBy().getName() + "', " + "'" 
                     + ticket.getProblemLocation() + "', " 
@@ -236,7 +236,7 @@ public class MYSQLEngine
                     ticket.getCISKeywordsAsString() + "', "
                     + "'" + ticket.getReportedBy() + "', " + "'" + 
                     ticket.getWhoIsA()+ "', " + "'" + ticket.getContactVia() + 
-                    "', " + ticket.getContactNumber() + ", " + "'" + 
+                    "', '" + ticket.getContactNumber() + "', " + "'" + 
                     ticket.getLocationVenueVillage() + "', " + "'Low', '0', NULL,"
                     + " 'Issue Reported', NULL, NULL, NULL, NULL, NULL, NULL, "
                     + "NULL, NULL, NULL, NULL, NULL);";
@@ -247,7 +247,6 @@ public class MYSQLEngine
         } catch (SQLException se)
         {
             System.out.println(se.getSQLState());
-            System.out.println(se.getErrorCode());
             //Handle errors for JDBC
         } catch (Exception e)
         {
