@@ -403,21 +403,29 @@ public class MainSystem
                         String validationResult = ticket.dataValidationEntry();
                         if(validationResult.equals("Passed"))
                         {
-                            if(mysqlEngine.submitTicket(ticket))
+                            if(!(mysqlEngine.isTicketDuplicate(ticket)))
                             {
-                                JOptionPane.showMessageDialog(cofe.getMainFrame(), "It seems to have worked");
+                                if(mysqlEngine.submitTicket(ticket, false))
+                                {
+                                    JOptionPane.showMessageDialog(cofe.getMainFrame(),
+                                            "The Job Ticket has been submitted. \n"
+                                            + "The Job ID is: " + ticket.getJobRefId()
+                                            + "\nIt was submitted at: " + ticket.getDateTime().toString("H-m-s - d-M-y"));
+                                }
+                                else
+                                {
+                                    JOptionPane.showMessageDialog(cofe.getMainFrame(), "MYSQL isn't happy...");
+                                }
                             }
                             else
                             {
-                                JOptionPane.showMessageDialog(cofe.getMainFrame(), "It don't work :(");
+                                mysqlEngine.submitTicket(ticket, true);
                             }
-                        }
+                        }   
                         else
                         {
                             JOptionPane.showMessageDialog(cofe.getMainFrame(), validationResult);
                         }
-                        
-                        ;
                     }
                 });
         

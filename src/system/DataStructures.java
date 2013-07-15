@@ -571,7 +571,7 @@ public class DataStructures
         {
             if(fieldsBox3.get(i).equals("NA") && i < 45)
             {
-                int marker = i - 35;
+                int marker = i - 30;
                 masterListBox4.put(fieldsBox2.get(marker) + "-" + fieldsBox3.get(i), listOfLists.get(i));
                 i++;
             }

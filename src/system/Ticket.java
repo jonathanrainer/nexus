@@ -218,5 +218,16 @@ public class Ticket
     {
         return contactNumber;
     }
+
+    public void setJobRefId(int jobRefId)
+    {
+        this.jobRefId = jobRefId;
+    }
+
+    public void setDateTime(DateTime dateTime)
+    {
+        this.dateTime = dateTime;
+    }
+    
     
 }

@@ -32,7 +32,7 @@ CREATE TABLE `Tickets` (
 `update3UpdatedAt` DATETIME,
 `jobClosed` DATETIME,
 `nextUpdateDue` DATETIME,
-PRIMARY KEY (`job_ref_id`)
+PRIMARY KEY (`jobRefId`)
 ) Engine = InnoDB CHARACTER SET utf8 COLLATE utf8_bin;
 
 CREATE TABLE `Users` (
@@ -43,7 +43,7 @@ CREATE TABLE `Users` (
 PRIMARY KEY (`userID`)
 ) Engine = InnoDB CHARACTER SET utf8 COLLATE utf8_bin;
 
-
+CREATE TABLE `DuplicateQueue` LIKE `Tickets`
 --CREATE TABLE `Verification-Queue` (
 --)
 

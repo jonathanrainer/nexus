@@ -11,6 +11,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Arrays;
+import org.joda.time.DateTime;
 import system.Ticket;
 
 /**
@@ -208,7 +209,100 @@ public class MYSQLEngine
         return results;
     }
 
-    public boolean submitTicket(Ticket ticket)
+    public boolean submitTicket(Ticket ticket, boolean duplicate)
+    {
+        // Set up the initial connection and statement objects
+        Connection conn = null;
+        Statement stmt1 = null;
+        Statement stmt2 = null;
+        boolean success = false;
+        // Begin try block so SQL Exceptions can be handled later
+        try
+        {
+            // Register JDBC driver
+            Class.forName("com.mysql.jdbc.Driver");
+            // Open a connection
+            conn = DriverManager.getConnection(DB_URL, USER, PASS);
+
+            // Create and Execute the SQL Query
+            stmt1 = conn.createStatement();
+            stmt2 = conn.createStatement();
+            /**
+             * Query states: Select all the users in a particular team
+             */
+            String table = "";
+            if(duplicate)
+            {
+                table = "`DuplicateQueue`";
+            }
+            else
+            {
+                table = "`Tickets`";
+            }
+            String insertionQuery;
+            insertionQuery = "INSERT INTO " + table +  "VALUES (NULL, NOW(), '" + 
+                    ticket.getTicketRaisedBy().getTeam() + "', "
+                    + "'" + ticket.getTicketRaisedBy().getName() + "', " + "'" 
+                    + ticket.getProblemLocation() + "', " 
+                    + "'" + ticket.getProblemDescription() + "', " + "'" + 
+                    ticket.getCISKeywordsAsString() + "', "
+                    + "'" + ticket.getReportedBy() + "', " + "'" + 
+                    ticket.getWhoIsA()+ "', " + "'" + ticket.getContactVia() + 
+                    "', '" + ticket.getContactNumber() + "', " + "'" + 
+                    ticket.getLocationVenueVillage() + "', " + "'Low', '0', NULL,"
+                    + " 'Issue Reported', NULL, NULL, NULL, NULL, NULL, NULL, "
+                    + "NULL, NULL, NULL, NULL, NULL);";
+            stmt1.executeUpdate(insertionQuery);
+            String query2 = "SELECT * FROM `Tickets` WHERE `CISKeywords` LIKE '" + 
+                    ticket.getCISKeywordsAsString() + "' AND `problemLocation`"
+                    + "LIKE '" + ticket.getProblemLocation() + "' AND `reportedBy`"
+                    + " LIKE '" + ticket.getReportedBy() + "';";
+            ResultSet rs = stmt2.executeQuery(query2);
+            while(rs.next())
+            {
+                ticket.setJobRefId(rs.getInt("jobRefId"));
+                String timeStamp = rs.getString("dateTime");
+                ticket.setDateTime(timeStampToDateTime(timeStamp));
+            }
+            success = true;
+            stmt1.close();
+            stmt2.close();
+            conn.close();
+        } catch (SQLException se)
+        {
+            System.out.println(se.getSQLState());
+            //Handle errors for JDBC
+        } catch (Exception e)
+        {
+            //Handle errors for Class.forName
+        } finally
+        {
+            //finally block used to close resources should all else fail
+            try
+            {
+                if (stmt1 != null || stmt2 != null)
+                {
+                    stmt1.close();
+                    stmt2.close();
+                }
+            } catch (SQLException se2)
+            {
+            }// nothing we can do
+
+            try
+            {
+                if (conn != null)
+                {
+                    conn.close();
+                }
+            } catch (SQLException se)
+            {
+            }
+        }
+        return success;
+    }
+    
+    public boolean isTicketDuplicate(Ticket ticket)
     {
         // Set up the initial connection and statement objects
         Connection conn = null;
@@ -228,20 +322,18 @@ public class MYSQLEngine
              * Query states: Select all the users in a particular team
              */
             String sql;
-            sql = "INSERT INTO `Tickets` VALUES (NULL, NOW(), '" + 
-                    ticket.getTicketRaisedBy().getTeam() + "', "
-                    + "'" + ticket.getTicketRaisedBy().getName() + "', " + "'" 
-                    + ticket.getProblemLocation() + "', " 
-                    + "'" + ticket.getProblemDescription() + "', " + "'" + 
-                    ticket.getCISKeywordsAsString() + "', "
-                    + "'" + ticket.getReportedBy() + "', " + "'" + 
-                    ticket.getWhoIsA()+ "', " + "'" + ticket.getContactVia() + 
-                    "', '" + ticket.getContactNumber() + "', " + "'" + 
-                    ticket.getLocationVenueVillage() + "', " + "'Low', '0', NULL,"
-                    + " 'Issue Reported', NULL, NULL, NULL, NULL, NULL, NULL, "
-                    + "NULL, NULL, NULL, NULL, NULL);";
-            stmt.executeUpdate(sql);
-            success = true;
+            sql = "SELECT * FROM `Tickets` WHERE `CISKeywords` LIKE '" + 
+                    ticket.getCISKeywordsAsString() + "' AND `problemLocation`"
+                    + "LIKE '" + ticket.getProblemLocation() + "' AND `reportedBy`"
+                    + " LIKE '" + ticket.getReportedBy() + "';";
+            ResultSet rs = stmt.executeQuery(sql);
+            if (!rs.isBeforeFirst())
+            {
+            }
+            else
+            {
+                success = true;
+            }
             stmt.close();
             conn.close();
         } catch (SQLException se)
@@ -276,4 +368,15 @@ public class MYSQLEngine
         }
         return success;
     }
+    
+    private DateTime timeStampToDateTime(String timeStamp)
+    {
+        System.out.println(timeStamp.substring(0, 4));
+        int year = Integer.parseInt(timeStamp.substring(0, 4));
+        int month = Integer.parseInt(timeStamp.substring(5, 7));
+        int dayOfMonth = Integer.parseInt(timeStamp.substring(8, 10));
+        int hourOfDay = Integer.parseInt(timeStamp.substring(11, 13));
+        int minuteOfDay = Integer.parseInt(timeStamp.substring(14, 16));
+        return new DateTime(year, month, dayOfMonth, hourOfDay, minuteOfDay);
+    } 
 }
