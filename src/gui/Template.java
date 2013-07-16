@@ -13,6 +13,7 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
+import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 
 /**
@@ -63,7 +64,6 @@ public class Template
         menuBar.add(fileMenu);
         templatedFrame.setJMenuBar(menuBar);
 
-        templatedFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         return templatedFrame;
     }
 

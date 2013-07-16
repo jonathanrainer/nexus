@@ -11,9 +11,10 @@ import io.MYSQLEngine;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Iterator;
-import javax.swing.JButton;
+import javax.swing.JMenu;
+import javax.swing.JMenuBar;
+import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JRadioButton;
 
@@ -171,6 +172,13 @@ public class MainSystem
                 ControlOfficeEntryForm cofe = createLimitedEntryForm();
             }
         });
+        
+        JMenuBar mainMenu = mainGUI.getTaskSelectionScreen().getMainFrame().getJMenuBar();
+        JMenu fileMenu = mainMenu.getMenu(0);
+        JMenuItem checkForPotentialDuplicates = new JMenuItem("Check For Potential Duplicates");
+        JMenuItem checkForUnprintedTickets = new JMenuItem("Check For Unprinted Job Tickets");
+        fileMenu.add(checkForPotentialDuplicates);
+        fileMenu.add(checkForUnprintedTickets);
     }
 
     /**
@@ -225,7 +233,7 @@ public class MainSystem
                         equals("Select a Location")))
                 {
                     ArrayList<String> secondBoxOptions = dataStructures.getMasterListBox2().
-                            get(cofe.getProblemLocationComboBox1().getSelectedItem());
+                            get(cofe.getProblemLocationComboBox1().getSelectedItem().toString());
                     cofe.getProblemLocationComboBox2().removeAllItems();
                     cofe.getProblemLocationComboBox3().removeAllItems();
                     cofe.getProblemLocationComboBox4().removeAllItems();
@@ -250,6 +258,7 @@ public class MainSystem
         cofe.getProblemLocationComboBox2().addActionListener(
                 new ActionListener()
         {
+            @Override
             public void actionPerformed(ActionEvent e)
             {
                 if (e.getActionCommand().equals("comboBoxChanged") 
@@ -257,7 +266,7 @@ public class MainSystem
                         && !(cofe.getProblemLocationComboBox2().getSelectedItem().equals("Select a Location")))
                     {
                         ArrayList<String> thirdBoxOptions = dataStructures.getMasterListBox3().get(
-                                cofe.getProblemLocationComboBox2().getSelectedItem());
+                                cofe.getProblemLocationComboBox2().getSelectedItem().toString());
                         cofe.getProblemLocationComboBox3().removeAllItems();
                         cofe.getProblemLocationComboBox4().removeAllItems();
                         Iterator<String> thirdBoxIterator = thirdBoxOptions.iterator();
@@ -411,6 +420,7 @@ public class MainSystem
                                             "The Job Ticket has been submitted. \n"
                                             + "The Job ID is: " + ticket.getJobRefId()
                                             + "\nIt was submitted at: " + ticket.getDateTime().toString("H:m:s - d/M/y"));
+                                    cofe.getMainFrame().dispose();
                                 }
                                 else
                                 {
