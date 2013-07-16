@@ -27,6 +27,8 @@ public class Ticket
     private String locationVenueVillage;
     private String delegateImpact;
     private boolean showOnCIS;
+    private String ticketAllocatedTo;
+    private String jobProgress;
     private ArrayList<String> updateDescriptions;
     private ArrayList<DateTime> estimatedCompletions;
     private ArrayList<DateTime> updatedAt;
@@ -38,6 +40,7 @@ public class Ticket
             ArrayList<String> CISKeywords, String reportedBy, 
             String whoIsA, String contactVia, String contactNumber, 
             String locationVenueVillage, String delegateImpact, boolean showOnCIS, 
+            String ticketAllocatedTo, String jobProgress,
             ArrayList<String> updateDescriptions, 
             ArrayList<DateTime> estimatedCompletions, 
             ArrayList<DateTime> updatedAt, DateTime jobClosed, 
@@ -56,6 +59,8 @@ public class Ticket
         this.locationVenueVillage = locationVenueVillage;
         this.delegateImpact = delegateImpact;
         this.showOnCIS = showOnCIS;
+        this.ticketAllocatedTo = ticketAllocatedTo;
+        this.jobProgress = jobProgress;
         this.updateDescriptions = updateDescriptions;
         this.estimatedCompletions = estimatedCompletions;
         this.updatedAt = updatedAt;
@@ -219,6 +224,16 @@ public class Ticket
         return contactNumber;
     }
 
+    public String getTicketAllocatedTo()
+    {
+        return ticketAllocatedTo;
+    }
+
+    public String getJobProgress()
+    {
+        return jobProgress;
+    }
+    
     public void setJobRefId(int jobRefId)
     {
         this.jobRefId = jobRefId;

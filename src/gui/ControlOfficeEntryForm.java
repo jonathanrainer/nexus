@@ -109,7 +109,7 @@ public class ControlOfficeEntryForm {
         // Define a blank JLabel so that layout can more easily be specified
 
         if (!entry) {
-            String title = "NWNE Nexus - Control Office Job Ticket Entry";
+            String title = "NWNE Nexus - Control Office Job Ticket - Updating Screen";
             updateFormCreation(title);
         }
         else{
@@ -1161,6 +1161,91 @@ public class ControlOfficeEntryForm {
     public JFrame getMainFrame()
     {
         return mainFrame;
+    }
+
+    public JComboBox getDelegateImpactComboBox()
+    {
+        return delegateImpactComboBox;
+    }
+
+    public JRadioButton getShowOnCISRadioButton()
+    {
+        return showOnCISRadioButton;
+    }
+
+    public JComboBox getJobProgressComboBox()
+    {
+        return jobProgressComboBox;
+    }
+
+    public JTextField getAsAtTextField()
+    {
+        return asAtTextField;
+    }
+
+    public JComboBox getTicketAllocatedToComboBox()
+    {
+        return ticketAllocatedToComboBox;
+    }
+
+    public JTextArea getUpdateTextArea1()
+    {
+        return updateTextArea1;
+    }
+
+    public JTextField getEstimatedCompletionByTextField1()
+    {
+        return estimatedCompletionByTextField1;
+    }
+
+    public JTextField getUpdatedAtTextField1()
+    {
+        return updatedAtTextField1;
+    }
+
+    public JTextArea getUpdateTextArea2()
+    {
+        return updateTextArea2;
+    }
+
+    public JTextField getEstimatedCompletionByTextField2()
+    {
+        return estimatedCompletionByTextField2;
+    }
+
+    public JTextField getUpdatedAtTextField2()
+    {
+        return updatedAtTextField2;
+    }
+
+    public JTextArea getUpdateTextArea3()
+    {
+        return updateTextArea3;
+    }
+
+    public JTextField getEstimatedCompletionByTextField3()
+    {
+        return estimatedCompletionByTextField3;
+    }
+
+    public JTextField getUpdatedAtTextField3()
+    {
+        return updatedAtTextField3;
+    }
+
+    public JRadioButton getJobCompletedRadioButton()
+    {
+        return jobCompletedRadioButton;
+    }
+
+    public JTextField getJobCompletedTextField()
+    {
+        return jobCompletedTextField;
+    }
+
+    public JTextField getNextUpdateDueTextField()
+    {
+        return nextUpdateDueTextField;
     }
     
     

@@ -13,6 +13,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import org.joda.time.DateTime;
 import system.Ticket;
+import system.User;
 
 /**
  * A class to encapsulate the connectivity to the MYSQL database.
@@ -369,14 +370,125 @@ public class MYSQLEngine
         return success;
     }
     
+    public Ticket retrieveTicket(String ticketID)
+    {
+        // Set up the initial connection and statement objects
+        Connection conn = null;
+        Statement stmt = null;
+        Ticket ticket = null;
+        // Begin try block so SQL Exceptions can be handled later
+        try
+        {
+            // Register JDBC driver
+            Class.forName("com.mysql.jdbc.Driver");
+            // Open a connection
+            conn = DriverManager.getConnection(DB_URL, USER, PASS);
+
+            // Create and Execute the SQL Query
+            stmt = conn.createStatement();
+            /**
+             * Query states: Look in the information_schema table and extract,
+             * to a substring, the entire contents of the ENUM called team.
+             */
+            String sql = "SELECT * FROM `Tickets` WHERE `jobRefId` = " + ticketID + ";";
+            ResultSet rs = stmt.executeQuery(sql);
+
+            // Extract the resulting data from the ResultSet
+            while (rs.next())
+            {
+                int jobRefID = rs.getInt("jobRefId");
+                DateTime dateTime = timeStampToDateTime(rs.getString("dateTime"));
+                User user = new User(rs.getString("ticketRaisedByTeam"));
+                user.setName(rs.getString("ticketRaisedByMember"));
+                String problemLocation = rs.getString("problemLocation");
+                String problemDescription = rs.getString("problemDescription");
+                String[] CISKeywordsArray = rs.getString("CISKeywords").split(";");
+                int i = 0;
+                ArrayList<String> CISKeywords = new ArrayList<>();
+                while (i < CISKeywordsArray.length)
+                {
+                    CISKeywords.add(CISKeywordsArray[i]);
+                    i++;
+                }
+                String reportedBy = rs.getString("reportedBy");
+                String whoIsA = rs.getString("whoIsA");
+                String contactVia = rs.getString("contactVia");
+                String contactNumber = rs.getString("contactNumber");
+                String locationVenueVillage = rs.getString("locationVenueVillage");
+                String delegateImpact = rs.getString("delegateImpact");
+                boolean showOnCIS = rs.getBoolean("showOnCIS");
+                String ticketAllocatedTo = rs.getString("ticketAllocatedTo");
+                String jobProgress = rs.getString("jobProgress");
+                ArrayList<String> updateDescriptions = new ArrayList<>();
+                updateDescriptions.add(rs.getString("update1Description"));
+                updateDescriptions.add(rs.getString("update2Description"));
+                updateDescriptions.add(rs.getString("update3Description"));
+                ArrayList<DateTime> estimatedCompletions = new ArrayList<>();
+                estimatedCompletions.add(timeStampToDateTime(rs.getString("update1EstimatedCompletion")));
+                estimatedCompletions.add(timeStampToDateTime(rs.getString("update2EstimatedCompletion")));
+                estimatedCompletions.add(timeStampToDateTime(rs.getString("update3EstimatedCompletion")));
+                ArrayList<DateTime> updatedAt = new ArrayList<>();
+                updatedAt.add(timeStampToDateTime(rs.getString("update1UpdatedAt")));
+                updatedAt.add(timeStampToDateTime(rs.getString("update2UpdatedAt")));
+                updatedAt.add(timeStampToDateTime(rs.getString("update3UpdatedAt")));
+                DateTime jobClosed = timeStampToDateTime(rs.getString("jobClosed"));
+                DateTime nextUpdateDue = timeStampToDateTime(rs.getString("nextUpdateDue"));
+                ticket = new Ticket(jobRefID, dateTime, user, problemLocation,
+                        problemDescription, CISKeywords, reportedBy, whoIsA,
+                        contactVia, contactVia, locationVenueVillage, delegateImpact, showOnCIS,
+                        ticketAllocatedTo, jobProgress, updateDescriptions,
+                        estimatedCompletions, updatedAt, jobClosed, nextUpdateDue);
+            }
+            // Close all the statements, result set and connection.
+            rs.close();
+            stmt.close();
+            conn.close();
+        } catch (SQLException se)
+        {
+            //Handle errors for JDBC
+        } catch (Exception e)
+        {
+            //Handle errors for Class.forName
+        } finally
+        {
+            //finally block used to close resources should all else fail
+            try
+            {
+                if (stmt != null)
+                {
+                    stmt.close();
+                }
+            } catch (SQLException se2)
+            {
+            }// nothing we can do
+
+            try
+            {
+                if (conn != null)
+                {
+                    conn.close();
+                }
+            } catch (SQLException se)
+            {
+            }
+        }
+        return ticket;
+    }
+    
     private DateTime timeStampToDateTime(String timeStamp)
     {
-        System.out.println(timeStamp.substring(0, 4));
-        int year = Integer.parseInt(timeStamp.substring(0, 4));
-        int month = Integer.parseInt(timeStamp.substring(5, 7));
-        int dayOfMonth = Integer.parseInt(timeStamp.substring(8, 10));
-        int hourOfDay = Integer.parseInt(timeStamp.substring(11, 13));
-        int minuteOfDay = Integer.parseInt(timeStamp.substring(14, 16));
-        return new DateTime(year, month, dayOfMonth, hourOfDay, minuteOfDay);
-    } 
+        if (timeStamp == null)
+        {
+            return null;
+        }
+        else
+        {
+            int year = Integer.parseInt(timeStamp.substring(0, 4));
+            int month = Integer.parseInt(timeStamp.substring(5, 7));
+            int dayOfMonth = Integer.parseInt(timeStamp.substring(8, 10));
+            int hourOfDay = Integer.parseInt(timeStamp.substring(11, 13));
+            int minuteOfDay = Integer.parseInt(timeStamp.substring(14, 16));
+            return new DateTime(year, month, dayOfMonth, hourOfDay, minuteOfDay);
+        }
+    }  
 }
