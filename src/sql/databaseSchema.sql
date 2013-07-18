@@ -43,11 +43,6 @@ CREATE TABLE `Users` (
 PRIMARY KEY (`userID`)
 ) Engine = InnoDB CHARACTER SET utf8 COLLATE utf8_bin;
 
-CREATE TABLE `DuplicateQueue` LIKE `Tickets`
---CREATE TABLE `Verification-Queue` (
---)
-
---CREATE TABLE `CIS-Entries` (
---)
+CREATE TABLE `DuplicateQueue` LIKE `Tickets`;
 
 
