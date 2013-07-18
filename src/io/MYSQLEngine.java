@@ -514,7 +514,7 @@ public class MYSQLEngine
             /**
              * Query states: Select all the users in a particular team
              */
-            String sql = "SELECT * FROM duplicatesQueue";
+            String sql = "SELECT * FROM duplicateQueue";
             ResultSet rs = stmt.executeQuery(sql);
             while(rs.next())
             {
@@ -525,7 +525,7 @@ public class MYSQLEngine
             conn.close();
         } catch (SQLException se)
         {
-            System.out.println(se.getSQLState());
+;            System.out.println(se.getSQLState());
             //Handle errors for JDBC
         } catch (Exception e)
         {
@@ -558,6 +558,7 @@ public class MYSQLEngine
         while(i < duplicates.size())
         {
             duplicateArray[i] = duplicates.get(i);
+            i++;
         }
         return duplicateArray;
     }

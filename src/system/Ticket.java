@@ -256,5 +256,9 @@ public class Ticket
         return asAt;
     }
     
+    public String toString()
+    {
+        return "ID: " + jobRefId + " - Description : " + problemDescription;
+    }
     
 }

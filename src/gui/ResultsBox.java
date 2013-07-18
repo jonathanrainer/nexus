@@ -8,6 +8,7 @@ import java.awt.Dimension;
 import java.awt.GridLayout;
 import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JPanel;
 import javax.swing.ListSelectionModel;
@@ -31,9 +32,9 @@ public class ResultsBox
     {
         template = new Template();
         
-        mainFrame = new JFrame("Results of Query - " + type);
+        mainFrame = new JFrame("Results of Query - Find" + type + " Tickets");
         mainFrame.setSize(new Dimension(250, 450));
-        mainFrame.setLayout(new GridLayout(2,1));
+        mainFrame.setLayout(new GridLayout(3,1));
         
         resultsPane = new JPanel();
         buttonsPane = new JPanel();
@@ -46,6 +47,7 @@ public class ResultsBox
         buttonsPane.add(submitButton);
         buttonsPane.add(exitButton);
         
+        mainFrame.add(new JLabel(template.headingString("Results", 2), JLabel.CENTER));
         mainFrame.add(resultsPane);
         mainFrame.add(buttonsPane);
         mainFrame.pack();
@@ -55,6 +57,8 @@ public class ResultsBox
             case "Duplicate":
                 resultsArea.setListData(results);
                 resultsArea.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
+                break;
+            case "Unprinted":
                 break;
         }
         
