@@ -93,7 +93,11 @@ public class Ticket
         {
             return "Too many keywords specified";
         }
-        if(whoIsA.equals("Choose One"))
+        if(CISKeywords.size() < 1)
+        {
+            return "Too few keywords specified";
+        }
+        if(whoIsA.equals("Who Is A?"))
         {
             return "Role of person reporting is not specified";
         }
@@ -104,7 +108,7 @@ public class Ticket
         }
         if(contactNumber.equals(""))
         {
-            return "A number must be entered as a contact number";
+            return "A method of contact must be entered for this ticket.";
         }
         if(locationVenueVillage.equals("Choose One"))
         {

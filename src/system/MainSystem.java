@@ -387,7 +387,7 @@ public class MainSystem
                 }
             });
 
-        cofe.getWhoIsAComboBox().addItem("Choose One");
+        cofe.getWhoIsAComboBox().addItem("Who Is A?");
         cofe.getWhoIsAComboBox().addItem("Delegate");
         cofe.getWhoIsAComboBox().addItem("Speaker");
         cofe.getWhoIsAComboBox().addItem("Team Member");
@@ -405,10 +405,7 @@ public class MainSystem
                    public void actionPerformed(ActionEvent e)
                    {
                        if(e.getActionCommand().equals("comboBoxChanged") &&
-                               !(cofe.getContactViaComboBox().getSelectedItem().
-                               toString().equals("Choose One")) && 
-                               !(cofe.getContactViaComboBox().getSelectedItem().
-                               toString().equals("Mobile")))
+                               cofe.getContactViaComboBox().getSelectedItem().equals("Not Required"))
                        {
                            cofe.getContactNumberTextField().setText(
                                    cofe.getContactViaComboBox().
