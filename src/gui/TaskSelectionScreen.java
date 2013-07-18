@@ -83,6 +83,15 @@ public class TaskSelectionScreen {
                 1);
         buttons.put("viewAmendAOTicketButton", viewAmendAOTicketButton);
         frameContent.add(viewAmendAOTicketButton, viewAmendAOTicketButtonConstraints);
+        JButton logoutButton;
+        logoutButton = new JButton(template.headingString(
+                "Logout", 2));
+        GridBagConstraints logoutButtonConstraints = template.
+                createGridBagConstraints(0, 6, GridBagConstraints.BOTH, 0, 0,
+                new Insets(0, 0, 0, 0), GridBagConstraints.CENTER, 0.0, 0.0, 1,
+                1);
+        buttons.put("Logout", logoutButton);
+        frameContent.add(logoutButton, logoutButtonConstraints);
         return frameContent;
     }
 
@@ -114,6 +123,15 @@ public class TaskSelectionScreen {
                 1);
         buttons.put("viewAmendCOTicketButton", viewAmendCOTicketButton);
         frameContent.add(viewAmendCOTicketButton, viewAmendCOTicketButtonConstraints);
+        JButton logoutButton;
+        logoutButton = new JButton(template.headingString(
+                "Logout", 2));
+        GridBagConstraints logoutButtonConstraints = template.
+                createGridBagConstraints(0, 6, GridBagConstraints.BOTH, 0, 0,
+                new Insets(0, 0, 0, 0), GridBagConstraints.CENTER, 0.0, 0.0, 1,
+                1);
+        buttons.put("Logout", logoutButton);
+        frameContent.add(logoutButton, logoutButtonConstraints);
         return frameContent;
     }
 
@@ -136,6 +154,15 @@ public class TaskSelectionScreen {
                 1);
         buttons.put("writeNewCOTicketButton", writeNewCOTicketButton);
         frameContent.add(writeNewCOTicketButton, writeNewCOTicketButtonConstraints);
+        JButton logoutButton;
+        logoutButton = new JButton(template.headingString(
+                "Logout", 2));
+        GridBagConstraints logoutButtonConstraints = template.
+                createGridBagConstraints(0, 6, GridBagConstraints.BOTH, 0, 0,
+                new Insets(0, 0, 0, 0), GridBagConstraints.CENTER, 0.0, 0.0, 1,
+                1);
+        buttons.put("Logout", logoutButton);
+        frameContent.add(logoutButton, logoutButtonConstraints);
         return frameContent;
     }
 

@@ -144,6 +144,20 @@ public class MainSystem
 
             }
         });
+        
+        mainGUI.getTaskSelectionScreen().getButtons().get("Logout").
+                addActionListener(
+                new ActionListener()
+                {
+                    @Override
+                    public void actionPerformed(ActionEvent e)
+                    {
+                        mainGUI.getTaskSelectionScreen().getMainFrame().dispose();
+                        user = null;
+                        initialGUI.getTeamSelectionScreen().getMainFrame().setVisible(true);
+                    }
+
+                });
     }
 
     private void addActionListenersInfoTaskSelection()
@@ -158,6 +172,20 @@ public class MainSystem
                 ControlOfficeEntryForm cofe = createLimitedEntryForm();
             }
         });
+        
+        mainGUI.getTaskSelectionScreen().getButtons().get("Logout").
+                addActionListener(
+                new ActionListener()
+                {
+                    @Override
+                    public void actionPerformed(ActionEvent e)
+                    {
+                        mainGUI.getTaskSelectionScreen().getMainFrame().dispose();
+                        user = null;
+                        initialGUI.getTeamSelectionScreen().getMainFrame().setVisible(true);
+                    }
+
+                });
     }
 
     private void addActionListenersControlOfficeTaskSelection()
@@ -169,7 +197,7 @@ public class MainSystem
             @Override
             public void actionPerformed(ActionEvent e)
             {
-                ControlOfficeEntryForm cofe = createLimitedEntryForm();
+                ControlOfficeEntryForm cofe = createControlEntryForm();
             }
         });
         
@@ -187,8 +215,21 @@ public class MainSystem
                    public void actionPerformed(ActionEvent e)
                    {
                        createUpdateAmendEntryForm();
-                       
                    }
+                });
+        
+       mainGUI.getTaskSelectionScreen().getButtons().get("Logout").
+                addActionListener(
+                new ActionListener()
+                {
+                    @Override
+                    public void actionPerformed(ActionEvent e)
+                    {
+                        mainGUI.getTaskSelectionScreen().getMainFrame().dispose();
+                        user = null;
+                        initialGUI.getTeamSelectionScreen().getMainFrame().setVisible(true);
+                    }
+
                 });
     }
 
@@ -761,101 +802,112 @@ public class MainSystem
                 + "update.", "Update/Amend Ticket Search", 
                 JOptionPane.QUESTION_MESSAGE);
         final ControlOfficeEntryForm cofeAmmend = new ControlOfficeEntryForm(false, user);
-        Ticket ticket = mysqlEngine.retrieveTicket(ticketID);
-        
-        //Add information back into the ticket
-        cofeAmmend.getTicketReferenceTextField().setText("" + ticket.getJobRefId());
-        cofeAmmend.getTicketReferenceTextField().setEnabled(false);
-        cofeAmmend.getDateTimeTextField().setText(ticket.getDateTime().toString("d/M/y - H:mm"));
-        cofeAmmend.getDateTimeTextField().setEnabled(false);
-        cofeAmmend.getTicketWrittenComboBox().addItem(ticket.getTicketRaisedBy().getTeam());
-        cofeAmmend.getTicketWrittenComboBox().setSelectedIndex(0);
-        cofeAmmend.getTicketWrittenComboBox().setEnabled(false);
-        cofeAmmend.getTeamMembersComboBox().addItem(ticket.getTicketRaisedBy().getName());
-        cofeAmmend.getTeamMembersComboBox().setSelectedIndex(0);
-        cofeAmmend.getTeamMembersComboBox().setEnabled(false);
-        
-        String[] problemLocation = ticket.getProblemLocation().split("-");
-        cofeAmmend.getProblemLocationComboBox1().addItem(problemLocation[0]);
-        cofeAmmend.getProblemLocationComboBox1().setSelectedIndex(0);
-        cofeAmmend.getProblemLocationComboBox1().setEnabled(false);
-        cofeAmmend.getProblemLocationComboBox2().addItem(problemLocation[1]);
-        cofeAmmend.getProblemLocationComboBox2().setSelectedIndex(0);
-        cofeAmmend.getProblemLocationComboBox2().setEnabled(false);
-        cofeAmmend.getProblemLocationComboBox3().addItem(problemLocation[2]);
-        cofeAmmend.getProblemLocationComboBox3().setSelectedIndex(0);
-        cofeAmmend.getProblemLocationComboBox3().setEnabled(false);
-        cofeAmmend.getProblemLocationComboBox4().addItem(problemLocation[3]);
-        cofeAmmend.getProblemLocationComboBox4().setSelectedIndex(0);
-        cofeAmmend.getProblemLocationComboBox4().setEnabled(false);
-        
-        cofeAmmend.getProblemDescriptionTextArea().setText(ticket.getProblemDescription());
-        cofeAmmend.getProblemDescriptionTextArea().setEnabled(false);
-        
-        Iterator<String> it1 = ticket.getCISKeywords().iterator();
-        while(it1.hasNext())
+        Ticket ticket = null;
+        try 
         {
-            String keyword = it1.next();
-            Iterator<JRadioButton> it2 = cofeAmmend.getButtonsInGrid().iterator();
-            while(it2.hasNext())
-            {
-                JRadioButton buttonToConsider = it2.next();
-                if(buttonToConsider.getName().equals(keyword))
-                {
-                    buttonToConsider.setSelected(true);
-                }
-                buttonToConsider.setEnabled(false);
-            }
+            ticket = mysqlEngine.retrieveTicket(ticketID);
+                    //Add information back into the ticket
+               cofeAmmend.getTicketReferenceTextField().setText("" + ticket.getJobRefId());
+               cofeAmmend.getTicketReferenceTextField().setEnabled(false);
+               cofeAmmend.getDateTimeTextField().setText(ticket.getDateTime().toString("d/M/y - H:mm"));
+               cofeAmmend.getDateTimeTextField().setEnabled(false);
+               cofeAmmend.getTicketWrittenComboBox().addItem(ticket.getTicketRaisedBy().getTeam());
+               cofeAmmend.getTicketWrittenComboBox().setSelectedIndex(0);
+               cofeAmmend.getTicketWrittenComboBox().setEnabled(false);
+               cofeAmmend.getTeamMembersComboBox().addItem(ticket.getTicketRaisedBy().getName());
+               cofeAmmend.getTeamMembersComboBox().setSelectedIndex(0);
+               cofeAmmend.getTeamMembersComboBox().setEnabled(false);
+
+               String[] problemLocation = ticket.getProblemLocation().split("-");
+               cofeAmmend.getProblemLocationComboBox1().addItem(problemLocation[0]);
+               cofeAmmend.getProblemLocationComboBox1().setSelectedIndex(0);
+               cofeAmmend.getProblemLocationComboBox1().setEnabled(false);
+               cofeAmmend.getProblemLocationComboBox2().addItem(problemLocation[1]);
+               cofeAmmend.getProblemLocationComboBox2().setSelectedIndex(0);
+               cofeAmmend.getProblemLocationComboBox2().setEnabled(false);
+               cofeAmmend.getProblemLocationComboBox3().addItem(problemLocation[2]);
+               cofeAmmend.getProblemLocationComboBox3().setSelectedIndex(0);
+               cofeAmmend.getProblemLocationComboBox3().setEnabled(false);
+               cofeAmmend.getProblemLocationComboBox4().addItem(problemLocation[3]);
+               cofeAmmend.getProblemLocationComboBox4().setSelectedIndex(0);
+               cofeAmmend.getProblemLocationComboBox4().setEnabled(false);
+
+               cofeAmmend.getProblemDescriptionTextArea().setText(ticket.getProblemDescription());
+               cofeAmmend.getProblemDescriptionTextArea().setEnabled(false);
+
+               Iterator<String> it1 = ticket.getCISKeywords().iterator();
+               while(it1.hasNext())
+               {
+                   String keyword = it1.next();
+                   Iterator<JRadioButton> it2 = cofeAmmend.getButtonsInGrid().iterator();
+                   while(it2.hasNext())
+                   {
+                       JRadioButton buttonToConsider = it2.next();
+                       if(buttonToConsider.getName().equals(keyword))
+                       {
+                           buttonToConsider.setSelected(true);
+                       }
+                       buttonToConsider.setEnabled(false);
+                   }
+               }
+
+               cofeAmmend.getProblemReportedByTextField().setText(ticket.getReportedBy());
+               cofeAmmend.getProblemReportedByTextField().setEnabled(false);
+               cofeAmmend.getWhoIsAComboBox().addItem(ticket.getWhoIsA());
+               cofeAmmend.getWhoIsAComboBox().setSelectedIndex(0);
+               cofeAmmend.getWhoIsAComboBox().setEnabled(false);
+
+               cofeAmmend.getContactViaComboBox().addItem(ticket.getContactVia());
+               cofeAmmend.getContactViaComboBox().setSelectedIndex(0);
+               cofeAmmend.getContactViaComboBox().setEnabled(false);
+               cofeAmmend.getContactNumberTextField().setText(ticket.getContactNumber());
+               cofeAmmend.getContactNumberTextField().setEnabled(false);
+               cofeAmmend.getLocationVenueVillageComboBox().addItem(ticket.getLocationVenueVillage());
+               cofeAmmend.getLocationVenueVillageComboBox().setSelectedIndex(0);
+               cofeAmmend.getLocationVenueVillageComboBox().setEnabled(false);
+
+               // All fields that should be filled in are above
+
+               cofeAmmend.getDelegateImpactComboBox().addItem("Low");
+               cofeAmmend.getDelegateImpactComboBox().addItem("Medium");
+               cofeAmmend.getDelegateImpactComboBox().addItem("High");
+               cofeAmmend.getDelegateImpactComboBox().setSelectedItem(0);
+
+               cofeAmmend.getTicketAllocatedToComboBox().addItem("Please Choose One");
+               cofeAmmend.getTicketAllocatedToComboBox().addItem("Control Office");
+               cofeAmmend.getTicketAllocatedToComboBox().addItem("Control Office (Admin)");
+               cofeAmmend.getTicketAllocatedToComboBox().addItem("Day Stewards");
+               cofeAmmend.getTicketAllocatedToComboBox().addItem("Night Stewards");
+               cofeAmmend.getTicketAllocatedToComboBox().addItem("AV");
+               cofeAmmend.getTicketAllocatedToComboBox().addItem("Finance");
+               cofeAmmend.getTicketAllocatedToComboBox().addItem("Hospitality");
+               cofeAmmend.getTicketAllocatedToComboBox().addItem("Information");
+               cofeAmmend.getTicketAllocatedToComboBox().addItem("IT Support");
+               cofeAmmend.getTicketAllocatedToComboBox().addItem("Logistics");
+               cofeAmmend.getTicketAllocatedToComboBox().addItem("Production");
+               cofeAmmend.getTicketAllocatedToComboBox().addItem("Site Crew");
+               cofeAmmend.getTicketAllocatedToComboBox().addItem("WigWam");
+               cofeAmmend.getTicketAllocatedToComboBox().addItem("Andy (Showground)");
+               cofeAmmend.getTicketAllocatedToComboBox().addItem("Jackie (Cleaners)");
+               cofeAmmend.getTicketAllocatedToComboBox().addItem("Other");
+
+               cofeAmmend.getJobProgressComboBox().addItem("Issue Reported");
+               cofeAmmend.getJobProgressComboBox().addItem("Ticket Printed");
+               cofeAmmend.getJobProgressComboBox().addItem("Job In Progress");
+               cofeAmmend.getJobProgressComboBox().addItem("Job Escalated");
+               cofeAmmend.getJobProgressComboBox().addItem("Job Done");
+        
         }
         
-        cofeAmmend.getProblemReportedByTextField().setText(ticket.getReportedBy());
-        cofeAmmend.getProblemReportedByTextField().setEnabled(false);
-        cofeAmmend.getWhoIsAComboBox().addItem(ticket.getWhoIsA());
-        cofeAmmend.getWhoIsAComboBox().setSelectedIndex(0);
-        cofeAmmend.getWhoIsAComboBox().setEnabled(false);
-        
-        cofeAmmend.getContactViaComboBox().addItem(ticket.getContactVia());
-        cofeAmmend.getContactViaComboBox().setSelectedIndex(0);
-        cofeAmmend.getContactViaComboBox().setEnabled(false);
-        cofeAmmend.getContactNumberTextField().setText(ticket.getContactNumber());
-        cofeAmmend.getContactNumberTextField().setEnabled(false);
-        cofeAmmend.getLocationVenueVillageComboBox().addItem(ticket.getLocationVenueVillage());
-        cofeAmmend.getLocationVenueVillageComboBox().setSelectedIndex(0);
-        cofeAmmend.getLocationVenueVillageComboBox().setEnabled(false);
-        
-        // All fields that should be filled in are above
-        
-        cofeAmmend.getDelegateImpactComboBox().addItem("Low");
-        cofeAmmend.getDelegateImpactComboBox().addItem("Medium");
-        cofeAmmend.getDelegateImpactComboBox().addItem("High");
-        cofeAmmend.getDelegateImpactComboBox().setSelectedItem(0);
-        
-        cofeAmmend.getTicketAllocatedToComboBox().addItem("Please Choose One");
-        cofeAmmend.getTicketAllocatedToComboBox().addItem("Control Office");
-        cofeAmmend.getTicketAllocatedToComboBox().addItem("Control Office (Admin)");
-        cofeAmmend.getTicketAllocatedToComboBox().addItem("Day Stewards");
-        cofeAmmend.getTicketAllocatedToComboBox().addItem("Night Stewards");
-        cofeAmmend.getTicketAllocatedToComboBox().addItem("AV");
-        cofeAmmend.getTicketAllocatedToComboBox().addItem("Finance");
-        cofeAmmend.getTicketAllocatedToComboBox().addItem("Hospitality");
-        cofeAmmend.getTicketAllocatedToComboBox().addItem("Information");
-        cofeAmmend.getTicketAllocatedToComboBox().addItem("IT Support");
-        cofeAmmend.getTicketAllocatedToComboBox().addItem("Logistics");
-        cofeAmmend.getTicketAllocatedToComboBox().addItem("Production");
-        cofeAmmend.getTicketAllocatedToComboBox().addItem("Site Crew");
-        cofeAmmend.getTicketAllocatedToComboBox().addItem("WigWam");
-        cofeAmmend.getTicketAllocatedToComboBox().addItem("Andy (Showground)");
-        cofeAmmend.getTicketAllocatedToComboBox().addItem("Jackie (Cleaners)");
-        cofeAmmend.getTicketAllocatedToComboBox().addItem("Other");
-        
-        cofeAmmend.getJobProgressComboBox().addItem("Issue Reported");
-        cofeAmmend.getJobProgressComboBox().addItem("Ticket Printed");
-        cofeAmmend.getJobProgressComboBox().addItem("Job In Progress");
-        cofeAmmend.getJobProgressComboBox().addItem("Job Escalated");
-        cofeAmmend.getJobProgressComboBox().addItem("Job Done");
-        
+        catch(Exception e)
+        {
+            cofeAmmend.getMainFrame().dispose();
+            JOptionPane.showMessageDialog(
+                mainGUI.getTaskSelectionScreen().getMainFrame(), 
+                "That Ticket ID does not exist. Please enter an existing one", "Error has occurred", 
+                JOptionPane.ERROR_MESSAGE);
+        }
         return cofeAmmend;
-        
     }
     
     public InitialGUI getInitialGUI()
