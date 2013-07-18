@@ -7,11 +7,13 @@ package system;
 import gui.ControlOfficeEntryForm;
 import gui.InitialGUI;
 import gui.MainGUI;
+import gui.ResultsBox;
 import io.MYSQLEngine;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.Iterator;
+import javax.swing.JFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
@@ -202,13 +204,6 @@ public class MainSystem
             }
         });
         
-        JMenuBar mainMenu = mainGUI.getTaskSelectionScreen().getMainFrame().getJMenuBar();
-        JMenu fileMenu = mainMenu.getMenu(0);
-        JMenuItem checkForPotentialDuplicates = new JMenuItem("Check For Potential Duplicates");
-        JMenuItem checkForUnprintedTickets = new JMenuItem("Check For Unprinted Job Tickets");
-        fileMenu.add(checkForPotentialDuplicates);
-        fileMenu.add(checkForUnprintedTickets);
-        
         mainGUI.getTaskSelectionScreen().getButtons().
                 get("viewAmendCOTicketButton").addActionListener(
                 new ActionListener()
@@ -232,6 +227,17 @@ public class MainSystem
                     }
 
                 });
+       
+       mainGUI.getTaskSelectionScreen().getMainFrame().
+               getJMenuBar().getMenu(0).getItem(0).addActionListener(new ActionListener()
+               {
+                   @Override
+                   public void actionPerformed(ActionEvent e)
+                   {
+                       Ticket[] tickets = mysqlEngine.getDuplicates();
+                       ResultsBox resultsBox = new ResultsBox(tickets, "Duplicate");
+                   }
+               });
     }
 
     /**
@@ -241,7 +247,7 @@ public class MainSystem
      * @return The form ready to be filled in
      */
     private ControlOfficeEntryForm createLimitedEntryForm()
-    {
+     {
         final ControlOfficeEntryForm cofe = new ControlOfficeEntryForm(true, user);
         //Set the text in the two automated fields and make them unwriteable
         cofe.getTicketReferenceTextField().setText("Automated");
@@ -751,7 +757,7 @@ public class MainSystem
                                             "The Job Ticket has been submitted. \n"
                                             + "The Job ID is: " + ticket.getJobRefId()
                                             + "\nIt was submitted at: " + 
-                                            ticket.getDateTime().toString("dd/MM/yyyy HH:mnm"));
+                                            ticket.getDateTime().toString("dd/MM/yyyy HH:mm"));
                                     cofe.getMainFrame().dispose();
                                 }
                                 else
@@ -837,7 +843,7 @@ public class MainSystem
         Ticket ticket = null;
         try 
         {
-            ticket = mysqlEngine.retrieveTicket(ticketID);
+            ticket = mysqlEngine.retrieveTicket(ticketID, "tickets");
                     //Add information back into the ticket
                cofeAmmend.getTicketReferenceTextField().setText("" + ticket.getJobRefId());
                cofeAmmend.getTicketReferenceTextField().setEnabled(false);

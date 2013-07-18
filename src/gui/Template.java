@@ -61,6 +61,8 @@ public class Template
         // Create the menu to go across the top of the frame.
         JMenuBar menuBar = new JMenuBar();
         JMenu fileMenu = new JMenu("File");
+        JMenuItem quit = new JMenuItem("Quit");
+        fileMenu.add(quit, -1);
         menuBar.add(fileMenu);
         templatedFrame.setJMenuBar(menuBar);
 

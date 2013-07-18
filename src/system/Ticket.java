@@ -123,6 +123,7 @@ public class Ticket
     public String textValidation(String unvalidatedText)
     {
         System.out.println(unvalidatedText);
+        unvalidatedText = unvalidatedText.replace("'", "\'");
         unvalidatedText = unvalidatedText.replace("\"", "\\\"");
         unvalidatedText = unvalidatedText.replace("\\" , "\\\\");
         unvalidatedText = unvalidatedText.replace("%", "\\%");

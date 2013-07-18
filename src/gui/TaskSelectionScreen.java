@@ -6,11 +6,13 @@ package gui;
 
 import java.awt.GridBagConstraints;
 import java.awt.Insets;
-import java.util.ArrayList;
 import java.util.HashMap;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JMenu;
+import javax.swing.JMenuBar;
+import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 
 /**
@@ -96,6 +98,13 @@ public class TaskSelectionScreen {
     }
 
     private JPanel controlOfficeTasks(JPanel frameContent) {
+        JMenuBar mainMenu = mainFrame.getJMenuBar();
+        JMenu fileMenu = mainMenu.getMenu(0);
+        JMenuItem checkForPotentialDuplicates = new JMenuItem("Check For Potential Duplicates");
+        JMenuItem checkForUnprintedTickets = new JMenuItem("Check For Unprinted Job Tickets");
+        fileMenu.add(checkForPotentialDuplicates, 0);
+        fileMenu.add(checkForUnprintedTickets, 1);
+        
         JButton writeNewATTicketButton;
         writeNewATTicketButton = new JButton(template.headingString(
                 "Write New Administration Team Job Ticket", 2));
