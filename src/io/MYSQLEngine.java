@@ -241,7 +241,7 @@ public class MYSQLEngine
                 table = "`Tickets`";
             }
             String insertionQuery;
-            insertionQuery = "INSERT INTO " + table +  "VALUES (NULL, NOW(), '" + 
+            insertionQuery = "INSERT INTO " + table +  " VALUES (NULL, NOW(), '" + 
                     ticket.getTicketRaisedBy().getTeam() + "', "
                     + "'" + ticket.getTicketRaisedBy().getName() + "', " + "'" 
                     + ticket.getProblemLocation() + "', " 
@@ -250,9 +250,27 @@ public class MYSQLEngine
                     + "'" + ticket.getReportedBy() + "', " + "'" + 
                     ticket.getWhoIsA()+ "', " + "'" + ticket.getContactVia() + 
                     "', '" + ticket.getContactNumber() + "', " + "'" + 
-                    ticket.getLocationVenueVillage() + "', " + "'Low', '0', NULL,"
-                    + " 'Issue Reported', NULL, NULL, NULL, NULL, NULL, NULL, "
-                    + "NULL, NULL, NULL, NULL, NULL);";
+                    ticket.getLocationVenueVillage() + "', " + "'Low'";
+            
+            if(ticket.getTicketRaisedBy().getTeam().equals("Control Office"))
+            {
+                int showOnCIS = ticket.isShowOnCIS() ? 1 : 0;
+                String ticketAllocatedTo = ticket.getTicketAllocatedTo();
+                String jobProgress = ticket.getJobProgress();
+                DateTime asAt = ticket.getAsAt();
+                insertionQuery = insertionQuery + ", " + showOnCIS + ", '" + 
+                        ticketAllocatedTo + "', '" + jobProgress + "', '" 
+                        + asAt.toString("YYYY-MM-dd HH:mm:ss") 
+                        + "', NULL, NULL, NULL, NULL, NULL, "
+                    + "NULL, NULL, NULL, NULL, NULL, NULL);";
+                
+            }
+            else
+            {
+                insertionQuery = insertionQuery + ",'0', NULL,"
+                    + " 'Issue Reported', NOW(), NULL, NULL, NULL, NULL, NULL, "
+                    + "NULL, NULL, NULL, NULL, NULL, NULL);";
+            }
             stmt1.executeUpdate(insertionQuery);
             String query2 = "SELECT * FROM `Tickets` WHERE `CISKeywords` LIKE '" + 
                     ticket.getCISKeywordsAsString() + "' AND `problemLocation`"
@@ -419,6 +437,7 @@ public class MYSQLEngine
                 boolean showOnCIS = rs.getBoolean("showOnCIS");
                 String ticketAllocatedTo = rs.getString("ticketAllocatedTo");
                 String jobProgress = rs.getString("jobProgress");
+                DateTime asAt = timeStampToDateTime(rs.getString("asat"));
                 ArrayList<String> updateDescriptions = new ArrayList<>();
                 updateDescriptions.add(rs.getString("update1Description"));
                 updateDescriptions.add(rs.getString("update2Description"));
@@ -436,7 +455,7 @@ public class MYSQLEngine
                 ticket = new Ticket(jobRefID, dateTime, user, problemLocation,
                         problemDescription, CISKeywords, reportedBy, whoIsA,
                         contactVia, contactVia, locationVenueVillage, delegateImpact, showOnCIS,
-                        ticketAllocatedTo, jobProgress, updateDescriptions,
+                        ticketAllocatedTo, jobProgress, asAt, updateDescriptions,
                         estimatedCompletions, updatedAt, jobClosed, nextUpdateDue);
             }
             // Close all the statements, result set and connection.
@@ -475,6 +494,8 @@ public class MYSQLEngine
         return ticket;
     }
     
+    
+    
     private DateTime timeStampToDateTime(String timeStamp)
     {
         if (timeStamp == null)
@@ -489,6 +510,6 @@ public class MYSQLEngine
             int hourOfDay = Integer.parseInt(timeStamp.substring(11, 13));
             int minuteOfDay = Integer.parseInt(timeStamp.substring(14, 16));
             return new DateTime(year, month, dayOfMonth, hourOfDay, minuteOfDay);
-        }
+            }
     }  
 }

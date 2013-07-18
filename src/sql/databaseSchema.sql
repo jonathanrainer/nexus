@@ -2,7 +2,7 @@ DROP DATABASE IF EXISTS `Nexus`;
 CREATE DATABASE `Nexus`;
 USE `Nexus`;
 
-CREATE TABLE `Tickets` (
+CREATE TABLE `tickets` (
 `jobRefId` INT(4) NOT NULL AUTO_INCREMENT,
 `dateTime` DATETIME NOT NULL,
 `ticketRaisedByTeam` ENUM('Control Office', 'Information Team', 'Administration Team') NOT NULL,
@@ -21,6 +21,7 @@ CREATE TABLE `Tickets` (
 'Site Crew', 'Cleaners (Jackie)', 'WigWam', 'Production'),
 `jobProgress` ENUM('Issue Reported', 'Ticket Printed', 'Job In Progress',
 'Job Escalated', 'Job Complete', 'Duplicate Job') NOT NULL,
+`asAt` DATETIME NOT NULL,
 `update1Description` VARCHAR(144),
 `update1EstimatedCompletion` DATETIME,
 `update1UpdatedAt` DATETIME,
@@ -35,7 +36,7 @@ CREATE TABLE `Tickets` (
 PRIMARY KEY (`jobRefId`)
 ) Engine = InnoDB CHARACTER SET utf8 COLLATE utf8_bin;
 
-CREATE TABLE `Users` (
+CREATE TABLE `users` (
 `userID` INT(4) AUTO_INCREMENT  NOT NULL,
 `name` VARCHAR(255) NOT NULL,
 `team` ENUM('Super Users', 'Control Office', 'Information Team', 'Administration Team') NOT NULL,

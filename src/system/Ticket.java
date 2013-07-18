@@ -29,6 +29,7 @@ public class Ticket
     private boolean showOnCIS;
     private String ticketAllocatedTo;
     private String jobProgress;
+    private DateTime asAt;
     private ArrayList<String> updateDescriptions;
     private ArrayList<DateTime> estimatedCompletions;
     private ArrayList<DateTime> updatedAt;
@@ -40,7 +41,7 @@ public class Ticket
             ArrayList<String> CISKeywords, String reportedBy, 
             String whoIsA, String contactVia, String contactNumber, 
             String locationVenueVillage, String delegateImpact, boolean showOnCIS, 
-            String ticketAllocatedTo, String jobProgress,
+            String ticketAllocatedTo, String jobProgress, DateTime asAt,
             ArrayList<String> updateDescriptions, 
             ArrayList<DateTime> estimatedCompletions, 
             ArrayList<DateTime> updatedAt, DateTime jobClosed, 
@@ -61,6 +62,7 @@ public class Ticket
         this.showOnCIS = showOnCIS;
         this.ticketAllocatedTo = ticketAllocatedTo;
         this.jobProgress = jobProgress;
+        this.asAt = asAt;
         this.updateDescriptions = updateDescriptions;
         this.estimatedCompletions = estimatedCompletions;
         this.updatedAt = updatedAt;
@@ -246,6 +248,11 @@ public class Ticket
     public void setDateTime(DateTime dateTime)
     {
         this.dateTime = dateTime;
+    }
+
+    public DateTime getAsAt()
+    {
+        return asAt;
     }
     
     

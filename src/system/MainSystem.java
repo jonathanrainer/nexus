@@ -17,6 +17,7 @@ import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JRadioButton;
+import org.joda.time.DateTime;
 
 /**
  * The highest level of the system as a whole, all major functionality will, at
@@ -419,6 +420,7 @@ public class MainSystem
                 });
         
         cofe.getLocationVenueVillageComboBox().addItem("Choose One");
+        cofe.getLocationVenueVillageComboBox().addItem("Location");
         cofe.getLocationVenueVillageComboBox().addItem("Venue");
         cofe.getLocationVenueVillageComboBox().addItem("Village");
         cofe.getLocationVenueVillageComboBox().addItem("Not Required");
@@ -457,8 +459,8 @@ public class MainSystem
                         Ticket ticket = new Ticket(0, null, user, 
                                 problemLocation, problemDescription, keyWords, 
                                 problemReportedBy, whoIsA, contactVia, contactNumber,
-                                locationVenueVillage, "Low", false, null, "Issue Reported", null, null,
-                                null, null, null);
+                                locationVenueVillage, "Low", false, null, "Issue Reported", null,
+                                null, null, null, null, null);
                         String validationResult = ticket.dataValidationEntry();
                         if(validationResult.equals("Passed"))
                         {
@@ -679,10 +681,8 @@ public class MainSystem
                    public void actionPerformed(ActionEvent e)
                    {
                        if(e.getActionCommand().equals("comboBoxChanged") &&
-                               !(cofe.getContactViaComboBox().getSelectedItem().
-                               toString().equals("Choose One")) && 
-                               !(cofe.getContactViaComboBox().getSelectedItem().
-                               toString().equals("Mobile")))
+                               cofe.getContactViaComboBox().getSelectedItem().
+                               toString().equals("Not Required"))
                        {
                            cofe.getContactNumberTextField().setText(
                                    cofe.getContactViaComboBox().
@@ -731,10 +731,14 @@ public class MainSystem
                         String contactNumber = cofe.getContactNumberTextField().getText();
                         String locationVenueVillage = (String) cofe.getLocationVenueVillageComboBox().
                                 getSelectedItem().toString();
+                        String delegateImpact = cofe.getDelegateImpactComboBox().getSelectedItem().toString();
+                        boolean showOnCIS = cofe.getShowOnCISRadioButton().isSelected();
+                        String ticketAllocatedTo = cofe.getTicketAllocatedToComboBox().getSelectedItem().toString();
+                        DateTime asAt = new DateTime();
                         Ticket ticket = new Ticket(0, null, user, 
                                 problemLocation, problemDescription, keyWords, 
                                 problemReportedBy, whoIsA, contactVia, contactNumber,
-                                locationVenueVillage, "Low", false, null, "Issue Reported", null, null,
+                                locationVenueVillage, delegateImpact, showOnCIS, ticketAllocatedTo,"Issue Reported", asAt, null, null,
                                 null, null, null);
                         String validationResult = ticket.dataValidationEntry();
                         if(validationResult.equals("Passed"))
@@ -746,7 +750,8 @@ public class MainSystem
                                     JOptionPane.showMessageDialog(cofe.getMainFrame(),
                                             "The Job Ticket has been submitted. \n"
                                             + "The Job ID is: " + ticket.getJobRefId()
-                                            + "\nIt was submitted at: " + ticket.getDateTime().toString("d/M/y H:m"));
+                                            + "\nIt was submitted at: " + 
+                                            ticket.getDateTime().toString("dd/MM/yyyy HH:mnm"));
                                     cofe.getMainFrame().dispose();
                                 }
                                 else
@@ -787,8 +792,38 @@ public class MainSystem
                         cofe.getLocationVenueVillageComboBox().setSelectedIndex(0);
                     }
                 });
-        
-        return cofe;
+         cofe.getDelegateImpactComboBox().addItem("Low");
+         cofe.getDelegateImpactComboBox().addItem("Medium");
+         cofe.getDelegateImpactComboBox().addItem("High");
+         cofe.getDelegateImpactComboBox().setSelectedItem(0);
+
+         cofe.getTicketAllocatedToComboBox().addItem("Please Choose One");
+         cofe.getTicketAllocatedToComboBox().addItem("Control Office");
+         cofe.getTicketAllocatedToComboBox().addItem("Control Office (Admin)");
+         cofe.getTicketAllocatedToComboBox().addItem("Day Stewards");
+         cofe.getTicketAllocatedToComboBox().addItem("Night Stewards");
+         cofe.getTicketAllocatedToComboBox().addItem("AV");
+         cofe.getTicketAllocatedToComboBox().addItem("Finance");
+         cofe.getTicketAllocatedToComboBox().addItem("Hospitality");
+         cofe.getTicketAllocatedToComboBox().addItem("Information");
+         cofe.getTicketAllocatedToComboBox().addItem("IT Support");
+         cofe.getTicketAllocatedToComboBox().addItem("Logistics");
+         cofe.getTicketAllocatedToComboBox().addItem("Production");
+         cofe.getTicketAllocatedToComboBox().addItem("Site Crew");
+         cofe.getTicketAllocatedToComboBox().addItem("WigWam");
+         cofe.getTicketAllocatedToComboBox().addItem("Andy (Showground)");
+         cofe.getTicketAllocatedToComboBox().addItem("Jackie (Cleaners)");
+         cofe.getTicketAllocatedToComboBox().addItem("Other");
+
+         cofe.getJobProgressComboBox().addItem("Issue Reported");
+         cofe.getJobProgressComboBox().setSelectedIndex(0);
+         cofe.getJobProgressComboBox().setEnabled(false);
+         
+         cofe.getAsAtTextField().setText("Automated");
+         cofe.getAsAtTextField().setEditable(false);
+         
+         
+         return cofe;
     }
     
     private ControlOfficeEntryForm createUpdateAmendEntryForm()
