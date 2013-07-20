@@ -11,12 +11,11 @@ import gui.ResultsBox;
 import io.MYSQLEngine;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Iterator;
-import javax.swing.JFrame;
-import javax.swing.JMenu;
-import javax.swing.JMenuBar;
-import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JRadioButton;
 import org.joda.time.DateTime;
@@ -36,6 +35,7 @@ public class MainSystem
     private MainGUI mainGUI;
     private User user;
     private DataStructures dataStructures;
+    private String dateFormat;
     
 
     /**
@@ -48,6 +48,7 @@ public class MainSystem
         teamNames = mysqlEngine.enumerateTeamNames();
         initialGUI = new InitialGUI(teamNames);
         dataStructures = new DataStructures();
+        dateFormat = "dd/MM/yyyy HH:mm";
         addActionListenersInitialGUI();
         
     }
@@ -210,7 +211,12 @@ public class MainSystem
                 {
                    public void actionPerformed(ActionEvent e)
                    {
-                       createUpdateAmendEntryForm();
+                       String ticketID = JOptionPane.showInputDialog(
+                        mainGUI.getTaskSelectionScreen().getMainFrame(), 
+                        "Please enter the Ticket ID of the Job Ticket you wish to"
+                        + "update.", "Update/Amend Ticket Search", 
+                        JOptionPane.QUESTION_MESSAGE);
+                       createUpdateAmendEntryForm(ticketID);
                    }
                 });
         
@@ -234,9 +240,32 @@ public class MainSystem
                    @Override
                    public void actionPerformed(ActionEvent e)
                    {
-                       Ticket[] tickets = mysqlEngine.getDuplicates();
-                       ResultsBox resultsBox = new ResultsBox(tickets, "Duplicate");
-                   }
+                       final Ticket[] tickets = mysqlEngine.getDuplicates();
+                       final ResultsBox resultsBox = new ResultsBox(tickets, "Duplicate");
+                       resultsBox.getResultsArea().addMouseListener(new MouseAdapter()
+                       {
+                           @Override
+                           public void mouseClicked(MouseEvent evt)
+                           {
+                               if(evt.getSource().equals(resultsBox.getResultsArea()))
+                               {
+                                   if(evt.getClickCount() == 2)
+                                   {
+                                       int index = resultsBox.
+                                               getResultsArea().
+                                               locationToIndex(evt.getPoint());
+                                       ControlOfficeEntryForm cofeAmend = 
+                                               createUpdateAmendEntryForm
+                                               ("" + tickets[index].getJobRefId());
+                                       cofeAmend.getSubmitFormButton().setEnabled(false);
+                                       cofeAmend.getResetFormButton().setEnabled(false);
+                                       
+                                   }
+                               }
+                           }
+                       });
+                               
+                    }
                });
     }
 
@@ -477,7 +506,7 @@ public class MainSystem
                                     JOptionPane.showMessageDialog(cofe.getMainFrame(),
                                             "The Job Ticket has been submitted. \n"
                                             + "The Job ID is: " + ticket.getJobRefId()
-                                            + "\nIt was submitted at: " + ticket.getDateTime().toString("d/M/y H:m"));
+                                            + "\nIt was submitted at: " + ticket.getDateTime().toString(dateFormat));
                                     cofe.getMainFrame().dispose();
                                 }
                                 else
@@ -757,7 +786,7 @@ public class MainSystem
                                             "The Job Ticket has been submitted. \n"
                                             + "The Job ID is: " + ticket.getJobRefId()
                                             + "\nIt was submitted at: " + 
-                                            ticket.getDateTime().toString("dd/MM/yyyy HH:mm"));
+                                            ticket.getDateTime().toString(dateFormat));
                                     cofe.getMainFrame().dispose();
                                 }
                                 else
@@ -832,13 +861,8 @@ public class MainSystem
          return cofe;
     }
     
-    private ControlOfficeEntryForm createUpdateAmendEntryForm()
+    private ControlOfficeEntryForm createUpdateAmendEntryForm(String ticketID)
     {
-        String ticketID = JOptionPane.showInputDialog(
-                mainGUI.getTaskSelectionScreen().getMainFrame(), 
-                "Please enter the Ticket ID of the Job Ticket you wish to"
-                + "update.", "Update/Amend Ticket Search", 
-                JOptionPane.QUESTION_MESSAGE);
         final ControlOfficeEntryForm cofeAmmend = new ControlOfficeEntryForm(false, user);
         Ticket ticket = null;
         try 
@@ -847,7 +871,7 @@ public class MainSystem
                     //Add information back into the ticket
                cofeAmmend.getTicketReferenceTextField().setText("" + ticket.getJobRefId());
                cofeAmmend.getTicketReferenceTextField().setEnabled(false);
-               cofeAmmend.getDateTimeTextField().setText(ticket.getDateTime().toString("d/M/y - H:mm"));
+               cofeAmmend.getDateTimeTextField().setText(ticket.getDateTime().toString(dateFormat));
                cofeAmmend.getDateTimeTextField().setEnabled(false);
                cofeAmmend.getTicketWrittenComboBox().addItem(ticket.getTicketRaisedBy().getTeam());
                cofeAmmend.getTicketWrittenComboBox().setSelectedIndex(0);
@@ -933,8 +957,55 @@ public class MainSystem
                cofeAmmend.getJobProgressComboBox().addItem("Ticket Printed");
                cofeAmmend.getJobProgressComboBox().addItem("Job In Progress");
                cofeAmmend.getJobProgressComboBox().addItem("Job Escalated");
+               cofeAmmend.getJobProgressComboBox().addItem("Duplicate");
                cofeAmmend.getJobProgressComboBox().addItem("Job Done");
-        
+               cofeAmmend.getJobProgressComboBox().setSelectedItem(ticket.getJobProgress());
+               
+               cofeAmmend.getAsAtTextField().setText(ticket.getAsAt().toString(dateFormat));
+               cofeAmmend.getAsAtTextField().setEnabled(false);
+               
+               //
+               if(!(ticket.getUpdatedAt().get(0).equals("")))
+               {
+                    cofeAmmend.getUpdateTextArea1().setText(ticket.getUpdateDescriptions().get(0));
+                    cofeAmmend.getEstimatedCompletionByTextField1().setText(ticket.getEstimatedCompletions().get(0).toString(dateFormat));
+                    cofeAmmend.getUpdatedAtTextField1().setText(ticket.getUpdatedAt().get(0).toString(dateFormat));
+               }
+               if(!(ticket.getUpdatedAt().get(1).equals("")))
+               {
+                    cofeAmmend.getUpdateTextArea2().setText(ticket.getUpdateDescriptions().get(1));
+                    cofeAmmend.getEstimatedCompletionByTextField2().setText(ticket.getEstimatedCompletions().get(1).toString(dateFormat));
+                    cofeAmmend.getUpdatedAtTextField2().setText(ticket.getUpdatedAt().get(1).toString(dateFormat));
+               }
+               if(!(ticket.getUpdatedAt().get(2).equals("")))
+               {
+                    cofeAmmend.getUpdateTextArea3().setText(ticket.getUpdateDescriptions().get(2));
+                    cofeAmmend.getEstimatedCompletionByTextField3().setText(ticket.getEstimatedCompletions().get(2).toString(dateFormat));
+                    cofeAmmend.getUpdatedAtTextField3().setText(ticket.getUpdatedAt().get(2).toString(dateFormat));
+               }
+               if(!(ticket.getJobClosed() == null))
+               {
+                   cofeAmmend.getJobCompletedRadioButton().setSelected(true);
+                   cofeAmmend.getJobCompletedTextField().setText(ticket.getJobClosed().toString(dateFormat));
+               }
+               
+               ArrayList<DateTime> timesToCompare = ticket.getUpdatedAt();
+               timesToCompare.add(ticket.getAsAt());
+               Collections.sort(timesToCompare);
+               cofeAmmend.getNextUpdateDueTextField().setText(timesToCompare.get(timesToCompare.size()).toString(dateFormat));
+               
+                   
+                   
+               cofeAmmend.getResetFormButton().addActionListener(new ActionListener()
+         {
+             public void actionPerformed(ActionEvent e)
+             {
+                 cofeAmmend.getDelegateImpactComboBox().setSelectedIndex(0);
+                 cofeAmmend.getShowOnCISRadioButton().setSelected(false);
+                 cofeAmmend.getTicketAllocatedToComboBox().setSelectedIndex(0);
+             }
+         });
+               
         }
         
         catch(Exception e)

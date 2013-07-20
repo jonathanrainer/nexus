@@ -4,8 +4,10 @@
  */
 package gui;
 
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.GridLayout;
+import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -32,7 +34,7 @@ public class ResultsBox
     {
         template = new Template();
         
-        mainFrame = new JFrame("Results of Query - Find" + type + " Tickets");
+        mainFrame = new JFrame("Results of Query - Find " + type + " Tickets");
         mainFrame.setSize(new Dimension(250, 450));
         mainFrame.setLayout(new GridLayout(3,1));
         
@@ -40,6 +42,7 @@ public class ResultsBox
         buttonsPane = new JPanel();
         
         resultsArea = new JList();
+        resultsArea.setBorder(BorderFactory.createLineBorder(Color.BLACK, 2));
         submitButton = new JButton(template.headingString("Mark Selected as Duplicates", 3));
         exitButton = new JButton(template.headingString("Exit", 3));
         
@@ -65,4 +68,22 @@ public class ResultsBox
         
         
     }
+
+    public JList getResultsArea()
+    {
+        return resultsArea;
+    }
+
+    public JButton getSubmitButton()
+    {
+        return submitButton;
+    }
+
+    public JButton getExitButton()
+    {
+        return exitButton;
+    }
+    
+    
+    
 }

@@ -143,10 +143,9 @@ public class ControlOfficeEntryForm {
     {
                 // Get initial templated Frame
         mainFrame = template.giveTemplatedJFrame(frameTitle);
-
         // Get initial content Panel
         frameContent = template.giveFormTemplatedJPanel(formTitle);
-
+        
         // Create the introText label
         String introText = "<html>This Form is to raise Jobs Tickets for the "
                 + "Control Office Team to Manage. Please fill in as much detail as possible. <br><br>";
@@ -328,8 +327,9 @@ public class ControlOfficeEntryForm {
         //Create Text Area for Problem Description
         problemDescriptionTextArea = new JTextArea();
         problemDescriptionTextArea.setLineWrap(true);
-        problemDescriptionTextArea.setMargin(new Insets(5, 5, 5, 5));
+        problemDescriptionTextArea.setMargin(new Insets(10, 10, 10, 10));
         problemDescriptionTextArea.setPreferredSize(new Dimension(520, 70));
+        problemDescriptionTextArea.setBorder(border);
         GridBagConstraints problemDescriptionTextAreaConstraints = template.
                 createGridBagConstraints(1, 7, GridBagConstraints.NONE, 5, 5,
                 new Insets(10, 0, 0, 0), GridBagConstraints.NORTHWEST, 0.0, 0.0, 4,
@@ -564,6 +564,8 @@ public class ControlOfficeEntryForm {
     
     
     private int updateFormAddition() {
+        Border border = BorderFactory.createLineBorder(Color.BLACK, 1);
+        
         //Add in Updates Label
         updatesLabel = new JLabel(template.headingString("Updates", 3));
         GridBagConstraints updatesLabelConstraints = template.
@@ -600,6 +602,7 @@ public class ControlOfficeEntryForm {
         updateTextArea1 = new JTextArea();
         updateTextArea1.setLineWrap(true);
         updateTextArea1.setPreferredSize(new Dimension(345, 45));
+        updateTextArea1.setBorder(border);
         GridBagConstraints updateTextArea1Constraints = template.
                 createGridBagConstraints(1, 22, GridBagConstraints.NONE, 5, 5,
                 new Insets(0, 0, 0, 0), GridBagConstraints.NORTHWEST, 0.0, 0.0, 3,
@@ -635,6 +638,7 @@ public class ControlOfficeEntryForm {
         updateTextArea2 = new JTextArea();
         updateTextArea2.setLineWrap(true);
         updateTextArea2.setPreferredSize(new Dimension(345, 45));
+        updateTextArea2.setBorder(border);
         GridBagConstraints updateTextArea2Constraints = template.
                 createGridBagConstraints(1, 25, GridBagConstraints.NONE, 5, 5,
                 new Insets(0, 0, 0, 0), GridBagConstraints.WEST, 0.0, 0.0, 3,
@@ -670,6 +674,7 @@ public class ControlOfficeEntryForm {
         updateTextArea3 = new JTextArea();
         updateTextArea3.setLineWrap(true);
         updateTextArea3.setPreferredSize(new Dimension(345, 45));
+        updateTextArea3.setBorder(border);
         GridBagConstraints updateTextArea3Constraints = template.
                 createGridBagConstraints(1, 28, GridBagConstraints.NONE, 5, 5,
                 new Insets(0, 0, 0, 0), GridBagConstraints.SOUTHWEST, 0.0, 0.0, 3,

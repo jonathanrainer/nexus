@@ -8,6 +8,8 @@ import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -53,7 +55,7 @@ public class Template
      */
     public JFrame giveTemplatedJFrame(String title)
     {
-        JFrame templatedFrame = new JFrame(title);
+        final JFrame templatedFrame = new JFrame(title);
 
         Dimension frameDimensions = new Dimension(1024, 768);
         templatedFrame.setPreferredSize(frameDimensions);
@@ -62,6 +64,13 @@ public class Template
         JMenuBar menuBar = new JMenuBar();
         JMenu fileMenu = new JMenu("File");
         JMenuItem quit = new JMenuItem("Quit");
+        quit.addActionListener(new ActionListener()
+        {
+            public void actionPerformed(ActionEvent e)
+            {
+                System.exit(0);
+            }
+        });
         fileMenu.add(quit, -1);
         menuBar.add(fileMenu);
         templatedFrame.setJMenuBar(menuBar);
