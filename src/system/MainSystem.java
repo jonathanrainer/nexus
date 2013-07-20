@@ -9,6 +9,7 @@ import gui.InitialGUI;
 import gui.MainGUI;
 import gui.ResultsBox;
 import io.MYSQLEngine;
+import io.PrintingEngine;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
@@ -16,6 +17,8 @@ import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Iterator;
+import javax.swing.JMenu;
+import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JRadioButton;
 import org.joda.time.DateTime;
@@ -36,6 +39,7 @@ public class MainSystem
     private MainGUI mainGUI;
     private User user;
     private DataStructures dataStructures;
+    private PrintingEngine printingEngine;
     private static final String DATEFORMAT = "dd/MM/yyyy HH:mm";
     ;
     private static final int UPDATEHOURS = 2;
@@ -50,6 +54,7 @@ public class MainSystem
         teamNames = mysqlEngine.enumerateTeamNames();
         initialGUI = new InitialGUI(teamNames);
         dataStructures = new DataStructures();
+        printingEngine = new PrintingEngine();
         addActionListenersInitialGUI();
 
     }
@@ -853,6 +858,17 @@ public class MainSystem
         final ControlOfficeEntryForm cofeAmmend = new ControlOfficeEntryForm(false, user);
         final Ticket ticket;
         ticket = mysqlEngine.retrieveTicket(ticketID, "tickets");
+        JMenu fileMenu = cofeAmmend.getMainFrame().getJMenuBar().getMenu(0);
+        JMenuItem print = new JMenuItem("Print");
+        print.addActionListener(new ActionListener()
+        {
+            @Override
+            public void actionPerformed(ActionEvent e)
+            {
+                printingEngine.printFile(ticket, "ticket.csv");
+            }
+        });
+        fileMenu.add(print, 0);
         try
         {
 

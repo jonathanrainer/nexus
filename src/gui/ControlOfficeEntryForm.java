@@ -19,6 +19,8 @@ import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JMenu;
+import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.JScrollPane;
@@ -749,6 +751,10 @@ public class ControlOfficeEntryForm {
                 1);
         frameContent.add(nextUpdateDueTextField, nextUpdateDueTextFieldConstraints);
                 
+
+        
+       
+        
         mainFrame.pack();
         mainFrame.setVisible(true);
         
