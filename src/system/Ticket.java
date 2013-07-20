@@ -255,6 +255,42 @@ public class Ticket
     {
         return asAt;
     }
+
+    public void setDelegateImpact(String delegateImpact)
+    {
+        this.delegateImpact = delegateImpact;
+    }
+
+    public void setShowOnCIS(boolean showOnCIS)
+    {
+        this.showOnCIS = showOnCIS;
+    }
+
+    public void setTicketAllocatedTo(String ticketAllocatedTo)
+    {
+        this.ticketAllocatedTo = ticketAllocatedTo;
+    }
+
+    public void setJobProgress(String jobProgress)
+    {
+        this.jobProgress = jobProgress;
+    }
+
+    public void setAsAt(DateTime asAt)
+    {
+        this.asAt = asAt;
+    }
+
+    public void setJobClosed(DateTime jobClosed)
+    {
+        this.jobClosed = jobClosed;
+    }
+
+    public void setNextUpdateDue(DateTime nextUpdateDue)
+    {
+        this.nextUpdateDue = nextUpdateDue;
+    }
+    
     
     public String toString()
     {

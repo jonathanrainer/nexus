@@ -30,6 +30,7 @@ public class MYSQLEngine
     //  Database credentials
     private String USER;
     private String PASS;
+    private static final String MYSQLTIMEFORMAT = "YYYY-MM-dd HH:mm:ss";
 
     /**
      * Constructor to create the object, requiring the host, database, username
@@ -261,7 +262,7 @@ public class MYSQLEngine
                 DateTime asAt = ticket.getAsAt();
                 insertionQuery = insertionQuery + ", " + showOnCIS + ", '" + 
                         ticketAllocatedTo + "', '" + jobProgress + "', '" 
-                        + asAt.toString("YYYY-MM-dd HH:mm:ss") 
+                        + asAt.toString(MYSQLTIMEFORMAT) 
                         + "', NULL, NULL, NULL, NULL, NULL, "
                     + "NULL, NULL, NULL, NULL, NULL, NULL);";
                 
@@ -455,7 +456,7 @@ public class MYSQLEngine
                 DateTime nextUpdateDue = timeStampToDateTime(rs.getString("nextUpdateDue"));
                 ticket = new Ticket(jobRefID, dateTime, user, problemLocation,
                         problemDescription, CISKeywords, reportedBy, whoIsA,
-                        contactVia, contactVia, locationVenueVillage, delegateImpact, showOnCIS,
+                        contactVia, contactNumber, locationVenueVillage, delegateImpact, showOnCIS,
                         ticketAllocatedTo, jobProgress, asAt, updateDescriptions,
                         estimatedCompletions, updatedAt, jobClosed, nextUpdateDue);
             }
@@ -563,6 +564,103 @@ public class MYSQLEngine
         return duplicateArray;
     }
     
+    public boolean updateTicket(Ticket ticket)
+    {
+         // Set up the initial connection and statement objects
+        Connection conn = null;
+        Statement stmt = null;
+        Boolean success = false;
+        // Begin try block so SQL Exceptions can be handled later
+        try
+        {
+            // Register JDBC driver
+            Class.forName("com.mysql.jdbc.Driver");
+            // Open a connection
+            conn = DriverManager.getConnection(DB_URL, USER, PASS);
+
+            // Create and Execute the SQL Query
+            stmt = conn.createStatement();
+            /**
+             * Query states: Look in the information_schema table and extract,
+             * to a substring, the entire contents of the ENUM called team.
+             */
+            int showOnCIS = ticket.isShowOnCIS() ? 1 : 0;
+            String sql = "UPDATE `Tickets` SET delegateImpact = '" + ticket.getDelegateImpact() + 
+                    "', showOnCIS = " + showOnCIS + ", ticketAllocatedTo = '" + ticket.getTicketAllocatedTo() +
+                    "', jobProgress = '" + ticket.getJobProgress() + "', asAt = '" + ticket.getAsAt().toString(MYSQLTIMEFORMAT) +
+                    "',";
+            int i = 1;
+            while (i <= ticket.getUpdateDescriptions().size())
+            {
+                if(!(ticket.getUpdateDescriptions().get(i-1) == null))
+                {
+                    sql = sql + " update" + i + "Description = '" + 
+                        ticket.getUpdateDescriptions().get(i - 1) + "', update" + i +
+                        "EstimatedCompletion = '" + ticket.getEstimatedCompletions().get(i-1).toString(MYSQLTIMEFORMAT) +
+                        "', update" + i + "UpdatedAt = '" + ticket.getUpdatedAt().get(i-1).toString(MYSQLTIMEFORMAT) + "',";
+                    i++;
+                }
+                else
+                {
+                    sql = sql + " update" + i + "Description = '" + 
+                        ticket.getUpdateDescriptions().get(i - 1) + "', update" + i +
+                        "EstimatedCompletion = '" + ticket.getEstimatedCompletions().get(i-1) +
+                        "', update" + i + "UpdatedAt = '" + ticket.getUpdatedAt().get(i-1) + "',";
+                    i++;
+                }
+                
+            }
+            if(!(ticket.getJobClosed() == null))
+            {
+                sql = sql + " jobClosed = '" + ticket.getJobClosed().toString(MYSQLTIMEFORMAT) +
+                    "', nextUpdateDue = '" + ticket.getNextUpdateDue().toString(MYSQLTIMEFORMAT) + "' "
+                    + "WHERE jobRefId = " + ticket.getJobRefId() + " ;";
+            }
+            else
+            {
+                sql = sql + " nextUpdateDue = '" + ticket.getNextUpdateDue().toString(MYSQLTIMEFORMAT) + "' "
+                    + "WHERE jobRefId = " + ticket.getJobRefId() + " ;";
+            }
+            
+            sql = sql.replace("'null'", "NULL");
+                    
+           System.out.println(sql); 
+            
+           stmt.executeUpdate(sql);
+           success = true;
+           stmt.close();
+           conn.close();
+        } catch (SQLException se)
+        {
+            //Handle errors for JDBC
+        } catch (Exception e)
+        {
+            //Handle errors for Class.forName
+        } finally
+        {
+            //finally block used to close resources should all else fail
+            try
+            {
+                if (stmt != null)
+                {
+                    stmt.close();
+                }
+            } catch (SQLException se2)
+            {
+            }// nothing we can do
+
+            try
+            {
+                if (conn != null)
+                {
+                    conn.close();
+                }
+            } catch (SQLException se)
+            {
+            }
+        }
+        return success;
+    }
     
     private DateTime timeStampToDateTime(String timeStamp)
     {
