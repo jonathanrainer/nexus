@@ -252,7 +252,8 @@ public class MYSQLEngine
                     + "'" + ticket.getReportedBy() + "', " + "'" + 
                     ticket.getWhoIsA()+ "', " + "'" + ticket.getContactVia() + 
                     "', '" + ticket.getContactNumber() + "', " + "'" + 
-                    ticket.getLocationVenueVillage() + "', " + "'Low'";
+                    ticket.getLocationVenueVillage() + "', " + 
+                    ticket.getDelegateImpact() + "'";
             
             if(ticket.getTicketRaisedBy().getTeam().equals("Control Office"))
             {
@@ -622,9 +623,7 @@ public class MYSQLEngine
                     + "WHERE jobRefId = " + ticket.getJobRefId() + " ;";
             }
             
-            sql = sql.replace("'null'", "NULL");
-                    
-           System.out.println(sql); 
+            sql = sql.replace("'null'", "NULL"); 
             
            stmt.executeUpdate(sql);
            success = true;
