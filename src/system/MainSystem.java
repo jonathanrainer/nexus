@@ -19,6 +19,7 @@ import java.util.Iterator;
 import javax.swing.JOptionPane;
 import javax.swing.JRadioButton;
 import org.joda.time.DateTime;
+import org.joda.time.DateTimeComparator;
 
 /**
  * The highest level of the system as a whole, all major functionality will, at
@@ -35,7 +36,8 @@ public class MainSystem
     private MainGUI mainGUI;
     private User user;
     private DataStructures dataStructures;
-    private String dateFormat;
+    private static final String DATEFORMAT = "dd/MM/yyyy HH:mm";;
+    private static final int UPDATEHOURS = 2;
     
 
     /**
@@ -48,7 +50,6 @@ public class MainSystem
         teamNames = mysqlEngine.enumerateTeamNames();
         initialGUI = new InitialGUI(teamNames);
         dataStructures = new DataStructures();
-        dateFormat = "dd/MM/yyyy HH:mm";
         addActionListenersInitialGUI();
         
     }
@@ -506,7 +507,7 @@ public class MainSystem
                                     JOptionPane.showMessageDialog(cofe.getMainFrame(),
                                             "The Job Ticket has been submitted. \n"
                                             + "The Job ID is: " + ticket.getJobRefId()
-                                            + "\nIt was submitted at: " + ticket.getDateTime().toString(dateFormat));
+                                            + "\nIt was submitted at: " + ticket.getDateTime().toString(DATEFORMAT));
                                     cofe.getMainFrame().dispose();
                                 }
                                 else
@@ -786,7 +787,7 @@ public class MainSystem
                                             "The Job Ticket has been submitted. \n"
                                             + "The Job ID is: " + ticket.getJobRefId()
                                             + "\nIt was submitted at: " + 
-                                            ticket.getDateTime().toString(dateFormat));
+                                            ticket.getDateTime().toString(DATEFORMAT));
                                     cofe.getMainFrame().dispose();
                                 }
                                 else
@@ -864,14 +865,15 @@ public class MainSystem
     private ControlOfficeEntryForm createUpdateAmendEntryForm(String ticketID)
     {
         final ControlOfficeEntryForm cofeAmmend = new ControlOfficeEntryForm(false, user);
-        Ticket ticket = null;
+        final Ticket ticket;
+        ticket = mysqlEngine.retrieveTicket(ticketID, "tickets");
         try 
         {
-            ticket = mysqlEngine.retrieveTicket(ticketID, "tickets");
+           
                     //Add information back into the ticket
                cofeAmmend.getTicketReferenceTextField().setText("" + ticket.getJobRefId());
                cofeAmmend.getTicketReferenceTextField().setEnabled(false);
-               cofeAmmend.getDateTimeTextField().setText(ticket.getDateTime().toString(dateFormat));
+               cofeAmmend.getDateTimeTextField().setText(ticket.getDateTime().toString(DATEFORMAT));
                cofeAmmend.getDateTimeTextField().setEnabled(false);
                cofeAmmend.getTicketWrittenComboBox().addItem(ticket.getTicketRaisedBy().getTeam());
                cofeAmmend.getTicketWrittenComboBox().setSelectedIndex(0);
@@ -933,7 +935,10 @@ public class MainSystem
                cofeAmmend.getDelegateImpactComboBox().addItem("Low");
                cofeAmmend.getDelegateImpactComboBox().addItem("Medium");
                cofeAmmend.getDelegateImpactComboBox().addItem("High");
-               cofeAmmend.getDelegateImpactComboBox().setSelectedItem(0);
+               cofeAmmend.getDelegateImpactComboBox().setSelectedItem(
+                       ticket.getDelegateImpact());
+               
+               cofeAmmend.getShowOnCISRadioButton().setSelected(ticket.isShowOnCIS());
 
                cofeAmmend.getTicketAllocatedToComboBox().addItem("Please Choose One");
                cofeAmmend.getTicketAllocatedToComboBox().addItem("Control Office");
@@ -952,6 +957,15 @@ public class MainSystem
                cofeAmmend.getTicketAllocatedToComboBox().addItem("Andy (Showground)");
                cofeAmmend.getTicketAllocatedToComboBox().addItem("Jackie (Cleaners)");
                cofeAmmend.getTicketAllocatedToComboBox().addItem("Other");
+               if(!(ticket.getTicketAllocatedTo() == null))
+               {
+                    cofeAmmend.getTicketAllocatedToComboBox().
+                            setSelectedItem(ticket.getTicketAllocatedTo());
+               }
+               else
+               {
+                   cofeAmmend.getTicketAllocatedToComboBox().setSelectedIndex(0);
+               }
 
                cofeAmmend.getJobProgressComboBox().addItem("Issue Reported");
                cofeAmmend.getJobProgressComboBox().addItem("Ticket Printed");
@@ -961,48 +975,110 @@ public class MainSystem
                cofeAmmend.getJobProgressComboBox().addItem("Job Done");
                cofeAmmend.getJobProgressComboBox().setSelectedItem(ticket.getJobProgress());
                
-               cofeAmmend.getAsAtTextField().setText(ticket.getAsAt().toString(dateFormat));
+               cofeAmmend.getAsAtTextField().setText(ticket.getAsAt().toString(DATEFORMAT));
                cofeAmmend.getAsAtTextField().setEnabled(false);
                
-               //
-               if(!(ticket.getUpdatedAt().get(0).equals("")))
-               {
-                    cofeAmmend.getUpdateTextArea1().setText(ticket.getUpdateDescriptions().get(0));
-                    cofeAmmend.getEstimatedCompletionByTextField1().setText(ticket.getEstimatedCompletions().get(0).toString(dateFormat));
-                    cofeAmmend.getUpdatedAtTextField1().setText(ticket.getUpdatedAt().get(0).toString(dateFormat));
-               }
-               if(!(ticket.getUpdatedAt().get(1).equals("")))
-               {
-                    cofeAmmend.getUpdateTextArea2().setText(ticket.getUpdateDescriptions().get(1));
-                    cofeAmmend.getEstimatedCompletionByTextField2().setText(ticket.getEstimatedCompletions().get(1).toString(dateFormat));
-                    cofeAmmend.getUpdatedAtTextField2().setText(ticket.getUpdatedAt().get(1).toString(dateFormat));
-               }
-               if(!(ticket.getUpdatedAt().get(2).equals("")))
-               {
-                    cofeAmmend.getUpdateTextArea3().setText(ticket.getUpdateDescriptions().get(2));
-                    cofeAmmend.getEstimatedCompletionByTextField3().setText(ticket.getEstimatedCompletions().get(2).toString(dateFormat));
-                    cofeAmmend.getUpdatedAtTextField3().setText(ticket.getUpdatedAt().get(2).toString(dateFormat));
-               }
+               cofeAmmend.getUpdatedAtTextField1().setEnabled(false);
+                if(!(ticket.getUpdatedAt().get(0) == null))
+                {
+                     cofeAmmend.getUpdateTextArea1().setText(ticket.getUpdateDescriptions().get(0));
+                     cofeAmmend.getEstimatedCompletionByTextField1().setText(ticket.getEstimatedCompletions().get(0).toString(DATEFORMAT));
+                     cofeAmmend.getUpdatedAtTextField1().setText(ticket.getUpdatedAt().get(0).toString(DATEFORMAT));
+                     cofeAmmend.getUpdateTextArea1().setEnabled(false);
+                     cofeAmmend.getEstimatedCompletionByTextField1().setEnabled(false);
+                     
+                }
+                else
+                {
+                    cofeAmmend.getEstimatedCompletionByTextField1().setText(DATEFORMAT);
+                    cofeAmmend.getUpdatedAtTextField1().setText("Automated");
+                    cofeAmmend.getUpdateTextArea2().setEnabled(false);
+                    cofeAmmend.getEstimatedCompletionByTextField2().setEnabled(false);
+                    cofeAmmend.getUpdateTextArea3().setEnabled(false);
+                    cofeAmmend.getEstimatedCompletionByTextField3().setEnabled(false);
+                }
+                cofeAmmend.getUpdatedAtTextField2().setEnabled(false);
+                if(!(ticket.getUpdatedAt().get(1) == null))
+                {
+                     cofeAmmend.getUpdateTextArea2().setText(ticket.getUpdateDescriptions().get(1));
+                     cofeAmmend.getEstimatedCompletionByTextField2().setText(ticket.getEstimatedCompletions().get(1).toString(DATEFORMAT));
+                     cofeAmmend.getUpdatedAtTextField2().setText(ticket.getUpdatedAt().get(1).toString(DATEFORMAT));
+                     cofeAmmend.getUpdateTextArea2().setEnabled(false);
+                     cofeAmmend.getEstimatedCompletionByTextField2().setEnabled(false);
+                }
+                else
+                {
+                    cofeAmmend.getEstimatedCompletionByTextField2().setText(DATEFORMAT);
+                    cofeAmmend.getUpdatedAtTextField2().setText("Automated");
+                    cofeAmmend.getUpdateTextArea3().setEnabled(false);
+                    cofeAmmend.getEstimatedCompletionByTextField3().setEnabled(false);
+                }
+                cofeAmmend.getUpdatedAtTextField3().setEnabled(false);
+                if(!(ticket.getUpdatedAt().get(2) == null))
+                {
+                     cofeAmmend.getUpdateTextArea3().setText(ticket.getUpdateDescriptions().get(2));
+                     cofeAmmend.getEstimatedCompletionByTextField3().setText(ticket.getEstimatedCompletions().get(2).toString(DATEFORMAT));
+                     cofeAmmend.getUpdatedAtTextField3().setText(ticket.getUpdatedAt().get(2).toString(DATEFORMAT));
+                     cofeAmmend.getUpdateTextArea3().setEnabled(false);
+                     cofeAmmend.getEstimatedCompletionByTextField3().setEnabled(false);
+                }
+                else
+                {
+                    cofeAmmend.getEstimatedCompletionByTextField3().setText(DATEFORMAT);
+                    cofeAmmend.getUpdatedAtTextField3().setText("Automated");
+                }
+                
+               cofeAmmend.getJobCompletedTextField().setEnabled(false);
                if(!(ticket.getJobClosed() == null))
                {
                    cofeAmmend.getJobCompletedRadioButton().setSelected(true);
-                   cofeAmmend.getJobCompletedTextField().setText(ticket.getJobClosed().toString(dateFormat));
+                   cofeAmmend.getJobCompletedTextField().setText(ticket.getJobClosed().toString(DATEFORMAT));
                }
+               else
+                {
+                    cofeAmmend.getJobCompletedTextField().setText("Automated");
+                }
+               
+               cofeAmmend.getNextUpdateDueTextField().setEnabled(false);
                
                ArrayList<DateTime> timesToCompare = ticket.getUpdatedAt();
                timesToCompare.add(ticket.getAsAt());
-               Collections.sort(timesToCompare);
-               cofeAmmend.getNextUpdateDueTextField().setText(timesToCompare.get(timesToCompare.size()).toString(dateFormat));
-               
+               Collections.sort(timesToCompare, DateTimeComparator.getInstance());
+               int i = timesToCompare.size() - 1;
+               boolean found = false;
+               DateTime nextUpdateDue = null;
+               while(i > -1)
+               {
+                   if(timesToCompare.get(i) != null && !found)
+                   {
+                       nextUpdateDue = timesToCompare.get(i).plusHours(2);
+                       found = true;
+                       i--;
+                   }
+                   else
+                   {
+                       i--;
+                   }
+               }
+               cofeAmmend.getNextUpdateDueTextField().setText(nextUpdateDue.toString(DATEFORMAT));
                    
                    
                cofeAmmend.getResetFormButton().addActionListener(new ActionListener()
          {
              public void actionPerformed(ActionEvent e)
              {
-                 cofeAmmend.getDelegateImpactComboBox().setSelectedIndex(0);
-                 cofeAmmend.getShowOnCISRadioButton().setSelected(false);
-                 cofeAmmend.getTicketAllocatedToComboBox().setSelectedIndex(0);
+                 cofeAmmend.getDelegateImpactComboBox().setSelectedItem(ticket.getDelegateImpact());
+                 cofeAmmend.getShowOnCISRadioButton().setSelected(ticket.isShowOnCIS());
+                 cofeAmmend.getTicketAllocatedToComboBox().setSelectedItem(ticket.getTicketAllocatedTo());
+                 cofeAmmend.getJobProgressComboBox().setSelectedItem(ticket.getJobProgress());
+                 cofeAmmend.getUpdateTextArea1().setText("");
+                 cofeAmmend.getEstimatedCompletionByTextField1().setText(DATEFORMAT);
+                 cofeAmmend.getUpdateTextArea2().setText("");
+                 cofeAmmend.getEstimatedCompletionByTextField2().setText(DATEFORMAT);
+                 cofeAmmend.getUpdateTextArea3().setText("");
+                 cofeAmmend.getEstimatedCompletionByTextField3().setText(DATEFORMAT);
+                 
+                 
              }
          });
                
