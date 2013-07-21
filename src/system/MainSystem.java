@@ -8,15 +8,25 @@ import gui.ControlOfficeEntryForm;
 import gui.InitialGUI;
 import gui.MainGUI;
 import gui.ResultsBox;
+import io.RemoteInterfaceEngine;
 import io.MYSQLEngine;
 import io.PrintingEngine;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Iterator;
+import javax.print.Doc;
+import javax.print.DocFlavor;
+import javax.print.DocPrintJob;
+import javax.print.PrintException;
+import javax.print.PrintService;
+import javax.print.PrintServiceLookup;
+import javax.print.SimpleDoc;
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
@@ -40,6 +50,7 @@ public class MainSystem
     private User user;
     private DataStructures dataStructures;
     private PrintingEngine printingEngine;
+    private RemoteInterfaceEngine remoteInterfaceEngine;
     private static final String DATEFORMAT = "dd/MM/yyyy HH:mm";
     ;
     private static final int UPDATEHOURS = 2;
@@ -55,6 +66,7 @@ public class MainSystem
         initialGUI = new InitialGUI(teamNames);
         dataStructures = new DataStructures();
         printingEngine = new PrintingEngine();
+        remoteInterfaceEngine = new RemoteInterfaceEngine();
         addActionListenersInitialGUI();
 
     }
@@ -764,6 +776,10 @@ public class MainSystem
                 String delegateImpact = cofe.getDelegateImpactComboBox().getSelectedItem().toString();
                 boolean showOnCIS = cofe.getShowOnCISRadioButton().isSelected();
                 String ticketAllocatedTo = cofe.getTicketAllocatedToComboBox().getSelectedItem().toString();
+                if (ticketAllocatedTo.equals("Please Choose One"))
+                {
+                    ticketAllocatedTo = "";
+                }
                 DateTime asAt = new DateTime();
                 Ticket ticket = new Ticket(0, null, user,
                         problemLocation, problemDescription, keyWords,
@@ -865,7 +881,33 @@ public class MainSystem
             @Override
             public void actionPerformed(ActionEvent e)
             {
-                printingEngine.printFile(ticket, "ticket.csv");
+                if (ticket.dataValidationEntry().equals("Passed")
+                        && ticket.pritingValidation().equals("Passed"))
+                {
+                    DateTime now = new DateTime();
+                    String fileName = ticket.getJobRefId() + "_"
+                            + now.toString("ddMMyyyyHHmm") + ".csv";
+                    printingEngine.printFile(ticket, fileName);
+                    remoteInterfaceEngine.transferLocalToRemote(fileName);
+                    remoteInterfaceEngine.compileLatexFiles(fileName);
+                    String finishedTicket = remoteInterfaceEngine.transferRemoteToLocal(fileName);
+                    
+                    FileInputStream postScriptStream;
+                    PrintService prnSvc = PrintServiceLookup.lookupDefaultPrintService();
+                    DocPrintJob printJob = prnSvc.createPrintJob();
+                    Doc doc;
+                    try
+                    {
+                        postScriptStream = new FileInputStream(finishedTicket);
+                        doc = new SimpleDoc(postScriptStream, DocFlavor.INPUT_STREAM.POSTSCRIPT, null);
+                        printJob.print(doc,null);
+                    }
+                    catch(FileNotFoundException | PrintException exc)
+                    {
+                        
+                    }
+                    
+                }
             }
         });
         fileMenu.add(print, 0);
@@ -1074,6 +1116,7 @@ public class MainSystem
 
             cofeAmmend.getSubmitFormButton().addActionListener(new ActionListener()
             {
+                @Override
                 public void actionPerformed(ActionEvent e)
                 {
                     ticket.setDelegateImpact(cofeAmmend.getDelegateImpactComboBox()

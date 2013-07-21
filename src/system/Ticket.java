@@ -119,6 +119,15 @@ public class Ticket
         
         return "Passed";
     }
+   
+    public String pritingValidation()
+    {
+        if(ticketAllocatedTo.equals(""))
+        {
+            return "Ticket must be allocated somewhere";
+        }
+        return "Passed";
+    }
     
     public String textValidation(String unvalidatedText)
     {

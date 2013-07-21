@@ -1,31 +1,61 @@
-\documentclass[13pt]{amsart}
-\usepackage[margin = 1cm]{geometry}           % See geometry.pdf to learn the layout options. There are lots.
+\documentclass{amsart}
+\usepackage[margin = 1cm] {geometry}           % See geometry.pdf to learn the layout options. There are lots.
 \geometry {a6paper}              % ... or a4paper or a5paper or ... 
 \geometry{landscape}                % Activate for for rotated page geometry
 \usepackage[parfill]{parskip}    % Activate to begin paragraphs with an empty line rather than an indent
 \usepackage{graphicx}
 \usepackage{amssymb}
 \usepackage{epstopdf}
+\usepackage{datatool}
+
 \DeclareGraphicsRule{.tif}{png}{.png}{`convert #1 `dirname #1`/`basename #1 .tif`.png}
 
+\makeatletter
+\newcommand\tabfill[1]{%
+\dimen@\linewidth%
+\advance\dimen@\@totalleftmargin%
+\advance\dimen@-\dimen\@curtab%
+\parbox[t]\dimen@{#1\ifhmode\strut\fi}%
+% or, to avoid stretching:
+% \parbox[t]\dimen@{\raggedright #1\ifhmode\strut\fi}%
+}
+
+
+
 \begin{document}
+%Load in Database and pull required values
+\DTLloaddb{ticket}{/Users/jonathanrainer/Documents/Nexus/csvUploadDir/1_210720131149.csv}
+\DTLgetvalue{\insertjobRefId}{ticket}{1}{\dtlcolumnindex{ticket}{jobRefId}}
+\DTLgetvalue{\insertraisedDate}{ticket}{1}{\dtlcolumnindex{ticket}{raisedDate}}
+\DTLgetvalue{\insertraisedTime}{ticket}{1}{\dtlcolumnindex{ticket}{raisedTime}}
+\DTLgetvalue{\insertraisedByName}{ticket}{1}{\dtlcolumnindex{ticket}{raisedByName}}
+\DTLgetvalue{\insertraisedByTeam}{ticket}{1}{\dtlcolumnindex{ticket}{raisedByTeam}}
+\DTLgetvalue{\insertallocatedTeam}{ticket}{1}{\dtlcolumnindex{ticket}{allocatedTeam}}
+\DTLgetvalue{\insertproblemLocation}{ticket}{1}{\dtlcolumnindex{ticket}{problemLocation}}
+\DTLgetvalue{\insertproblemDescription}{ticket}{1}{\dtlcolumnindex{ticket}{problemDescription}}
+\DTLgetvalue{\insertproblemReportedBy}{ticket}{1}{\dtlcolumnindex{ticket}{problemReportedBy}}
+\DTLgetvalue{\insertwhoIsA}{ticket}{1}{\dtlcolumnindex{ticket}{whoIsA}}
+\DTLgetvalue{\insertcontactName}{ticket}{1}{\dtlcolumnindex{ticket}{contactName}}
+\DTLgetvalue{\insertcontactNumber}{ticket}{1}{\dtlcolumnindex{ticket}{contactNumber}}
+\DTLgetvalue{\insertshowOnCIS}{ticket}{1}{\dtlcolumnindex{ticket}{showOnCIS}}
+
 \sffamily
 \pagenumbering{gobble}
-\LARGE{\bfseries{CONTROL OFFICE JOB TICKET}} \qquad \Large{Ref: } \large{0001}
+\LARGE{\bfseries{CONTROL OFFICE JOB TICKET}} \qquad \Large{Ref: } \large{\insertjobRefId}
 \begin{tabbing}
-\Large{Raised:} \quad \= \large{02/11/1992} \qquad \= \quad \large{[Date]}  \qquad \=  \large{07:30} \qquad  \qquad \qquad \qquad \= \large{[Time]} \\
-\Large{By:} \quad \> \large{Jonathan Rainer} \> \quad [Name] \qquad \> Administration Team \>  [Team] \\
+\Large{\bfseries{Raised:}} \quad \= \Large{\insertraisedDate} \quad \= \quad \Large{[Date]}  \qquad \=  \Large{\insertraisedTime} \qquad  \qquad \= \Large{[Time]} \\[2pt]
+\Large{\bfseries{By:}} \quad \> \Large{\insertraisedByName} \> \quad \Large{[Name]} \qquad \> \Large{\insertraisedByTeam} \>  \Large{[Team]} \\
 \\
 \LARGE{\bfseries{TO:}} \\
 \\[-8pt]
-\Large{Team} \quad \> \large{Day Stewards} \\
+\Large{\bfseries{Team:}} \quad \> \Large{\insertallocatedTeam} \\
 \\
 \LARGE{\bfseries{DETAILS OF PROBLEM:}} \\
 \\[-8pt]
-\Large{Where:} \qquad\quad\= \large{Villages, Red, 4, Toilet(Male)} \\
-\Large{Problem:} \> \large{Lorem ipsum dolor sit amet, nonummy ligula volutpat hac} \\ \> \large{integer nonummy. Suspendisse ultricies, congue etiam tellus,} \\ \> \large{erat libero, nulla eleifend, mauris pellentesque. Suspendisse integer} \\ \> \large{praesent vel, integer gravida mauris, fringilla vehicula lacinia non}\\[7pt]
-\Large{Reported by:} \> \large{Ian Walker (Control Team)}\\
-\Large{Contact Info:} \> \large{Testing lol} \\
-\Large{CIS:} \> \large{Yes}
+\Large{\bfseries{Where:}} \qquad\quad\= \Large{\insertproblemLocation} \\
+\Large{\bfseries{Problem:}} \>\tabfill{\Large{\insertproblemDescription}}\\[7pt]
+\Large{\bfseries{Reported by:}} \> \Large{\insertproblemReportedBy} \qquad \= \Large{(\insertwhoIsA)}\\
+\Large{\bfseries{Contact Info:}} \> \Large{\insertcontactName} \> \Large{(\insertcontactNumber)} \\
+\Large{\bfseries{CIS:}} \> \Large{\insertshowOnCIS}
 \end{tabbing}
-\end{document}  
+\end{document}
