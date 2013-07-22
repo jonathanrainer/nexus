@@ -7,6 +7,9 @@ package io;
 import au.com.bytecode.opencsv.CSVWriter;
 import java.io.File;
 import java.io.FileWriter;
+import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import org.joda.time.DateTime;
 import system.Ticket;
 import system.User;
@@ -78,7 +81,13 @@ public class PrintingEngine
    
     public void printPDF(String filePath)
     {
-        
+        try
+        {
+            Runtime.getRuntime().exec("AcroRd32.exe /n /s /p " + filePath);
+        } catch (IOException ex)
+        {
+            Logger.getLogger(PrintingEngine.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
     
 }
