@@ -11,7 +11,6 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Iterator;
 import org.joda.time.DateTime;
 import system.Ticket;
 import system.User;
@@ -727,6 +726,61 @@ public class MYSQLEngine
             i++;
         }
         return unprintedArray;
+    }
+    
+    public void markTicketPrinted(Ticket ticket)
+    {
+        // Set up the initial connection and statement objects
+        Connection conn = null;
+        Statement stmt = null;
+        // Begin try block so SQL Exceptions can be handled later
+        try
+        {
+            // Register JDBC driver
+            Class.forName("com.mysql.jdbc.Driver");
+            // Open a connection
+            conn = DriverManager.getConnection(DB_URL, USER, PASS);
+
+            // Create and Execute the SQL Query
+            stmt = conn.createStatement();
+            /**
+             * Query states: Select all the users in a particular team
+             */
+            String sql = "UPDATE tickets SET jobProgress = 'Ticket Printed'"
+                    + "WHERE jobrefId = ' " + ticket.getJobRefId() + "';";
+            stmt.executeUpdate(sql);
+            stmt.close();
+            conn.close();
+        } catch (SQLException se)
+        {
+;            System.out.println(se.getSQLState());
+            //Handle errors for JDBC
+        } catch (Exception e)
+        {
+            //Handle errors for Class.forName
+        } finally
+        {
+            //finally block used to close resources should all else fail
+            try
+            {
+                if (stmt != null )
+                {
+                    stmt.close();
+                }
+            } catch (SQLException se2)
+            {
+            }// nothing we can do
+
+            try
+            {
+                if (conn != null)
+                {
+                    conn.close();
+                }
+            } catch (SQLException se)
+            {
+            }
+        }
     }
     
     private DateTime timeStampToDateTime(String timeStamp)

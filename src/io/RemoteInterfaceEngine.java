@@ -4,15 +4,16 @@
  */
 package io;
 
-import com.trilead.ssh2.ChannelCondition;
 import com.trilead.ssh2.Connection;
 import com.trilead.ssh2.SCPClient;
+import com.trilead.ssh2.SFTPv3Client;
+import com.trilead.ssh2.SFTPv3DirectoryEntry;
+import com.trilead.ssh2.SFTPv3FileHandle;
 import com.trilead.ssh2.Session;
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import org.apache.commons.io.FileUtils;
+import java.util.Iterator;
 import org.apache.commons.io.FilenameUtils;
 
 /**
@@ -46,6 +47,7 @@ public class RemoteInterfaceEngine
             Connection conn = new Connection(hostname);
 
             conn.connect();
+            
 
             /* Authenticate.
              * If you get an IOException saying something like
@@ -81,6 +83,7 @@ public class RemoteInterfaceEngine
     {
         try
         {
+            
             Connection conn = new Connection(hostname);
             conn.connect();
             boolean isAuthenticated = conn.authenticateWithPassword(username, password);
@@ -88,24 +91,24 @@ public class RemoteInterfaceEngine
             {
                 throw new IOException("Authentication Failed!");
             }
-            
+            SFTPv3Client sftpClient = new SFTPv3Client(conn);
             Session sesh = conn.openSession();
             sesh.execCommand(compileLatexFilesCommand(fileName));
-            String postScriptCommand = "dvi2ps -c " + REMOTEOUTPUTLOCATION + FilenameUtils.removeExtension(fileName) + ".ps " 
-                    + REMOTEOUTPUTLOCATION + FilenameUtils.removeExtension(fileName) + ".dvi";
-            System.out.println(postScriptCommand);
-            sesh.close();
-            Session psSesh = conn.openSession();
-            psSesh.execCommand(postScriptCommand);
-            try
+             boolean fileExists = false;
+            while(!fileExists)
             {
-                Thread.sleep(8000l);
-            } catch (InterruptedException ex)
-            {
-                Logger.getLogger(RemoteInterfaceEngine.class.getName()).log(Level.SEVERE, null, ex);
+                Iterator<SFTPv3DirectoryEntry> it1 = sftpClient.ls(REMOTEOUTPUTLOCATION).iterator();
+                while(it1.hasNext())
+                {
+                    if(it1.next().filename.contains(".pdf"))
+                    {
+                        fileExists = true;
+                    }
+                }
             }
-            psSesh.close();
+            sesh.close();
             conn.close();
+           
         }
         catch (IOException e)
         {
@@ -117,7 +120,7 @@ public class RemoteInterfaceEngine
     private String compileLatexFilesCommand(String fileName)
     {
         String fileNameSansExtension = FilenameUtils.removeExtension(fileName);
-        String command = "latex -output-directory " + REMOTEOUTPUTLOCATION
+        String command = "pdflatex -output-directory " + REMOTEOUTPUTLOCATION
                 + " -jobname=" + fileNameSansExtension + " '\\providecommand{\\csvFileLocation}{"
                 + REMOTECSVLOCATION + fileName + "}\\input{ " + REMOTETEXLOCATION + "jobticket.tex}'"
                 + " >> " + TEXLOGGINGLOCATION + fileNameSansExtension + "-log.txt";
@@ -148,13 +151,37 @@ public class RemoteInterfaceEngine
 
             /* Create a session */
 
-            SCPClient scpClient = new SCPClient(conn);
+            SFTPv3Client sftpClient = new SFTPv3Client(conn);
             
-            pdfFileName = FilenameUtils.removeExtension(fileName) + ".ps";
-            scpClient.get(REMOTEOUTPUTLOCATION + pdfFileName, LOCALOUTPUTLOCATION);
+            pdfFileName = FilenameUtils.removeExtension(fileName) + ".pdf";
+            
+            File file = new File(LOCALOUTPUTLOCATION + pdfFileName);
+ 
+            // if file doesnt exists, then create it
+            if (!file.exists())
+            {
+                file.createNewFile();
+            }
+            
+            
+            
+            FileOutputStream fos = new FileOutputStream(file, true);
+            System.out.println(REMOTEOUTPUTLOCATION + pdfFileName);
+            SFTPv3FileHandle handle = sftpClient.openFileRO(REMOTEOUTPUTLOCATION + pdfFileName);
+            
+
+            
+            int i = 0;
+            byte[] byteArray = new byte[32768];
+            while(sftpClient.read(handle, (i * 32768), byteArray, 0, 32768) != -1)
+            {
+                fos.write(byteArray);
+                i++;
+            }
             /* Close the connection */
 
             conn.close();
+            fos.close();
 
         } catch (IOException e)
         {

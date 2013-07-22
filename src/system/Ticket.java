@@ -35,6 +35,7 @@ public class Ticket
     private ArrayList<DateTime> updatedAt;
     private DateTime jobClosed;
     private DateTime nextUpdateDue;
+    private static final String DATEFORMAT = "dd/MM/yyyy HH:mm";
 
     public Ticket(int jobRefId, DateTime dateTime, User ticketRaisedBy, 
             String problemLocation, String problemDescription, 
@@ -132,15 +133,25 @@ public class Ticket
     public String textValidation(String unvalidatedText)
     {
         System.out.println(unvalidatedText);
-        unvalidatedText = unvalidatedText.replace("'", "\'");
-        unvalidatedText = unvalidatedText.replace("\"", "\\\"");
         unvalidatedText = unvalidatedText.replace("\\" , "\\\\");
         unvalidatedText = unvalidatedText.replace("%", "\\%");
+        unvalidatedText = unvalidatedText.replace("'", "\\'");
+        unvalidatedText = unvalidatedText.replace("\"", "\\\"");
+
+
         return unvalidatedText;
     }
     
     public boolean updateValidation()
     {
+        int i = 0;
+        while(i < updateDescriptions.size())
+        {
+            String validText = textValidation(updateDescriptions.get(i));
+            updateDescriptions.remove(i);
+            updateDescriptions.add(i, validText);
+        }
+        
         if(jobClosed != null & (!jobProgress.equals("Duplicate")
                    || !jobProgress.equals("Job Escalated")
                    || !jobProgress.equals("Job Done")))
@@ -317,7 +328,7 @@ public class Ticket
     @Override
     public String toString()
     {
-        return "ID: " + jobRefId + " - Description : " + problemDescription;
+        return "ID: " + jobRefId + " - Time Submitted : " + dateTime.toString(DATEFORMAT);
     }
     
 }

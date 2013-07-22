@@ -15,18 +15,9 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Iterator;
-import javax.print.Doc;
-import javax.print.DocFlavor;
-import javax.print.DocPrintJob;
-import javax.print.PrintException;
-import javax.print.PrintService;
-import javax.print.PrintServiceLookup;
-import javax.print.SimpleDoc;
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
@@ -52,7 +43,6 @@ public class MainSystem
     private PrintingEngine printingEngine;
     private RemoteInterfaceEngine remoteInterfaceEngine;
     private static final String DATEFORMAT = "dd/MM/yyyy HH:mm";
-    ;
     private static final int UPDATEHOURS = 2;
 
     /**
@@ -595,6 +585,23 @@ public class MainSystem
     private ControlOfficeEntryForm createControlEntryForm()
     {
         final ControlOfficeEntryForm cofe = new ControlOfficeEntryForm(true, user);
+        JMenu fileMenu = cofe.getMainFrame().getJMenuBar().getMenu(0);
+        JMenuItem printAndSubmit = new JMenuItem("Submit & Print");
+        printAndSubmit.addActionListener(new ActionListener()
+        {
+            @Override
+            public void actionPerformed(ActionEvent e)
+            {
+                String ticketID = "" + submitTicket(cofe);
+                Ticket ticket = mysqlEngine.retrieveTicket(ticketID, "Tickets");
+                if (ticket.dataValidationEntry().equals("Passed")
+                        && ticket.printingValidation().equals("Passed"))
+                {
+                    printTicket(ticket);
+                }
+            }
+        });
+        fileMenu.add(printAndSubmit, 0);
         //Set the text in the two automated fields and make them unwriteable
         cofe.getTicketReferenceTextField().setText("Automated");
         cofe.getTicketReferenceTextField().setEditable(false);
@@ -780,69 +787,7 @@ public class MainSystem
             @Override
             public void actionPerformed(ActionEvent e)
             {
-                String team = user.getTeam();
-                user.setName(cofe.getTeamMembersComboBox().getSelectedItem().toString());
-                String member = user.getName();
-                String problemLocation = cofe.
-                        getProblemLocationComboBox1().getSelectedItem()
-                        + "-" + cofe.getProblemLocationComboBox2().getSelectedItem()
-                        + "-" + cofe.getProblemLocationComboBox3().getSelectedItem()
-                        + "-" + cofe.getProblemLocationComboBox4().getSelectedItem();
-                String problemDescription = cofe.getProblemDescriptionTextArea().getText();
-                Iterator<JRadioButton> buttonsIterator = cofe.getButtonsInGrid().iterator();
-                ArrayList<String> keyWords = new ArrayList<String>();
-                while (buttonsIterator.hasNext())
-                {
-                    JRadioButton buttonUnderConsideration = buttonsIterator.next();
-                    if (buttonUnderConsideration.isSelected())
-                    {
-                        keyWords.add(buttonUnderConsideration.getName());
-                    }
-                }
-                String problemReportedBy = cofe.getProblemReportedByTextField().getText();
-                String whoIsA = cofe.getWhoIsAComboBox().getSelectedItem().toString();
-                String contactVia = cofe.getContactViaComboBox().getSelectedItem().toString();
-                String contactNumber = cofe.getContactNumberTextField().getText();
-                String locationVenueVillage = (String) cofe.getLocationVenueVillageComboBox().
-                        getSelectedItem().toString();
-                String delegateImpact = cofe.getDelegateImpactComboBox().getSelectedItem().toString();
-                boolean showOnCIS = cofe.getShowOnCISRadioButton().isSelected();
-                String ticketAllocatedTo = cofe.getTicketAllocatedToComboBox().getSelectedItem().toString();
-                if (ticketAllocatedTo.equals("Please Choose One"))
-                {
-                    ticketAllocatedTo = "";
-                }
-                DateTime asAt = new DateTime();
-                Ticket ticket = new Ticket(0, null, user,
-                        problemLocation, problemDescription, keyWords,
-                        problemReportedBy, whoIsA, contactVia, contactNumber,
-                        locationVenueVillage, delegateImpact, showOnCIS, ticketAllocatedTo, "Issue Reported", asAt, null, null,
-                        null, null, null);
-                String validationResult = ticket.dataValidationEntry();
-                if (validationResult.equals("Passed"))
-                {
-                    if (!(mysqlEngine.isTicketDuplicate(ticket)))
-                    {
-                        if (mysqlEngine.submitTicket(ticket, false))
-                        {
-                            JOptionPane.showMessageDialog(cofe.getMainFrame(),
-                                    "The Job Ticket has been submitted. \n"
-                                    + "The Job ID is: " + ticket.getJobRefId()
-                                    + "\nIt was submitted at: "
-                                    + ticket.getDateTime().toString(DATEFORMAT));
-                            cofe.getMainFrame().dispose();
-                        } else
-                        {
-                            JOptionPane.showMessageDialog(cofe.getMainFrame(), "MYSQL isn't happy...");
-                        }
-                    } else
-                    {
-                        mysqlEngine.submitTicket(ticket, true);
-                    }
-                } else
-                {
-                    JOptionPane.showMessageDialog(cofe.getMainFrame(), validationResult);
-                }
+                submitTicket(cofe);
             }
         });
 
@@ -916,29 +861,7 @@ public class MainSystem
                 if (ticket.dataValidationEntry().equals("Passed")
                         && ticket.printingValidation().equals("Passed"))
                 {
-                    DateTime now = new DateTime();
-                    String fileName = ticket.getJobRefId() + "_"
-                            + now.toString("ddMMyyyyHHmm") + ".csv";
-                    printingEngine.printFile(ticket, fileName);
-                    remoteInterfaceEngine.transferLocalToRemote(fileName);
-                    remoteInterfaceEngine.compileLatexFiles(fileName);
-                    String finishedTicket = remoteInterfaceEngine.transferRemoteToLocal(fileName);
-                    
-                    FileInputStream postScriptStream;
-                    PrintService prnSvc = PrintServiceLookup.lookupDefaultPrintService();
-                    DocPrintJob printJob = prnSvc.createPrintJob();
-                    Doc doc;
-                    try
-                    {
-                        postScriptStream = new FileInputStream(finishedTicket);
-                        doc = new SimpleDoc(postScriptStream, DocFlavor.INPUT_STREAM.POSTSCRIPT, null);
-                        printJob.print(doc,null);
-                    }
-                    catch(FileNotFoundException | PrintException exc)
-                    {
-                        
-                    }
-                    
+                    printTicket(ticket);
                 }
             }
         });
@@ -1129,6 +1052,7 @@ public class MainSystem
 
             cofeAmmend.getResetFormButton().addActionListener(new ActionListener()
             {
+                @Override
                 public void actionPerformed(ActionEvent e)
                 {
                     cofeAmmend.getDelegateImpactComboBox().setSelectedItem(ticket.getDelegateImpact());
@@ -1182,7 +1106,6 @@ public class MainSystem
                     {
                         JOptionPane.showMessageDialog(cofeAmmend.getMainFrame(),
                                 "Update Committed Successfully");
-                        cofeAmmend.getMainFrame().dispose();
                     } else
                     {
 
@@ -1229,7 +1152,7 @@ public class MainSystem
             {
                 nextUpdateDue = timesToCompare.get(i).plusHours(UPDATEHOURS);
                 found = true;
-                i--;
+                 i--;
             } else
             {
                 i--;
@@ -1245,6 +1168,94 @@ public class MainSystem
         return timeToReturn;
     }
 
+    private boolean printTicket(Ticket ticket)
+    {
+        DateTime now = new DateTime();
+        String fileName = ticket.getJobRefId() + "_"
+                + now.toString("ddMMyyyyHHmm") + ".csv";
+        printingEngine.printFile(ticket, fileName);
+        remoteInterfaceEngine.transferLocalToRemote(fileName);
+        remoteInterfaceEngine.compileLatexFiles(fileName);
+        String finishedTicket = remoteInterfaceEngine.transferRemoteToLocal(fileName);
+        
+        //printingEngine.printPDF(filePath);
+        
+        mysqlEngine.updateTicket(ticket);
+        mysqlEngine.markTicketPrinted(ticket);
+        return true;
+    }
+
+    private int submitTicket(ControlOfficeEntryForm cofe)
+    {
+        String team = user.getTeam();
+        user.setName(cofe.getTeamMembersComboBox().getSelectedItem().toString());
+        String member = user.getName();
+        String problemLocation = cofe.
+                getProblemLocationComboBox1().getSelectedItem()
+                + "-" + cofe.getProblemLocationComboBox2().getSelectedItem()
+                + "-" + cofe.getProblemLocationComboBox3().getSelectedItem()
+                + "-" + cofe.getProblemLocationComboBox4().getSelectedItem();
+        String problemDescription = cofe.getProblemDescriptionTextArea().getText();
+        Iterator<JRadioButton> buttonsIterator = cofe.getButtonsInGrid().iterator();
+        ArrayList<String> keyWords = new ArrayList<>();
+        while (buttonsIterator.hasNext())
+        {
+            JRadioButton buttonUnderConsideration = buttonsIterator.next();
+            if (buttonUnderConsideration.isSelected())
+            {
+                keyWords.add(buttonUnderConsideration.getName());
+            }
+        }
+        String problemReportedBy = cofe.getProblemReportedByTextField().getText();
+        String whoIsA = cofe.getWhoIsAComboBox().getSelectedItem().toString();
+        String contactVia = cofe.getContactViaComboBox().getSelectedItem().toString();
+        String contactNumber = cofe.getContactNumberTextField().getText();
+        String locationVenueVillage = (String) cofe.getLocationVenueVillageComboBox().
+                getSelectedItem().toString();
+        String delegateImpact = cofe.getDelegateImpactComboBox().getSelectedItem().toString();
+        boolean showOnCIS = cofe.getShowOnCISRadioButton().isSelected();
+        String ticketAllocatedTo = cofe.getTicketAllocatedToComboBox().getSelectedItem().toString();
+        if (ticketAllocatedTo.equals("Please Choose One"))
+        {
+            ticketAllocatedTo = "";
+        }
+        DateTime asAt = new DateTime();
+        Ticket ticket = new Ticket(0, null, user,
+                problemLocation, problemDescription, keyWords,
+                problemReportedBy, whoIsA, contactVia, contactNumber,
+                locationVenueVillage, delegateImpact, showOnCIS, ticketAllocatedTo, "Issue Reported", asAt, null, null,
+                null, null, null);
+        String validationResult = ticket.dataValidationEntry();
+        if (validationResult.equals("Passed"))
+        {
+            if (!(mysqlEngine.isTicketDuplicate(ticket)))
+            {
+                if (mysqlEngine.submitTicket(ticket, false))
+                {
+                    JOptionPane.showMessageDialog(cofe.getMainFrame(),
+                            "The Job Ticket has been submitted. \n"
+                            + "The Job ID is: " + ticket.getJobRefId()
+                            + "\nIt was submitted at: "
+                            + ticket.getDateTime().toString(DATEFORMAT));
+                    cofe.getMainFrame().dispose();
+                } else
+                {
+                    JOptionPane.showMessageDialog(cofe.getMainFrame(), "MYSQL isn't happy...");
+                    return -1;
+                }
+            } else
+            {
+                mysqlEngine.submitTicket(ticket, true);
+                return -2;
+            }
+        } else
+        {
+            JOptionPane.showMessageDialog(cofe.getMainFrame(), validationResult);
+            return -3;
+        }
+        return ticket.getJobRefId();
+    }
+    
     public InitialGUI getInitialGUI()
     {
         return initialGUI;
