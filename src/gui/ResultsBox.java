@@ -62,6 +62,8 @@ public class ResultsBox
                 resultsArea.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
                 break;
             case "Unprinted":
+                resultsArea.setListData(results);
+                resultsArea.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
                 break;
         }
         

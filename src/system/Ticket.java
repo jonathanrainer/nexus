@@ -120,7 +120,7 @@ public class Ticket
         return "Passed";
     }
    
-    public String pritingValidation()
+    public String printingValidation()
     {
         if(ticketAllocatedTo.equals(""))
         {
@@ -137,6 +137,19 @@ public class Ticket
         unvalidatedText = unvalidatedText.replace("\\" , "\\\\");
         unvalidatedText = unvalidatedText.replace("%", "\\%");
         return unvalidatedText;
+    }
+    
+    public boolean updateValidation()
+    {
+        if(jobClosed != null & (!jobProgress.equals("Duplicate")
+                   || !jobProgress.equals("Job Escalated")
+                   || !jobProgress.equals("Job Done")))
+        {
+        } else
+        {
+            return false;
+        }
+        return true;
     }
 
     public int getJobRefId()
@@ -301,6 +314,7 @@ public class Ticket
     }
     
     
+    @Override
     public String toString()
     {
         return "ID: " + jobRefId + " - Description : " + problemDescription;

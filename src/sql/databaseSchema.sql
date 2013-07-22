@@ -22,7 +22,7 @@ CREATE TABLE `tickets` (
 'IT Support', 'Logistics', 'Production','Site Crew', 'WigWam', 'Andy (Showground)',
  'Jackie (Cleaners)', 'Other'),
 `jobProgress` ENUM('Issue Reported', 'Ticket Printed', 'Job In Progress',
-'Job Escalated', 'Job Complete', 'Duplicate Job') NOT NULL,
+'Job Escalated', 'Job Done', 'Duplicate Job') NOT NULL,
 `asAt` DATETIME NOT NULL,
 `update1Description` VARCHAR(144),
 `update1EstimatedCompletion` DATETIME,

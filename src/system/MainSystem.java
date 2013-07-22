@@ -280,7 +280,39 @@ public class MainSystem
                 });
 
             }
+            
         });
+       
+        mainGUI.getTaskSelectionScreen().getMainFrame().getJMenuBar().getMenu(0).
+                getItem(1).addActionListener(new ActionListener()
+        {
+            public void actionPerformed(ActionEvent e)
+            {
+                final Ticket[] tickets = mysqlEngine.getUnprinted();
+                final ResultsBox resultsBox = new ResultsBox(tickets, "Unprinted");
+                resultsBox.getResultsArea().addMouseListener(new MouseAdapter()
+                {
+                    @Override
+                    public void mouseClicked(MouseEvent evt)
+                    {
+                        if (evt.getSource().equals(resultsBox.getResultsArea()))
+                        {
+                            if (evt.getClickCount() == 2)
+                            {
+                                int index = resultsBox.
+                                        getResultsArea().
+                                        locationToIndex(evt.getPoint());
+                                ControlOfficeEntryForm cofeAmend =
+                                        createUpdateAmendEntryForm("" + tickets[index].getJobRefId());
+                            }
+                        }
+                    }
+                });
+
+
+            }
+        });
+
     }
 
     /**
@@ -882,7 +914,7 @@ public class MainSystem
             public void actionPerformed(ActionEvent e)
             {
                 if (ticket.dataValidationEntry().equals("Passed")
-                        && ticket.pritingValidation().equals("Passed"))
+                        && ticket.printingValidation().equals("Passed"))
                 {
                     DateTime now = new DateTime();
                     String fileName = ticket.getJobRefId() + "_"
@@ -1146,7 +1178,7 @@ public class MainSystem
                     }
 
                     ticket.setNextUpdateDue(calculateNextUpdateDue(ticket));
-                    if (mysqlEngine.updateTicket(ticket))
+                    if (mysqlEngine.updateTicket(ticket) && ticket.updateValidation())
                     {
                         JOptionPane.showMessageDialog(cofeAmmend.getMainFrame(),
                                 "Update Committed Successfully");

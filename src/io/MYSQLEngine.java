@@ -252,7 +252,7 @@ public class MYSQLEngine
                     + "'" + ticket.getReportedBy() + "', " + "'" + 
                     ticket.getWhoIsA()+ "', " + "'" + ticket.getContactVia() + 
                     "', '" + ticket.getContactNumber() + "', " + "'" + 
-                    ticket.getLocationVenueVillage() + "', " + 
+                    ticket.getLocationVenueVillage() + "', '" + 
                     ticket.getDelegateImpact() + "'";
             
             if(ticket.getTicketRaisedBy().getTeam().equals("Control Office"))
@@ -659,6 +659,74 @@ public class MYSQLEngine
             }
         }
         return success;
+    }
+    
+    public Ticket[] getUnprinted()
+    {
+        // Set up the initial connection and statement objects
+        Connection conn = null;
+        Statement stmt = null;
+        ArrayList<Ticket> unprinted = new ArrayList<>();
+        // Begin try block so SQL Exceptions can be handled later
+        try
+        {
+            // Register JDBC driver
+            Class.forName("com.mysql.jdbc.Driver");
+            // Open a connection
+            conn = DriverManager.getConnection(DB_URL, USER, PASS);
+
+            // Create and Execute the SQL Query
+            stmt = conn.createStatement();
+            /**
+             * Query states: Select all the users in a particular team
+             */
+            String sql = "SELECT * FROM tickets WHERE jobProgress = 'Issue Reported'";
+            ResultSet rs = stmt.executeQuery(sql);
+            while(rs.next())
+            {
+                Ticket ticket = retrieveTicket(rs.getString("jobRefId"), "tickets");
+                unprinted.add(ticket);
+            }
+            stmt.close();
+            conn.close();
+        } catch (SQLException se)
+        {
+;            System.out.println(se.getSQLState());
+            //Handle errors for JDBC
+        } catch (Exception e)
+        {
+            //Handle errors for Class.forName
+        } finally
+        {
+            //finally block used to close resources should all else fail
+            try
+            {
+                if (stmt != null )
+                {
+                    stmt.close();
+                }
+            } catch (SQLException se2)
+            {
+            }// nothing we can do
+
+            try
+            {
+                if (conn != null)
+                {
+                    conn.close();
+                }
+            } catch (SQLException se)
+            {
+            }
+        }
+        int i = 0;
+        Ticket[] unprintedArray = new Ticket[unprinted.size()];
+        while(i < unprinted.size())
+        {
+            unprintedArray[i] = unprinted.get(i);
+            i++;
+        }
+        return unprintedArray;
     }
     
     private DateTime timeStampToDateTime(String timeStamp)
