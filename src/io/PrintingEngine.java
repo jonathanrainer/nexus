@@ -5,9 +5,11 @@
 package io;
 
 import au.com.bytecode.opencsv.CSVWriter;
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.joda.time.DateTime;
@@ -25,6 +27,7 @@ public class PrintingEngine
     "raisedTime", "raisedByName", "raisedByTeam", "allocatedTeam",
     "problemLocation", "problemDescription", "problemReportedBy",
     "whoIsA", "contactName", "contactNumber", "showOnCIS"};
+    private static final String LOCALCSVDIR = "C:\\Nexus\\localCSV\\";
     
     public PrintingEngine()
     {
@@ -35,7 +38,7 @@ public class PrintingEngine
     {
         try
         {
-            File csvFile = new File("/Users/jonathanrainer/Documents/Nexus/csvUploadDir/" + fileName);
+            File csvFile = new File(LOCALCSVDIR + fileName);
             csvFile.createNewFile();
             FileWriter fileWriter = new FileWriter(csvFile);
             csvWriter = new CSVWriter(fileWriter);
@@ -81,11 +84,20 @@ public class PrintingEngine
    
     public void printPDF(String filePath)
     {
-        try
-        {
-            Runtime.getRuntime().exec("AcroRd32.exe /n /s /p " + filePath);
-        } catch (IOException ex)
-        {
+         ProcessBuilder builder = new ProcessBuilder("cmd.exe", "/c", "C:" + 
+                 File.separatorChar + "SumatraPDF" + File.separatorChar 
+        + "SumatraPDF.exe" + " -print-dialog -silent -exit-on-print  " + filePath);
+         builder.redirectErrorStream(true);
+        try {
+            Process p = builder.start();
+            BufferedReader r = new BufferedReader(new InputStreamReader(p.getInputStream()));
+        String line;
+        while (true) {
+            line = r.readLine();
+            if (line == null) { break; }
+            System.out.println(line);
+        }
+        } catch (IOException ex) {
             Logger.getLogger(PrintingEngine.class.getName()).log(Level.SEVERE, null, ex);
         }
     }

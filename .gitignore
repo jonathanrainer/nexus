@@ -6,3 +6,5 @@
 *.ear
 /externallibs/
 /dist/
+/nbproject/private/
+/build/

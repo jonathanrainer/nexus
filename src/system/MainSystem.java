@@ -51,13 +51,13 @@ public class MainSystem
      */
     public MainSystem()
     {
-        mysqlEngine = new MYSQLEngine("localhost", "Nexus", "nexus", "nexus2713");
+        mysqlEngine = new MYSQLEngine("localhost", "Nexus", "root", "");
         teamNames = mysqlEngine.enumerateTeamNames();
         initialGUI = new InitialGUI(teamNames);
         dataStructures = new DataStructures();
         printingEngine = new PrintingEngine();
         remoteInterfaceEngine = new RemoteInterfaceEngine();
-        addActionListenersInitialGUI();
+        addActionListenersInitialGUI(); 
 
     }
 
@@ -1178,7 +1178,7 @@ public class MainSystem
         remoteInterfaceEngine.compileLatexFiles(fileName);
         String finishedTicket = remoteInterfaceEngine.transferRemoteToLocal(fileName);
         
-        //printingEngine.printPDF(filePath);
+        printingEngine.printPDF(finishedTicket);
         
         mysqlEngine.updateTicket(ticket);
         mysqlEngine.markTicketPrinted(ticket);

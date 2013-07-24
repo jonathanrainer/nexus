@@ -22,11 +22,11 @@ import org.apache.commons.io.FilenameUtils;
  */
 public class RemoteInterfaceEngine
 {
-    private static final String LOCALCSVDIR = "/Users/jonathanrainer/Documents/Nexus/csvUploadDir/";
+    private static final String LOCALCSVDIR = "C:\\Nexus\\localCSV\\";
     private static final String REMOTECSVLOCATION = "/home/nexususer/Nexus/csvTransferDir/";
     private static final String REMOTETEXLOCATION = "/home/nexususer/Nexus/latexTemplates/";
     private static final String REMOTEOUTPUTLOCATION = "/home/nexususer/Nexus/pdfTickets/";
-    private static final String LOCALOUTPUTLOCATION = "/Users/jonathanrainer/Documents/Nexus/pdfTickets/";
+    private static final String LOCALOUTPUTLOCATION = "C:\\Nexus\\pdfTickets\\";
     private static final String TEXLOGGINGLOCATION = "/home/nexususer/Nexus/logging/";
     private String hostname;
     private String username;
@@ -169,18 +169,19 @@ public class RemoteInterfaceEngine
             System.out.println(REMOTEOUTPUTLOCATION + pdfFileName);
             SFTPv3FileHandle handle = sftpClient.openFileRO(REMOTEOUTPUTLOCATION + pdfFileName);
             
-
             
             int i = 0;
-            byte[] byteArray = new byte[32768];
-            while(sftpClient.read(handle, (i * 32768), byteArray, 0, 32768) != -1)
+            byte[] byteArray = new byte[4096];
+            while(sftpClient.read(handle, (i * 4096), byteArray, 0, 4096) != -1)
             {
                 fos.write(byteArray);
                 i++;
             }
+            sftpClient.closeFile(handle);
+            sftpClient.close();
             /* Close the connection */
-
             conn.close();
+            fos.flush();
             fos.close();
 
         } catch (IOException e)
