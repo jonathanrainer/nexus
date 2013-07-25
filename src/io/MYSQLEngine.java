@@ -728,6 +728,189 @@ public class MYSQLEngine
         return unprintedArray;
     }
     
+    public ArrayList<Ticket> getIssueReportedTickets()
+    {
+        // Set up the initial connection and statement objects
+        Connection conn = null;
+        Statement stmt = null;
+        ArrayList<Ticket> issueReportedTickets = new ArrayList<>();
+        // Begin try block so SQL Exceptions can be handled later
+        try
+        {
+            // Register JDBC driver
+            Class.forName("com.mysql.jdbc.Driver");
+            // Open a connection
+            conn = DriverManager.getConnection(DB_URL, USER, PASS);
+
+            // Create and Execute the SQL Query
+            stmt = conn.createStatement();
+            /**
+             * Query states: Select all the users in a particular team
+             */
+            String sql = "SELECT * FROM tickets WHERE jobProgress = 'Issue Reported'";
+            ResultSet rs = stmt.executeQuery(sql);
+            while(rs.next())
+            {
+                Ticket ticket = retrieveTicket(rs.getString("jobRefId"), "tickets");
+                issueReportedTickets.add(ticket);
+            }
+            stmt.close();
+            conn.close();
+        } catch (SQLException se)
+        {
+;            System.out.println(se.getSQLState());
+            //Handle errors for JDBC
+        } catch (Exception e)
+        {
+            //Handle errors for Class.forName
+        } finally
+        {
+            //finally block used to close resources should all else fail
+            try
+            {
+                if (stmt != null )
+                {
+                    stmt.close();
+                }
+            } catch (SQLException se2)
+            {
+            }// nothing we can do
+
+            try
+            {
+                if (conn != null)
+                {
+                    conn.close();
+                }
+            } catch (SQLException se)
+            {
+            }
+        }
+        return issueReportedTickets;
+    }
+    
+    public ArrayList<Ticket> getTicketPrintedTickets()
+    {
+        // Set up the initial connection and statement objects
+        Connection conn = null;
+        Statement stmt = null;
+        ArrayList<Ticket> ticketPrintedTickets = new ArrayList<>();
+        // Begin try block so SQL Exceptions can be handled later
+        try
+        {
+            // Register JDBC driver
+            Class.forName("com.mysql.jdbc.Driver");
+            // Open a connection
+            conn = DriverManager.getConnection(DB_URL, USER, PASS);
+
+            // Create and Execute the SQL Query
+            stmt = conn.createStatement();
+            /**
+             * Query states: Select all the users in a particular team
+             */
+            String sql = "SELECT * FROM tickets WHERE jobProgress = 'Ticket Printed'";
+            ResultSet rs = stmt.executeQuery(sql);
+            while(rs.next())
+            {
+                Ticket ticket = retrieveTicket(rs.getString("jobRefId"), "tickets");
+                ticketPrintedTickets.add(ticket);
+            }
+            stmt.close();
+            conn.close();
+        } catch (SQLException se)
+        {
+;            System.out.println(se.getSQLState());
+            //Handle errors for JDBC
+        } catch (Exception e)
+        {
+            //Handle errors for Class.forName
+        } finally
+        {
+            //finally block used to close resources should all else fail
+            try
+            {
+                if (stmt != null )
+                {
+                    stmt.close();
+                }
+            } catch (SQLException se2)
+            {
+            }// nothing we can do
+
+            try
+            {
+                if (conn != null)
+                {
+                    conn.close();
+                }
+            } catch (SQLException se)
+            {
+            }
+        }
+        return ticketPrintedTickets;
+    }
+    
+     public ArrayList<Ticket> getjobInProgressTickets()
+    {
+        // Set up the initial connection and statement objects
+        Connection conn = null;
+        Statement stmt = null;
+        ArrayList<Ticket> jobInProgressTickets = new ArrayList<>();
+        // Begin try block so SQL Exceptions can be handled later
+        try
+        {
+            // Register JDBC driver
+            Class.forName("com.mysql.jdbc.Driver");
+            // Open a connection
+            conn = DriverManager.getConnection(DB_URL, USER, PASS);
+
+            // Create and Execute the SQL Query
+            stmt = conn.createStatement();
+            /**
+             * Query states: Select all the users in a particular team
+             */
+            String sql = "SELECT * FROM tickets WHERE jobProgress = 'Job In Progress'";
+            ResultSet rs = stmt.executeQuery(sql);
+            while(rs.next())
+            {
+                Ticket ticket = retrieveTicket(rs.getString("jobRefId"), "tickets");
+                jobInProgressTickets.add(ticket);
+            }
+            stmt.close();
+            conn.close();
+        } catch (SQLException se)
+        {
+;            System.out.println(se.getSQLState());
+            //Handle errors for JDBC
+        } catch (Exception e)
+        {
+            //Handle errors for Class.forName
+        } finally
+        {
+            //finally block used to close resources should all else fail
+            try
+            {
+                if (stmt != null )
+                {
+                    stmt.close();
+                }
+            } catch (SQLException se2)
+            {
+            }// nothing we can do
+
+            try
+            {
+                if (conn != null)
+                {
+                    conn.close();
+                }
+            } catch (SQLException se)
+            {
+            }
+        }
+        return jobInProgressTickets;
+    }
+    
     public void markTicketPrinted(Ticket ticket)
     {
         // Set up the initial connection and statement objects

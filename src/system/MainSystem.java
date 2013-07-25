@@ -5,6 +5,7 @@
 package system;
 
 import gui.ControlOfficeEntryForm;
+import gui.DashBoard;
 import gui.InitialGUI;
 import gui.MainGUI;
 import gui.ResultsBox;
@@ -94,6 +95,18 @@ public class MainSystem
                 initialGUI.getTeamSelectionScreen().getMainFrame().setVisible(true);
             }
         });
+        
+        initialGUI.getWelcomeScreen().getMainFrame().getJMenuBar().getMenu(0).getItem(0).
+                addActionListener(new ActionListener()
+                {
+                    @Override
+                    public void actionPerformed(ActionEvent e)
+                    {
+                        initialGUI.getWelcomeScreen().getMainFrame().dispose();
+                        DashBoard dashBoard = new DashBoard(mysqlEngine);
+                    }
+                    
+                });
 
         /**
          * Add an ActionListener to the continue button on the Team Selection
@@ -124,6 +137,8 @@ public class MainSystem
                 initialGUI.getWelcomeScreen().getMainFrame().setVisible(true);
             }
         });
+        
+        
 
     }
 

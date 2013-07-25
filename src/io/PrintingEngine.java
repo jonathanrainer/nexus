@@ -90,13 +90,14 @@ public class PrintingEngine
          builder.redirectErrorStream(true);
         try {
             Process p = builder.start();
-            BufferedReader r = new BufferedReader(new InputStreamReader(p.getInputStream()));
-        String line;
-        while (true) {
-            line = r.readLine();
-            if (line == null) { break; }
-            System.out.println(line);
-        }
+            // Debugging code if necessary
+//            BufferedReader r = new BufferedReader(new InputStreamReader(p.getInputStream()));
+//        String line;
+//        while (true) {
+//            line = r.readLine();
+//            if (line == null) { break; }
+//            System.out.println(line);
+//        }
         } catch (IOException ex) {
             Logger.getLogger(PrintingEngine.class.getName()).log(Level.SEVERE, null, ex);
         }

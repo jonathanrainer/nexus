@@ -94,8 +94,8 @@ public class TeamSelectionScreen {
         // Create the continue buttons and its associated constraints.
         continueButton = new JButton(template.headingString("Continue", 2));
         GridBagConstraints continueButtonConstraints = template.
-                createGridBagConstraints(0, 3, GridBagConstraints.NORTH, 40, 40,
-                new Insets(0, 0, 0, 0), GridBagConstraints.CENTER, 0.0, 0.0, 1,
+                createGridBagConstraints(0, 3, GridBagConstraints.NONE, 20, 10,
+                new Insets(10, 10, 10, 10), GridBagConstraints.CENTER, 0.0, 0.0, 1,
                 1);
         frameContent.add(continueButton, continueButtonConstraints);
         
