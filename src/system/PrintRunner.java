@@ -15,6 +15,8 @@ import java.io.InputStreamReader;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.SwingWorker;
+import org.apache.commons.io.FileUtils;
+import org.apache.commons.io.FilenameUtils;
 import org.joda.time.DateTime;
 
 /**
@@ -63,6 +65,8 @@ public class PrintRunner extends SwingWorker<Void,String> {
         firePropertyChange("Message", "", "Invoking Print Dialog... \n");
         printPDF(finishedTicket);
         firePropertyChange("Message", "", "Ticket Printed... \n");
+        FileUtils.cleanDirectory(new File(LOCALCSVDIR));
+        FileUtils.cleanDirectory(new File(FilenameUtils.getFullPath(finishedTicket)));
         mysqlEngine.markTicketPrinted(ticket);
         return null;
     }
