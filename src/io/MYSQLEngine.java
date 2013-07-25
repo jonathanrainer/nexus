@@ -98,7 +98,7 @@ public class MYSQLEngine
                 int i = 0;
                 /**
                  * Remove Super Users from the list since login in as a Super
-                 * User will be dealt with seperately.
+                 * User will be dealt with separately.
                  */
                 while (i < argumentArray.length)
                 {
@@ -929,9 +929,12 @@ public class MYSQLEngine
             /**
              * Query states: Select all the users in a particular team
              */
-            String sql = "UPDATE tickets SET jobProgress = 'Ticket Printed'"
+            if(ticket.getJobProgress().equals("Issue Reported"))
+            {
+                String sql = "UPDATE tickets SET jobProgress = 'Ticket Printed'"
                     + "WHERE jobrefId = ' " + ticket.getJobRefId() + "';";
             stmt.executeUpdate(sql);
+            }
             stmt.close();
             conn.close();
         } catch (SQLException se)

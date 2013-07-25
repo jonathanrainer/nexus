@@ -9,20 +9,31 @@ import gui.DashBoard;
 import gui.InitialGUI;
 import gui.MainGUI;
 import gui.ResultsBox;
+import gui.Template;
 import io.RemoteInterfaceEngine;
 import io.MYSQLEngine;
-import io.PrintingEngine;
+import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Iterator;
+import java.util.concurrent.ExecutionException;
+import javax.swing.BorderFactory;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JRadioButton;
+import javax.swing.JTextArea;
+import javax.swing.border.Border;
 import org.joda.time.DateTime;
 import org.joda.time.DateTimeComparator;
 
@@ -41,7 +52,6 @@ public class MainSystem
     private MainGUI mainGUI;
     private User user;
     private DataStructures dataStructures;
-    private PrintingEngine printingEngine;
     private RemoteInterfaceEngine remoteInterfaceEngine;
     private static final String DATEFORMAT = "dd/MM/yyyy HH:mm";
     private static final int UPDATEHOURS = 2;
@@ -56,7 +66,6 @@ public class MainSystem
         teamNames = mysqlEngine.enumerateTeamNames();
         initialGUI = new InitialGUI(teamNames);
         dataStructures = new DataStructures();
-        printingEngine = new PrintingEngine();
         remoteInterfaceEngine = new RemoteInterfaceEngine();
         addActionListenersInitialGUI(); 
 
@@ -611,7 +620,7 @@ public class MainSystem
     {
         final ControlOfficeEntryForm cofe = new ControlOfficeEntryForm(true, user);
         JMenu fileMenu = cofe.getMainFrame().getJMenuBar().getMenu(0);
-        JMenuItem printAndSubmit = new JMenuItem("Submit & Print");
+        JMenuItem printAndSubmit = new JMenuItem("Print & Submit");
         printAndSubmit.addActionListener(new ActionListener()
         {
             @Override
@@ -770,7 +779,7 @@ public class MainSystem
             }
         });
 
-        cofe.getWhoIsAComboBox().addItem("Choose One");
+        cofe.getWhoIsAComboBox().addItem("Who Is A?");
         cofe.getWhoIsAComboBox().addItem("Delegate");
         cofe.getWhoIsAComboBox().addItem("Speaker");
         cofe.getWhoIsAComboBox().addItem("Team Member");
@@ -802,6 +811,7 @@ public class MainSystem
         });
 
         cofe.getLocationVenueVillageComboBox().addItem("Choose One");
+        cofe.getLocationVenueVillageComboBox().addItem("Location");
         cofe.getLocationVenueVillageComboBox().addItem("Venue");
         cofe.getLocationVenueVillageComboBox().addItem("Village");
         cofe.getLocationVenueVillageComboBox().addItem("Not Required");
@@ -837,6 +847,23 @@ public class MainSystem
                 cofe.getLocationVenueVillageComboBox().setSelectedIndex(0);
             }
         });
+        
+        cofe.getPrintFormButton().addActionListener(
+                new ActionListener()
+                {
+                    @Override
+                    public void actionPerformed(ActionEvent e)
+                    {
+                        String ticketID = "" + submitTicket(cofe);
+                        Ticket ticket = mysqlEngine.retrieveTicket(ticketID, "Tickets");
+                        if (ticket.dataValidationEntry().equals("Passed")
+                                && ticket.printingValidation().equals("Passed"))
+                        {
+                            printTicket(ticket);
+                        }
+                    }
+                });
+        
         cofe.getDelegateImpactComboBox().addItem("Low");
         cofe.getDelegateImpactComboBox().addItem("Medium");
         cofe.getDelegateImpactComboBox().addItem("High");
@@ -1066,13 +1093,14 @@ public class MainSystem
                 cofeAmmend.getJobCompletedTextField().setText(ticket.getJobClosed().toString(DATEFORMAT));
             } else
             {
-                cofeAmmend.getJobCompletedTextField().setText("Automated");
                 cofeAmmend.getNextUpdateDueTextField().setEnabled(false);
-                cofeAmmend.getNextUpdateDueTextField().setText(calculateNextUpdateDue(ticket).toString(DATEFORMAT));
+                cofeAmmend.getNextUpdateDueTextField().setText("Job Closed");
+                cofeAmmend.getJobCompletedTextField().setText("Automated");
             }
-
+            cofeAmmend.getNextUpdateDueTextField().setText(calculateNextUpdateDue(ticket).toString(DATEFORMAT));
             cofeAmmend.getNextUpdateDueTextField().setEnabled(false);
-            cofeAmmend.getNextUpdateDueTextField().setText("Job Closed");
+
+            
 
 
             cofeAmmend.getResetFormButton().addActionListener(new ActionListener()
@@ -1152,7 +1180,18 @@ public class MainSystem
                     JOptionPane.ERROR_MESSAGE);
         }
 
-
+        cofeAmmend.getPrintFormButton().addActionListener(new ActionListener()
+        {
+            @Override
+            public void actionPerformed(ActionEvent e)
+            {
+                if (ticket.dataValidationEntry().equals("Passed")
+                        && ticket.printingValidation().equals("Passed"))
+                {
+                    printTicket(ticket);
+                }
+            }
+        });
 
         return cofeAmmend;
     }
@@ -1177,7 +1216,7 @@ public class MainSystem
             {
                 nextUpdateDue = timesToCompare.get(i).plusHours(UPDATEHOURS);
                 found = true;
-                 i--;
+                i--;
             } else
             {
                 i--;
@@ -1193,21 +1232,58 @@ public class MainSystem
         return timeToReturn;
     }
 
-    private boolean printTicket(Ticket ticket)
+    private void printTicket(Ticket ticket)
     {
-        DateTime now = new DateTime();
-        String fileName = ticket.getJobRefId() + "_"
-                + now.toString("ddMMyyyyHHmm") + ".csv";
-        printingEngine.printFile(ticket, fileName);
-        remoteInterfaceEngine.transferLocalToRemote(fileName);
-        remoteInterfaceEngine.compileLatexFiles(fileName);
-        String finishedTicket = remoteInterfaceEngine.transferRemoteToLocal(fileName);
+        Template template = new Template();
+        final JFrame progressFrame = new JFrame("Printing Ticket....");
+        GridLayout layout = new GridLayout(2,1);
         
-        printingEngine.printPDF(finishedTicket);
+        JLabel printingProgressLabel = new JLabel(
+                template.headingString("Printing Progress", 2));
+        final JTextArea messageText = new JTextArea();
+        messageText.setPreferredSize(new Dimension(300,350));
+        messageText.setText("");
+        Border border = BorderFactory.createLineBorder(Color.BLACK, 2);
+        messageText.setBorder(border);
         
-        mysqlEngine.updateTicket(ticket);
-        mysqlEngine.markTicketPrinted(ticket);
-        return true;
+        PrintRunner printRunner = new PrintRunner(ticket, remoteInterfaceEngine,
+                mysqlEngine);
+        
+        progressFrame.setLayout(layout);
+        progressFrame.add(printingProgressLabel, JLabel.CENTER);
+        progressFrame.add(messageText);
+        progressFrame.setPreferredSize(new Dimension(600,400));
+        progressFrame.pack();
+        progressFrame.setVisible(true);
+        
+        
+        printRunner.addPropertyChangeListener(new PropertyChangeListener()
+        {
+            @Override
+            public void propertyChange(PropertyChangeEvent evt)
+            {
+                if(evt.getPropertyName().equals("Message"))
+                {
+                    messageText.append((String) evt.getNewValue());
+                    progressFrame.repaint();
+                }
+                if(evt.getPropertyName().equals("state"))
+                {
+                    if(evt.getNewValue().toString().equals("DONE"))
+                    {
+                        progressFrame.dispose();
+                    }
+                }
+            }
+        });
+        try
+        {
+            printRunner.execute();
+        }
+        catch(Exception e)
+        {
+            
+        }
     }
 
     private int submitTicket(ControlOfficeEntryForm cofe)

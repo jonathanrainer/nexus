@@ -19,8 +19,6 @@ import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
-import javax.swing.JMenu;
-import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.JScrollPane;
@@ -105,6 +103,7 @@ public class ControlOfficeEntryForm {
     private JTextField nextUpdateDueTextField;
     private JButton submitFormButton;
     private JButton resetFormButton;
+    private JButton printFormButton;
 
     public ControlOfficeEntryForm(boolean entry, User user)
     {
@@ -119,6 +118,7 @@ public class ControlOfficeEntryForm {
             controlOfficeFormCreation();
             int lastRow = updateFormAddition();
             submitResetButtons(lastRow);
+            printButton(lastRow, entry);
             
         } else
         {
@@ -128,6 +128,7 @@ public class ControlOfficeEntryForm {
                 basicFormCreation(frameTitle,formTitle);
                 int lastRow = controlOfficeFormCreation();
                 submitResetButtons(lastRow);
+                printButton(lastRow, entry);
             } else
             {
                 basicFormCreation(frameTitle, formTitle);
@@ -616,16 +617,23 @@ public class ControlOfficeEntryForm {
         estimatedCompletionByTextField1.setColumns(13);
         GridBagConstraints estimatedCompletionByTextField1Constraints = template.
                 createGridBagConstraints(3, 22, GridBagConstraints.NONE, 5, 5,
-                new Insets(0, 0, 0, 0), GridBagConstraints.CENTER, 0.0, 0.0, 2,
+                new Insets(0, 0, 0, 0), GridBagConstraints.CENTER, 0.0, 0.0, 1,
                 1);
         frameContent.add(estimatedCompletionByTextField1, estimatedCompletionByTextField1Constraints);
 
+        JLabel timestampExample = new JLabel(template.headingString("e.g. 23/11/1963 17:15", 4));
+        GridBagConstraints timestampExampleLabelConstraints = template.
+                createGridBagConstraints(3, 23, GridBagConstraints.NONE, 5, 5,
+                new Insets(0, 0, 0, 0), GridBagConstraints.NORTH, 0.0, 0.0, 1,
+                1);
+        frameContent.add(timestampExample, timestampExampleLabelConstraints);
+        
         //Add in Updated At Text Field
         updatedAtTextField1 = new JTextField();
         updatedAtTextField1.setBackground(Color.YELLOW);
         GridBagConstraints updatedAtTextField1Constraints = template.
                 createGridBagConstraints(4, 22, GridBagConstraints.HORIZONTAL, 5, 5,
-                new Insets(0, 0, 0, 0), GridBagConstraints.CENTER, 0.0, 0.0, 2,
+                new Insets(0, 0, 0, 0), GridBagConstraints.CENTER, 0.0, 0.0, 1,
                 1);
         frameContent.add(updatedAtTextField1, updatedAtTextField1Constraints);
 
@@ -769,7 +777,7 @@ public class ControlOfficeEntryForm {
         submitFormButton = new JButton("Submit Form");
         GridBagConstraints submitFormButtonConstraints = template.
                 createGridBagConstraints(0, lastRow+1, GridBagConstraints.HORIZONTAL, 5, 5,
-                new Insets(10, 0, 0, 0), GridBagConstraints.WEST, 0.0, 0.0, 1,
+                new Insets(10, 0, 20, 15), GridBagConstraints.WEST, 0.0, 0.0, 1,
                 1);
         frameContent.add(submitFormButton, submitFormButtonConstraints);
         
@@ -777,9 +785,32 @@ public class ControlOfficeEntryForm {
         resetFormButton = new JButton("Reset Form");
         GridBagConstraints resetFormButtonConstraints = template.
                 createGridBagConstraints(1, lastRow+1, GridBagConstraints.HORIZONTAL, 5, 5,
-                new Insets(10, 0, 0, 0), GridBagConstraints.WEST, 0.0, 0.0, 1,
+                new Insets(10, 0, 20, 0), GridBagConstraints.WEST, 0.0, 0.0, 1,
                 1);
         frameContent.add(resetFormButton, resetFormButtonConstraints);
+       
+        
+    }
+    
+    private void printButton(int lastRow, boolean entry)
+    {
+        //Add in a print Button
+        String buttonText = "";
+        if(entry)
+        {
+            buttonText = "Print & Submit Form";
+        }
+        else
+        {
+            buttonText = "Print Form";
+        }
+        printFormButton = new JButton(buttonText);
+        GridBagConstraints printFormButtonConstraints = template.
+                createGridBagConstraints(4, lastRow+1, GridBagConstraints.HORIZONTAL, 5, 5,
+                new Insets(0, 0, 20, 0), GridBagConstraints.WEST, 0.0, 0.0, 1,
+                1);
+        frameContent.add(printFormButton, printFormButtonConstraints);
+        
     }
 
     public JTextField getTicketReferenceTextField() {
@@ -942,6 +973,11 @@ public class ControlOfficeEntryForm {
     {
         return nextUpdateDueTextField;
     }
+
+    public JButton getPrintFormButton() {
+        return printFormButton;
+    }
+    
     
     
     
