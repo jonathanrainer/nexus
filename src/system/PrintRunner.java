@@ -65,6 +65,7 @@ public class PrintRunner extends SwingWorker<Void,String> {
         firePropertyChange("Message", "", "Invoking Print Dialog... \n");
         printPDF(finishedTicket);
         firePropertyChange("Message", "", "Ticket Printed... \n");
+        firePropertyChange("Message", "", "Clearing Local Directories... \n");
         FileUtils.cleanDirectory(new File(LOCALCSVDIR));
         FileUtils.cleanDirectory(new File(FilenameUtils.getFullPath(finishedTicket)));
         mysqlEngine.markTicketPrinted(ticket);
