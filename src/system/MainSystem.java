@@ -559,11 +559,21 @@ public class MainSystem
                             cofe.getMainFrame().dispose();
                         } else
                         {
-                            JOptionPane.showMessageDialog(cofe.getMainFrame(), "MYSQL isn't happy...");
+                            JOptionPane.showMessageDialog(cofe.getMainFrame(), "An error has occured. \n"
+                                    + "Don't close this window and report to Jonathan Rainer (Admin)"
+                                    + "or Ian Walker for assistance.");
                         }
                     } else
                     {
-                        mysqlEngine.submitTicket(ticket, true);
+                        if(mysqlEngine.submitTicket(ticket, true))
+                        {
+                            JOptionPane.showMessageDialog(cofe.getMainFrame(),
+                                    "The Job Ticket you submitted has been "
+                                    + "flagged as a duplicate. Control Office will advise. \n"
+                                    + "The Temporary Job ID is: " + ticket.getJobRefId()
+                                    + "\n It was submitted at: " + ticket.getDateTime().toString(DATEFORMAT));
+                            cofe.getMainFrame().dispose();
+                        };
                     }
                 } else
                 {

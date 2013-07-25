@@ -242,7 +242,7 @@ public class ControlOfficeEntryForm {
         ticketWrittenComboBox = new JComboBox();
         GridBagConstraints ticketWrittenComboBoxConstraints = template.
                 createGridBagConstraints(1, 4, GridBagConstraints.HORIZONTAL, 5, 5,
-                new Insets(0, 0, 0, 0), GridBagConstraints.WEST, 0.0, 0.0, 1,
+                new Insets(0, 0, 0, 5), GridBagConstraints.WEST, 0.0, 0.0, 1,
                 1);
         frameContent.add(ticketWrittenComboBox, ticketWrittenComboBoxConstraints);
 
@@ -287,7 +287,7 @@ public class ControlOfficeEntryForm {
         problemLocationComboBox1 = new JComboBox();
         GridBagConstraints problemLocationComboBox1Constraints = template.
                 createGridBagConstraints(1, 6, GridBagConstraints.HORIZONTAL, 5, 5,
-                new Insets(0, 0, 0, 0), GridBagConstraints.WEST, 0.0, 0.0, 1,
+                new Insets(0, 0, 0, 5), GridBagConstraints.WEST, 0.0, 0.0, 1,
                 1);
         frameContent.add(problemLocationComboBox1, problemLocationComboBox1Constraints);
 
@@ -295,7 +295,7 @@ public class ControlOfficeEntryForm {
         problemLocationComboBox2 = new JComboBox();
         GridBagConstraints problemLocationComboBox2Constraints = template.
                 createGridBagConstraints(2, 6, GridBagConstraints.HORIZONTAL, 5, 5,
-                new Insets(0, 0, 0, 0), GridBagConstraints.WEST, 0.0, 0.0, 1,
+                new Insets(0, 0, 0, 5), GridBagConstraints.WEST, 0.0, 0.0, 1,
                 1);
         frameContent.add(problemLocationComboBox2, problemLocationComboBox2Constraints);
 
@@ -303,7 +303,7 @@ public class ControlOfficeEntryForm {
         problemLocationComboBox3 = new JComboBox();
         GridBagConstraints problemLocationComboBox3Constraints = template.
                 createGridBagConstraints(3, 6, GridBagConstraints.HORIZONTAL, 5, 5,
-                new Insets(0, 0, 0, 0), GridBagConstraints.WEST, 0.0, 0.0, 1,
+                new Insets(0, 0, 0, 5), GridBagConstraints.WEST, 0.0, 0.0, 1,
                 1);
         frameContent.add(problemLocationComboBox3, problemLocationComboBox3Constraints);
 
@@ -343,7 +343,7 @@ public class ControlOfficeEntryForm {
                 + " You only <br> have 256 <br> characters.", 4));
         GridBagConstraints problemDescriptionExplanationLabelConstraints = template.
                 createGridBagConstraints(4, 7, GridBagConstraints.NONE, 5, 5,
-                new Insets(0, 0, 0, 0), GridBagConstraints.WEST, 0.0, 0.0, 1,
+                new Insets(0, 0, 0, 0), GridBagConstraints.EAST, 0.0, 0.0, 1,
                 1);
         frameContent.add(problemDescriptionExplanationLabel,
                 problemDescriptionExplanationLabelConstraints);
@@ -421,7 +421,7 @@ public class ControlOfficeEntryForm {
         whoIsAComboBox = new JComboBox();
         GridBagConstraints whoIsAComboBoxConstraints = template.
                 createGridBagConstraints(2, 16, GridBagConstraints.HORIZONTAL, 5, 5,
-                new Insets(0, 0, 0, 0), GridBagConstraints.WEST, 0.0, 0.0, 1,
+                new Insets(0, 10, 0, 0), GridBagConstraints.WEST, 0.0, 0.0, 1,
                 1);
         frameContent.add(whoIsAComboBox, whoIsAComboBoxConstraints);
 
@@ -445,7 +445,7 @@ public class ControlOfficeEntryForm {
         contactNumberTextField = new JTextField();
         GridBagConstraints contactNumberTextFieldConstraints = template.
                 createGridBagConstraints(2, 17, GridBagConstraints.HORIZONTAL, 5, 5,
-                new Insets(0, 0, 0, 0), GridBagConstraints.WEST, 0.0, 0.0, 1,
+                new Insets(0, 10, 0, 0), GridBagConstraints.WEST, 0.0, 0.0, 1,
                 1);
         frameContent.add(contactNumberTextField, contactNumberTextFieldConstraints);
 
@@ -453,7 +453,7 @@ public class ControlOfficeEntryForm {
         locationVenueVillageLabel = new JLabel(template.headingString("Location/Venue/Village:", 3));
         GridBagConstraints locationVenueVillageLabelConstraints = template.
                 createGridBagConstraints(3, 16, GridBagConstraints.NONE, 5, 5,
-                new Insets(0, 0, 0, 0), GridBagConstraints.EAST, 0.0, 0.0, 1,
+                new Insets(0, 10, 0, 0), GridBagConstraints.EAST, 0.0, 0.0, 1,
                 1);
         frameContent.add(locationVenueVillageLabel, locationVenueVillageLabelConstraints);
 
@@ -461,7 +461,7 @@ public class ControlOfficeEntryForm {
         locationVenueVillageComboBox = new JComboBox();
         GridBagConstraints locationVenueVillageComboBoxConstraints = template.
                 createGridBagConstraints(4, 16, GridBagConstraints.HORIZONTAL, 5, 5,
-                new Insets(0, 0, 0, 0), GridBagConstraints.CENTER, 0.0, 0.0, 1,
+                new Insets(0, 5, 0, 0), GridBagConstraints.CENTER, 0.0, 0.0, 1,
                 1);
         frameContent.add(locationVenueVillageComboBox, locationVenueVillageComboBoxConstraints);
     }
@@ -519,7 +519,7 @@ public class ControlOfficeEntryForm {
         jobProgressComboBox = new JComboBox();
         GridBagConstraints jobProgressComboBoxConstraints = template.
                 createGridBagConstraints(3, 20, GridBagConstraints.HORIZONTAL, 5, 5,
-                new Insets(0, 0, 0, 0), GridBagConstraints.WEST, 0.0, 0.0, 1,
+                new Insets(0, 0, 0, 10), GridBagConstraints.WEST, 0.0, 0.0, 1,
                 1);
         frameContent.add(jobProgressComboBox, jobProgressComboBoxConstraints);
 

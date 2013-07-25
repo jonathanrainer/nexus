@@ -132,7 +132,12 @@ public class Ticket
     
     public String textValidation(String unvalidatedText)
     {
-        System.out.println(unvalidatedText);
+        if(unvalidatedText == null)
+        {
+            return unvalidatedText;
+        }
+        else
+        {
         unvalidatedText = unvalidatedText.replace("\\" , "\\\\");
         unvalidatedText = unvalidatedText.replace("%", "\\%");
         unvalidatedText = unvalidatedText.replace("'", "\\'");
@@ -140,6 +145,7 @@ public class Ticket
 
 
         return unvalidatedText;
+        }
     }
     
     public boolean updateValidation()
