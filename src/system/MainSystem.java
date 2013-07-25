@@ -24,7 +24,6 @@ import java.beans.PropertyChangeListener;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Iterator;
-import java.util.concurrent.ExecutionException;
 import javax.swing.BorderFactory;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -239,6 +238,7 @@ public class MainSystem
                 get("viewAmendCOTicketButton").addActionListener(
                 new ActionListener()
         {
+            @Override
             public void actionPerformed(ActionEvent e)
             {
                 String ticketID = JOptionPane.showInputDialog(
@@ -300,6 +300,7 @@ public class MainSystem
         mainGUI.getTaskSelectionScreen().getMainFrame().getJMenuBar().getMenu(0).
                 getItem(1).addActionListener(new ActionListener()
         {
+            @Override
             public void actionPerformed(ActionEvent e)
             {
                 final Ticket[] tickets = mysqlEngine.getUnprinted();
@@ -534,7 +535,7 @@ public class MainSystem
                         + "-" + cofe.getProblemLocationComboBox4().getSelectedItem();
                 String problemDescription = cofe.getProblemDescriptionTextArea().getText();
                 Iterator<JRadioButton> buttonsIterator = cofe.getButtonsInGrid().iterator();
-                ArrayList<String> keyWords = new ArrayList<String>();
+                ArrayList<String> keyWords = new ArrayList<>();
                 while (buttonsIterator.hasNext())
                 {
                     JRadioButton buttonUnderConsideration = buttonsIterator.next();
@@ -582,7 +583,7 @@ public class MainSystem
                                     + "The Temporary Job ID is: " + ticket.getJobRefId()
                                     + "\n It was submitted at: " + ticket.getDateTime().toString(DATEFORMAT));
                             cofe.getMainFrame().dispose();
-                        };
+                        }
                     }
                 } else
                 {
@@ -737,13 +738,14 @@ public class MainSystem
         cofe.getProblemLocationComboBox3().addActionListener(
                 new ActionListener()
         {
+            @Override
             public void actionPerformed(ActionEvent e)
             {
                 if (e.getActionCommand().equals("comboBoxChanged")
                         && !(cofe.getProblemLocationComboBox3().getSelectedItem() == null
                         || cofe.getProblemLocationComboBox3().getSelectedItem().equals("Select a Location")))
                 {
-                    ArrayList<String> fourthBoxOptions = new ArrayList<>();
+                    ArrayList<String> fourthBoxOptions;
                     if (cofe.getProblemLocationComboBox3().getSelectedItem().equals("NA"))
                     {
                         fourthBoxOptions =
@@ -756,7 +758,7 @@ public class MainSystem
                     {
                         fourthBoxOptions =
                                 dataStructures.getMasterListBox4().get(cofe.getProblemLocationComboBox3()
-                                .getSelectedItem());
+                                .getSelectedItem().toString());
                     }
                     cofe.getProblemLocationComboBox4().removeAllItems();
                     Iterator<String> fourthBoxIterator =
