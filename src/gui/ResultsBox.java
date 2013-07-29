@@ -7,6 +7,8 @@ package gui;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.GridLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -35,7 +37,7 @@ public class ResultsBox
         template = new Template();
         
         mainFrame = new JFrame("Results of Query - Find " + type + " Tickets");
-        mainFrame.setSize(new Dimension(250, 450));
+        mainFrame.setPreferredSize(new Dimension(375, 475));
         mainFrame.setLayout(new GridLayout(3,1));
         
         resultsPane = new JPanel();
@@ -45,9 +47,16 @@ public class ResultsBox
         resultsArea.setBorder(BorderFactory.createLineBorder(Color.BLACK, 2));
         submitButton = new JButton(template.headingString("Mark Selected as Duplicates", 3));
         exitButton = new JButton(template.headingString("Exit", 3));
+        exitButton.addActionListener(new ActionListener()
+        {
+            @Override
+            public void actionPerformed(ActionEvent e)
+            {
+                mainFrame.dispose();
+            }
+        });
         
         resultsPane.add(resultsArea);
-        buttonsPane.add(submitButton);
         buttonsPane.add(exitButton);
         
         mainFrame.add(new JLabel(template.headingString("Results", 2), JLabel.CENTER));
@@ -58,8 +67,10 @@ public class ResultsBox
         switch(type)
         {
             case "Duplicate":
+                buttonsPane.add(submitButton);
                 resultsArea.setListData(results);
                 resultsArea.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
+                
                 break;
             case "Unprinted":
                 resultsArea.setListData(results);

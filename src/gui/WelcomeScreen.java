@@ -86,9 +86,6 @@ public class WelcomeScreen {
         frameContent.add(continueButton, continueButtonConstraints);
         mainFrame.add(frameContent);
         
-        JMenu fileMenu = mainFrame.getJMenuBar().getMenu(0);
-        JMenuItem modeSwitch = new JMenuItem("Switch to Dashboard Mode");
-        fileMenu.add(modeSwitch, 0);
         mainFrame.pack();
     }
 

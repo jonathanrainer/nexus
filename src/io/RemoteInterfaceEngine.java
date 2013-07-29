@@ -166,7 +166,6 @@ public class RemoteInterfaceEngine
             
             
             FileOutputStream fos = new FileOutputStream(file, true);
-            System.out.println(REMOTEOUTPUTLOCATION + pdfFileName);
             SFTPv3FileHandle handle = sftpClient.openFileRO(REMOTEOUTPUTLOCATION + pdfFileName);
             
             
