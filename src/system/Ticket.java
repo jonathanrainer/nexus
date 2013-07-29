@@ -207,6 +207,7 @@ public class Ticket
         {
             keyWords = keyWords + it1.next() + ";";
         }
+        keyWords = keyWords.substring(0, (keyWords.length()-1));
         return keyWords;
     }
 
