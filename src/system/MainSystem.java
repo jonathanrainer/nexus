@@ -235,7 +235,7 @@ public class MainSystem
                         "Please enter the Ticket ID of the Job Ticket you wish to"
                         + "update.", "Update/Amend Ticket Search",
                         JOptionPane.QUESTION_MESSAGE);
-                createUpdateAmendEntryForm(ticketID);
+                createUpdateAmendEntryForm(ticketID, "Tickets");
             }
         });
 
@@ -258,8 +258,8 @@ public class MainSystem
             @Override
             public void actionPerformed(ActionEvent e)
             {
-                final Ticket[] tickets = mysqlEngine.getDuplicates();
-                final ResultsBox resultsBox = new ResultsBox(tickets, "Duplicate");
+                final Ticket[] duplicateTickets = mysqlEngine.getDuplicates();
+                final ResultsBox resultsBox = new ResultsBox(duplicateTickets, "Duplicate");
                 resultsBox.getResultsArea().addMouseListener(new MouseAdapter()
                 {
                     @Override
@@ -267,13 +267,43 @@ public class MainSystem
                     {
                         if (evt.getSource().equals(resultsBox.getResultsArea()))
                         {
+                            if (evt.getClickCount() == 1)
+                            {
+                                int index = resultsBox.
+                                        getResultsArea().
+                                        locationToIndex(evt.getPoint());
+                                Ticket[] duplicateSources = mysqlEngine.
+                                        getTicketsThisTicketDuplicates(duplicateTickets[index]);
+                                resultsBox.getDuplicateResultsArea().setListData(duplicateSources);
+                            }
                             if (evt.getClickCount() == 2)
                             {
                                 int index = resultsBox.
                                         getResultsArea().
                                         locationToIndex(evt.getPoint());
                                 ControlOfficeEntryForm cofeAmend =
-                                        createUpdateAmendEntryForm("" + tickets[index].getJobRefId());
+                                        createUpdateAmendEntryForm("" + duplicateTickets[index].getJobRefId(), "duplicateQueue");
+                                cofeAmend.getSubmitFormButton().setEnabled(false);
+                                cofeAmend.getResetFormButton().setEnabled(false);
+
+                            }
+                        }
+                    }
+                });
+                resultsBox.getDuplicateResultsArea().addMouseListener(new MouseAdapter()
+                {
+                    @Override
+                    public void mouseClicked(MouseEvent evt)
+                    {
+                    if (evt.getSource().equals(resultsBox.getDuplicateResultsArea()))
+                        {
+                            if (evt.getClickCount() == 2)
+                            {
+                                int index = resultsBox.
+                                        getResultsArea().
+                                        locationToIndex(evt.getPoint());
+                                ControlOfficeEntryForm cofeAmend =
+                                        createUpdateAmendEntryForm("" + duplicateTickets[index].getJobRefId(), "Tickets");
                                 cofeAmend.getSubmitFormButton().setEnabled(false);
                                 cofeAmend.getResetFormButton().setEnabled(false);
 
@@ -292,8 +322,8 @@ public class MainSystem
             @Override
             public void actionPerformed(ActionEvent e)
             {
-                final Ticket[] tickets = mysqlEngine.getUnprinted();
-                final ResultsBox resultsBox = new ResultsBox(tickets, "Unprinted");
+                final Ticket[] unprintedTickets = mysqlEngine.getUnprinted();
+                final ResultsBox resultsBox = new ResultsBox(unprintedTickets, "Unprinted");
                 resultsBox.getResultsArea().addMouseListener(new MouseAdapter()
                 {
                     @Override
@@ -307,7 +337,8 @@ public class MainSystem
                                         getResultsArea().
                                         locationToIndex(evt.getPoint());
                                 ControlOfficeEntryForm cofeAmend =
-                                        createUpdateAmendEntryForm("" + tickets[index].getJobRefId());
+                                        createUpdateAmendEntryForm("" + 
+                                        unprintedTickets[index].getJobRefId(), "Tickets");
                             }
                         }
                     }
@@ -323,7 +354,6 @@ public class MainSystem
                     @Override
                     public void actionPerformed(ActionEvent e)
                     {
-                        mainGUI.getTaskSelectionScreen().getMainFrame().dispose();
                         DashBoard dashBoard = new DashBoard(mysqlEngine);
                     }
                     
@@ -901,11 +931,11 @@ public class MainSystem
         return cofe;
     }
 
-    private ControlOfficeEntryForm createUpdateAmendEntryForm(String ticketID)
+    private ControlOfficeEntryForm createUpdateAmendEntryForm(String ticketID, String table)
     {
         final ControlOfficeEntryForm cofeAmmend = new ControlOfficeEntryForm(false, user);
         final Ticket ticket;
-        ticket = mysqlEngine.retrieveTicket(ticketID, "tickets");
+        ticket = mysqlEngine.retrieveTicket(ticketID, table);
         JMenu fileMenu = cofeAmmend.getMainFrame().getJMenuBar().getMenu(0);
         JMenuItem print = new JMenuItem("Print");
         print.addActionListener(new ActionListener()
@@ -1241,7 +1271,7 @@ public class MainSystem
         GridLayout layout = new GridLayout(2,1);
         
         JLabel printingProgressLabel = new JLabel(
-                template.headingString("Printing Progress", 2));
+                template.headingString("Printing Progress", 2), JLabel.CENTER);
         final JTextArea messageText = new JTextArea();
         messageText.setPreferredSize(new Dimension(300,350));
         messageText.setText("");
@@ -1343,12 +1373,20 @@ public class MainSystem
                     cofe.getMainFrame().dispose();
                 } else
                 {
-                    JOptionPane.showMessageDialog(cofe.getMainFrame(), "MYSQL isn't happy...");
+                    JOptionPane.showMessageDialog(cofe.getMainFrame(), "An error has occured. \n"
+                                    + "Don't close this window and report to Jonathan Rainer (Admin)"
+                                    + "or Ian Walker (Control Office) for assistance.");
                     return -1;
                 }
             } else
             {
                 mysqlEngine.submitTicket(ticket, true);
+                JOptionPane.showMessageDialog(cofe.getMainFrame(),
+                                    "The Job Ticket you submitted has been "
+                                    + "flagged as a duplicate. Control Office will advise. \n"
+                                    + "The Temporary Job ID is: " + ticket.getJobRefId()
+                                    + "\n It was submitted at: " + ticket.getDateTime().toString(DATEFORMAT));
+                cofe.getMainFrame().dispose();
                 return -2;
             }
         } else

@@ -68,7 +68,10 @@ public class PrintRunner extends SwingWorker<Void,String> {
         firePropertyChange("Message", "", "Clearing Local Directories... \n");
         FileUtils.cleanDirectory(new File(LOCALCSVDIR));
         FileUtils.cleanDirectory(new File(FilenameUtils.getFullPath(finishedTicket)));
-        mysqlEngine.markTicketPrinted(ticket);
+        if(ticket.getJobProgress().equals("Issue Reported"))
+        {
+            mysqlEngine.markTicketPrinted(ticket);
+        }        
         return null;
     }
     

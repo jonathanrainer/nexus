@@ -27,6 +27,7 @@ public class ResultsBox
     private JFrame mainFrame;
     private JPanel resultsPane;
     private JList resultsArea;
+    private JList duplicateResultsArea;
     private JPanel buttonsPane;
     private JButton submitButton;
     private JButton exitButton;
@@ -37,7 +38,6 @@ public class ResultsBox
         template = new Template();
         
         mainFrame = new JFrame("Results of Query - Find " + type + " Tickets");
-        mainFrame.setPreferredSize(new Dimension(375, 475));
         mainFrame.setLayout(new GridLayout(3,1));
         
         resultsPane = new JPanel();
@@ -56,28 +56,39 @@ public class ResultsBox
             }
         });
         
-        resultsPane.add(resultsArea);
         buttonsPane.add(exitButton);
         
         mainFrame.add(new JLabel(template.headingString("Results", 2), JLabel.CENTER));
         mainFrame.add(resultsPane);
         mainFrame.add(buttonsPane);
-        mainFrame.pack();
-        mainFrame.setVisible(true);
         switch(type)
         {
             case "Duplicate":
+                mainFrame.setPreferredSize(new Dimension(450, 525));
+                resultsPane.setLayout(new GridLayout(2,2));
+                JLabel potentialDuplicates = new JLabel(template.headingString("Potential Duplicates", 3));
+                potentialDuplicates.setHorizontalAlignment(JLabel.CENTER);
+                JLabel entriesInDatabase = new JLabel(template.headingString("Entries in Database", 3));
+                entriesInDatabase.setHorizontalAlignment(JLabel.CENTER);
+                duplicateResultsArea = new JList();
+                resultsPane.add(potentialDuplicates);
+                resultsPane.add(entriesInDatabase);
+                resultsPane.add(resultsArea);
+                resultsPane.add(duplicateResultsArea);
                 buttonsPane.add(submitButton);
                 resultsArea.setListData(results);
                 resultsArea.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
                 
                 break;
             case "Unprinted":
+                mainFrame.setPreferredSize(new Dimension(375, 475));
+                resultsPane.add(resultsArea);
                 resultsArea.setListData(results);
                 resultsArea.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
                 break;
         }
-        
+        mainFrame.pack();
+        mainFrame.setVisible(true);
         
         
     }
@@ -95,6 +106,11 @@ public class ResultsBox
     public JButton getExitButton()
     {
         return exitButton;
+    }
+
+    public JList getDuplicateResultsArea()
+    {
+        return duplicateResultsArea;
     }
     
     

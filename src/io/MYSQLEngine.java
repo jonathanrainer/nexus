@@ -390,6 +390,78 @@ public class MYSQLEngine
         return success;
     }
     
+    public Ticket[] getTicketsThisTicketDuplicates(Ticket ticket)
+    {
+        // Set up the initial connection and statement objects
+        Connection conn = null;
+        Statement stmt = null;
+        ArrayList<Ticket> duplicatesFromMainDB = new ArrayList<>();
+        // Begin try block so SQL Exceptions can be handled later
+        try
+        {
+            // Register JDBC driver
+            Class.forName("com.mysql.jdbc.Driver");
+            // Open a connection
+            conn = DriverManager.getConnection(DB_URL, USER, PASS);
+
+            // Create and Execute the SQL Query
+            stmt = conn.createStatement();
+            /**
+             * Query states: Select all the users in a particular team
+             */
+            String sql;
+            sql = "SELECT * FROM `Tickets` WHERE `CISKeywords` LIKE '" + 
+                    ticket.getCISKeywordsAsString() + "' AND `problemLocation`"
+                    + "LIKE '" + ticket.getProblemLocation() + "' AND `reportedBy`"
+                    + " LIKE '" + ticket.getReportedBy() + "';";
+            ResultSet rs = stmt.executeQuery(sql);
+            while(rs.next())
+            {
+                Ticket duplicateTicket = retrieveTicket(rs.getString("jobRefId"), "tickets");
+                duplicatesFromMainDB.add(duplicateTicket);
+            }
+            stmt.close();
+            conn.close();
+        } catch (SQLException se)
+        {
+            System.out.println(se.getSQLState());
+            //Handle errors for JDBC
+        } catch (Exception e)
+        {
+            //Handle errors for Class.forName
+        } finally
+        {
+            //finally block used to close resources should all else fail
+            try
+            {
+                if (stmt != null)
+                {
+                    stmt.close();
+                }
+            } catch (SQLException se2)
+            {
+            }// nothing we can do
+
+            try
+            {
+                if (conn != null)
+                {
+                    conn.close();
+                }
+            } catch (SQLException se)
+            {
+            }
+        }
+        int i = 0;
+        Ticket[] duplicateMainDBArray = new Ticket[duplicatesFromMainDB.size()];
+        while(i < duplicatesFromMainDB.size())
+        {
+            duplicateMainDBArray[i] = duplicatesFromMainDB.get(i);
+            i++;
+        }
+        return duplicateMainDBArray;
+    }
+    
     public Ticket retrieveTicket(String ticketID, String table)
     {
         // Set up the initial connection and statement objects
