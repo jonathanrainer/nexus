@@ -24,6 +24,7 @@ import java.beans.PropertyChangeListener;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Iterator;
+import java.util.List;
 import javax.swing.BorderFactory;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -32,6 +33,7 @@ import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JRadioButton;
 import javax.swing.JTextArea;
+import javax.swing.ListModel;
 import javax.swing.border.Border;
 import org.joda.time.DateTime;
 import org.joda.time.DateTimeComparator;
@@ -302,16 +304,90 @@ public class MainSystem
                                 int index = resultsBox.
                                         getResultsArea().
                                         locationToIndex(evt.getPoint());
-                                ControlOfficeEntryForm cofeAmend =
-                                        createUpdateAmendEntryForm("" + duplicateTickets[index].getJobRefId(), "Tickets");
+                                if(index < duplicateTickets.length)
+                                {
+                                    ControlOfficeEntryForm cofeAmend =
+                                        createUpdateAmendEntryForm("" + 
+                                            duplicateTickets[index].getJobRefId(),
+                                            "Tickets");
                                 cofeAmend.getSubmitFormButton().setEnabled(false);
                                 cofeAmend.getResetFormButton().setEnabled(false);
+                                }
 
                             }
                         }
                     }
                 });
-
+                resultsBox.getExitButton().addActionListener(new ActionListener()
+                {
+                    public void actionPerformed(ActionEvent e)
+                    {
+                        resultsBox.getMainFrame().dispose();
+                    }
+                });
+                resultsBox.getSubmitButton().addActionListener(new ActionListener()
+                {
+                    public void actionPerformed(ActionEvent e)
+                    {
+                        ArrayList<Ticket> duplicatesArrayList = new ArrayList<>();
+                        ArrayList<Ticket> nonDuplicatesArrayList = new ArrayList<>();
+                        int i = 0;
+                        int j = 0;
+                        List<Ticket> duplicates = 
+                                resultsBox.getResultsArea().getSelectedValuesList();
+                        ListModel<Ticket> allValues = resultsBox.getResultsArea().getModel();
+                        while(i < duplicates.size())
+                        {
+                            duplicatesArrayList.add(duplicates.get(i));
+                            i++;
+                        }
+                        while(j < allValues.getSize())
+                        {
+                            nonDuplicatesArrayList.add(allValues.getElementAt(j));
+                            j++;
+                        }
+                        Iterator<Ticket> it1 = duplicatesArrayList.iterator();
+                        while(it1.hasNext())
+                        {
+                            Ticket duplicateTicketToConsider = it1.next();
+                            if(nonDuplicatesArrayList.contains(duplicateTicketToConsider))
+                            {
+                                nonDuplicatesArrayList.remove(duplicateTicketToConsider);
+                            }
+                        }
+                        mysqlEngine.markTicketsDuplicate(duplicatesArrayList);
+                        mysqlEngine.markTicketsNonDuplicates(nonDuplicatesArrayList);
+                        i = 0;
+                        String duplicateIDs = "";
+                        if(duplicatesArrayList.size() > 0)
+                        {
+                            while (i < duplicatesArrayList.size())
+                            {
+                                duplicateIDs = duplicateIDs + "" + duplicatesArrayList.get(i).getJobRefId() + ", ";
+                                i++;
+                            }
+                            duplicateIDs = duplicateIDs.substring(0, duplicateIDs.length()-2);
+                        }
+                        j = 0;
+                        String nonDuplicateIDs = "";
+                        if(nonDuplicatesArrayList.size() > 0)
+                        {
+                            while (j < nonDuplicatesArrayList.size())
+                                {
+                                    nonDuplicateIDs = nonDuplicateIDs + "" + nonDuplicatesArrayList.get(j).getJobRefId() + ", ";
+                                    j++;
+                                }
+                                nonDuplicateIDs = nonDuplicateIDs.substring(0, nonDuplicateIDs.length() - 2);
+                        }
+                        JOptionPane.showMessageDialog(resultsBox.getMainFrame(), 
+                                "Tickets Successfully Marked as Duplicates \n "
+                                + "IDs: " + duplicateIDs + "\n" +
+                                "Tickets Successfully Marked as Non-Duplicates \n "
+                                + "IDs: " + nonDuplicateIDs + "\n", 
+                                "Success", JOptionPane.OK_OPTION);
+                        resultsBox.getMainFrame().dispose();
+                    }
+                });
             }
             
         });
@@ -1260,7 +1336,10 @@ public class MainSystem
     private DateTime stringToDateTime(String date)
     {
         DateTime timeToReturn = new DateTime(Integer.parseInt(date.substring(6, 10)),
-                Integer.parseInt(date.substring(3, 5)), Integer.parseInt(date.substring(0, 2)), Integer.parseInt(date.substring(11, 13)), Integer.parseInt(date.substring(14, 16)));
+                Integer.parseInt(date.substring(3, 5)), 
+                Integer.parseInt(date.substring(0, 2)), 
+                Integer.parseInt(date.substring(11, 13)), 
+                Integer.parseInt(date.substring(14, 16)));
         return timeToReturn;
     }
 

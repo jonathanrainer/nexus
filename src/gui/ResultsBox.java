@@ -112,6 +112,11 @@ public class ResultsBox
     {
         return duplicateResultsArea;
     }
+
+    public JFrame getMainFrame()
+    {
+        return mainFrame;
+    }
     
     
     
