@@ -5,7 +5,7 @@
 package gui;
 
 import io.MYSQLEngine;
-import gui.Template;
+import javax.swing.JFrame;
 
 /**
  *
@@ -19,8 +19,7 @@ public final class DashBoard {
     public DashBoard(MYSQLEngine mysqlEngine)
     {
         template = new Template();
-       
-        
+        JFrame mainFrame = new JFrame("Dashboard Module");
     }
 
 

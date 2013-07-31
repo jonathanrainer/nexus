@@ -27,7 +27,7 @@ public class RemoteInterfaceEngine
     private static final String REMOTETEXLOCATION = "/home/nexususer/Nexus/latexTemplates/jobTickets";
     private static final String REMOTEOUTPUTLOCATION = "/home/nexususer/Nexus/pdfTickets/";
     private static final String LOCALOUTPUTLOCATION = "C:\\Nexus\\pdfTickets\\";
-    private static final String TEXLOGGINGLOCATION = "/home/nexususer/Nexus/logging/";
+    private static final String REMOTETEXLOGGINGLOCATION = "/home/nexususer/Nexus/logging/";
     private String hostname;
     private String username;
     private String password;
@@ -123,7 +123,7 @@ public class RemoteInterfaceEngine
         String command = "pdflatex -output-directory " + REMOTEOUTPUTLOCATION
                 + " -jobname=" + fileNameSansExtension + " '\\providecommand{\\csvFileLocation}{"
                 + REMOTECSVLOCATION + fileName + "}\\input{ " + REMOTETEXLOCATION + "jobticket.tex}'"
-                + " >> " + TEXLOGGINGLOCATION + fileNameSansExtension + "-log.txt";
+                + " >> " + REMOTETEXLOGGINGLOCATION + fileNameSansExtension + "-log.txt";
         return command;
     }
     

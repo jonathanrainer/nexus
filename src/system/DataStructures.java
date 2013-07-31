@@ -18,6 +18,7 @@ public class DataStructures
     private HashMap<String, ArrayList<String>> masterListBox2;
     private HashMap<String, ArrayList<String>> masterListBox3;
     private HashMap<String, ArrayList<String>> masterListBox4;
+    private HashMap<String, String> teamLevelPasswords;
     
     public DataStructures()
     {
@@ -25,6 +26,7 @@ public class DataStructures
         ArrayList<String> potentialFieldsBox2 = generateMasterListBox2(masterListBox1);
         ArrayList<String> potentialFieldsBox3 = generateMasterListBox3(potentialFieldsBox2);
         generateMasterListBox4(potentialFieldsBox3, potentialFieldsBox2);
+        teamLevelPasswords = generateTeamLevelPasswords();
     }
     
     private ArrayList<String> generateMasterListBox1()
@@ -595,6 +597,15 @@ public class DataStructures
             }
         }
     }
+    
+    private HashMap<String, String> generateTeamLevelPasswords()
+    {
+        HashMap<String,String> passwords = new HashMap<String, String>();
+        passwords.put("Control Office", "NWN3Control");
+        passwords.put("Information Team", "NWN3Info");
+        passwords.put("Administration Team", "NWN3Admin");
+        return passwords;
+    }
 
     public ArrayList<String> getMasterListBox1()
     {
@@ -614,6 +625,11 @@ public class DataStructures
     public HashMap<String, ArrayList<String>> getMasterListBox4()
     {
         return masterListBox4;
+    }
+    
+    public HashMap<String, String> getPasswords()
+    {
+        return teamLevelPasswords;
     }
     
     

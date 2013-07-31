@@ -31,6 +31,7 @@ import javax.swing.JLabel;
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
+import javax.swing.JPasswordField;
 import javax.swing.JRadioButton;
 import javax.swing.JTextArea;
 import javax.swing.ListModel;
@@ -118,10 +119,27 @@ public class MainSystem
             public void actionPerformed(ActionEvent e)
             {
                 user = new User(initialGUI.getTeamSelectionScreen().
-                        getTeamComboBox().getSelectedItem().toString());
-                initialGUI.getTeamSelectionScreen().getMainFrame().dispose();
-                mainGUI = new MainGUI(user.getTeam(), teamNames);
-                addActionListenersMainGUI();
+                            getTeamComboBox().getSelectedItem().toString());
+                String password = "";
+                JPasswordField pf = new JPasswordField();
+                int okCxl = JOptionPane.showConfirmDialog(null, pf, "Please enter your password", JOptionPane.OK_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE);
+
+                if (okCxl == JOptionPane.OK_OPTION) 
+                {
+                     password = new String(pf.getPassword());
+                }
+                if(!(password.equals(dataStructures.getPasswords().get(user.getTeam()))))
+                {
+                    JOptionPane.showMessageDialog(initialGUI.
+                            getTeamSelectionScreen().getMainFrame(), "Password did not match.");
+                    user = null;
+                }
+                else
+                {
+                    initialGUI.getTeamSelectionScreen().getMainFrame().dispose();
+                    mainGUI = new MainGUI(user.getTeam(), teamNames);
+                    addActionListenersMainGUI();
+                }
             }
         });
 
