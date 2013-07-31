@@ -46,6 +46,6 @@ CREATE TABLE `users` (
 PRIMARY KEY (`userID`)
 ) Engine = InnoDB CHARACTER SET utf8 COLLATE utf8_bin;
 
-CREATE TABLE `DuplicateQueue` LIKE `Tickets`;
+CREATE TABLE `duplicateQueue` LIKE `tickets`;
 
 

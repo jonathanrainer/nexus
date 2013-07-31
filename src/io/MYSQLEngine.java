@@ -84,7 +84,7 @@ public class MYSQLEngine
              */
             String sql = "SELECT SUBSTRING( COLUMN_TYPE, 5 ) FROM "
                     + "information_schema.COLUMNS WHERE TABLE_SCHEMA = 'Nexus' "
-                    + "AND TABLE_NAME = 'Users' AND COLUMN_NAME = 'team'";
+                    + "AND TABLE_NAME = 'users' AND COLUMN_NAME = 'team'";
             ResultSet rs = stmt.executeQuery(sql);
 
             // Extract the resulting data from the ResultSet
@@ -170,7 +170,7 @@ public class MYSQLEngine
              * Query states: Select all the users in a particular team
              */
             String sql;
-            sql = "SELECT `name` FROM `Users` WHERE `team` = '" + team + "'";
+            sql = "SELECT `name` FROM `users` WHERE `team` = '" + team + "'";
             try (ResultSet rs = stmt.executeQuery(sql))
             {
                 while (rs.next())
@@ -236,11 +236,11 @@ public class MYSQLEngine
             String table = "";
             if(duplicate)
             {
-                table = "`DuplicateQueue`";
+                table = "`duplicateQueue`";
             }
             else
             {
-                table = "`Tickets`";
+                table = "`tickets`";
             }
             String insertionQuery;
             insertionQuery = "INSERT INTO " + table +  " VALUES (NULL, NOW(), '" + 
@@ -275,7 +275,7 @@ public class MYSQLEngine
                     + "NULL, NULL, NULL, NULL, NULL, NULL);";
             }
             stmt1.executeUpdate(insertionQuery);
-            String query2 = "SELECT * FROM `Tickets` WHERE `CISKeywords` LIKE '" + 
+            String query2 = "SELECT * FROM `tickets` WHERE `CISKeywords` LIKE '" + 
                     ticket.getCISKeywordsAsString() + "' AND `problemLocation`"
                     + "LIKE '" + ticket.getProblemLocation() + "' AND `reportedBy`"
                     + " LIKE '" + ticket.getReportedBy() + "';";
@@ -344,7 +344,7 @@ public class MYSQLEngine
              * Query states: Select all the users in a particular team
              */
             String sql;
-            sql = "SELECT * FROM `Tickets` WHERE `CISKeywords` LIKE '" + 
+            sql = "SELECT * FROM `tickets` WHERE `CISKeywords` LIKE '" + 
                     ticket.getCISKeywordsAsString() + "' AND `problemLocation`"
                     + "LIKE '" + ticket.getProblemLocation() + "' AND `reportedBy`"
                     + " LIKE '" + ticket.getReportedBy() + "';";
@@ -411,7 +411,7 @@ public class MYSQLEngine
              * Query states: Select all the users in a particular team
              */
             String sql;
-            sql = "SELECT * FROM `Tickets` WHERE `CISKeywords` LIKE '" + 
+            sql = "SELECT * FROM `tickets` WHERE `CISKeywords` LIKE '" + 
                     ticket.getCISKeywordsAsString() + "' AND `problemLocation`"
                     + "LIKE '" + ticket.getProblemLocation() + "' AND `reportedBy`"
                     + " LIKE '" + ticket.getReportedBy() + "';";
@@ -658,7 +658,7 @@ public class MYSQLEngine
              * to a substring, the entire contents of the ENUM called team.
              */
             int showOnCIS = ticket.isShowOnCIS() ? 1 : 0;
-            String sql = "UPDATE `Tickets` SET delegateImpact = '" + ticket.getDelegateImpact() + 
+            String sql = "UPDATE `tickets` SET delegateImpact = '" + ticket.getDelegateImpact() + 
                     "', showOnCIS = " + showOnCIS + ", ticketAllocatedTo = '" + ticket.getTicketAllocatedTo() +
                     "', jobProgress = '" + ticket.getJobProgress() + "', asAt = '" + ticket.getAsAt().toString(MYSQLTIMEFORMAT) +
                     "',";

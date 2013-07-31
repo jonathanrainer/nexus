@@ -63,7 +63,7 @@ public class MainSystem
      */
     public MainSystem()
     {
-        mysqlEngine = new MYSQLEngine("localhost", "Nexus", "root", "");
+        mysqlEngine = new MYSQLEngine("192.168.8.5", "Nexus", "nexususer", "nexuspassword");
         teamNames = mysqlEngine.enumerateTeamNames();
         initialGUI = new InitialGUI(teamNames);
         dataStructures = new DataStructures();
