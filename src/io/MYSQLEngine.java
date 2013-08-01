@@ -275,7 +275,7 @@ public class MYSQLEngine
                     + "NULL, NULL, NULL, NULL, NULL, NULL);";
             }
             stmt1.executeUpdate(insertionQuery);
-            String query2 = "SELECT * FROM `tickets` WHERE `CISKeywords` LIKE '" + 
+            String query2 = "SELECT * FROM `" + table + "` WHERE `CISKeywords` LIKE '" + 
                     ticket.getCISKeywordsAsString() + "' AND `problemLocation`"
                     + "LIKE '" + ticket.getProblemLocation() + "' AND `reportedBy`"
                     + " LIKE '" + ticket.getReportedBy() + "';";
@@ -592,7 +592,7 @@ public class MYSQLEngine
             ResultSet rs = stmt.executeQuery(sql);
             while(rs.next())
             {
-                Ticket ticket = retrieveTicket(rs.getString("jobRefId"), "duplicatequeue");
+                Ticket ticket = retrieveTicket(rs.getString("jobRefId"), "duplicateQueue");
                 duplicates.add(ticket);
             }
             stmt.close();

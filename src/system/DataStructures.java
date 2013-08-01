@@ -106,7 +106,7 @@ public class DataStructures
         //Adults options
         ArrayList<String> adultsVenues = new ArrayList<>();
         Collections.addAll(adultsVenues, "VeA_Meeting Place (inc. Cafe)",
-                "VeA_Impact", "VeA_Burn", "VeA_Leaders' Lounge", "VeA_Pastoral Prayer",
+                "VeA_Impact", "VeA_Burn", "VeA_Leaders Lounge", "VeA_Pastoral Prayer",
                 "VeA_Sanctuary", "VeA_Arts 3:16", "VeA_Manifest", "VeA_Renovate", "VeA_Synergy",
                 "VeA_Upper Room", "VeA_Tearfund (inc. Cafe)");
         //Childrens and Youth Options

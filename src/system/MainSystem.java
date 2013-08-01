@@ -984,7 +984,7 @@ public class MainSystem
                     public void actionPerformed(ActionEvent e)
                     {
                         String ticketID = "" + submitTicket(cofe);
-                        Ticket ticket = mysqlEngine.retrieveTicket(ticketID, "Tickets");
+                        Ticket ticket = mysqlEngine.retrieveTicket(ticketID, "tickets");
                         if (ticket.dataValidationEntry().equals("Passed")
                                 && ticket.printingValidation().equals("Passed"))
                         {
@@ -1150,7 +1150,7 @@ public class MainSystem
             cofeAmmend.getJobProgressComboBox().addItem("Ticket Printed");
             cofeAmmend.getJobProgressComboBox().addItem("Job In Progress");
             cofeAmmend.getJobProgressComboBox().addItem("Job Escalated");
-            cofeAmmend.getJobProgressComboBox().addItem("Duplicate");
+            cofeAmmend.getJobProgressComboBox().addItem("Duplicate Job");
             cofeAmmend.getJobProgressComboBox().addItem("Job Done");
             cofeAmmend.getJobProgressComboBox().setSelectedItem(ticket.getJobProgress());
 
@@ -1281,6 +1281,7 @@ public class MainSystem
                     if (cofeAmmend.getJobCompletedRadioButton().isSelected())
                     {
                         ticket.setJobClosed(new DateTime());
+                        ticket.setJobProgress(cofeAmmend.getJobProgressComboBox().getSelectedItem().toString());
                     }
 
                     ticket.setNextUpdateDue(calculateNextUpdateDue(ticket));

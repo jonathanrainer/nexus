@@ -56,6 +56,7 @@ public class Template
     public JFrame giveTemplatedJFrame(String title)
     {
         final JFrame templatedFrame = new JFrame(title);
+        templatedFrame.setExtendedState(templatedFrame.getExtendedState() | JFrame.MAXIMIZED_BOTH);
 
         Dimension frameDimensions = new Dimension(1024, 768);
         templatedFrame.setPreferredSize(frameDimensions);
