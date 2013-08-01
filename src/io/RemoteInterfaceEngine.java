@@ -24,7 +24,7 @@ public class RemoteInterfaceEngine
 {
     private static final String LOCALCSVDIR = "C:\\Nexus\\localCSV\\";
     private static final String REMOTECSVLOCATION = "/home/nexususer/Nexus/csvTransferDir/";
-    private static final String REMOTETEXLOCATION = "/home/nexususer/Nexus/latexTemplates/jobTickets";
+    private static final String REMOTETEXLOCATION = "/home/nexususer/Nexus/latexTemplates/jobTickets/";
     private static final String REMOTEOUTPUTLOCATION = "/home/nexususer/Nexus/pdfTickets/";
     private static final String LOCALOUTPUTLOCATION = "C:\\Nexus\\pdfTickets\\";
     private static final String REMOTETEXLOGGINGLOCATION = "/home/nexususer/Nexus/logging/";

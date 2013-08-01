@@ -33,6 +33,8 @@ public class PrintRunner extends SwingWorker<Void,String> {
     "raisedTime", "raisedByName", "raisedByTeam", "allocatedTeam",
     "problemLocation", "problemDescription", "problemReportedBy",
     "whoIsA", "contactName", "contactNumber", "showOnCIS"};
+    //private static final String LOCALCSVDIR = "/home/jonathanrainer/Nexus/localCSV/";
+    //private static final String LOGGINGDIR = "/home/jonathanrainer/Nexus/logs/";
     private static final String LOCALCSVDIR = "C:\\Nexus\\localCSV\\";
     private static final String LOGGINGDIR = "C:\\Nexus\\logs\\";
     private static final String LOGGINGDATEFORMAT = "ddMMyyyyHHmm";
@@ -127,7 +129,7 @@ public class PrintRunner extends SwingWorker<Void,String> {
     {
          ProcessBuilder builder = new ProcessBuilder("cmd.exe", "/c", "C:" + 
                  File.separatorChar + "SumatraPDF" + File.separatorChar 
-        + "SumatraPDF.exe" + " -print-dialog -silent -exit-on-print  " + filePath);
+        + "SumatraPDF.exe" + " -print-dialog -exit-on-print  " + filePath);
          builder.redirectErrorStream(true);
         try {
             Process p = builder.start();

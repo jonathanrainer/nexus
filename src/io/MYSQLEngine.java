@@ -46,7 +46,7 @@ public class MYSQLEngine
     public MYSQLEngine(String mysqlhost, String mysqldatabase, String mysqluser, String mysqlpassword)
     {
         JDBC_DRIVER = "com.mysql.jdbc.Driver";
-        DB_URL = "jdbc:mysql://" + mysqlhost + "/" + mysqldatabase;
+        DB_URL = "jdbc:mysql://" + mysqlhost + ":3306/" + mysqldatabase;
         USER = mysqluser;
         PASS = mysqlpassword;
     }

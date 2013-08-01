@@ -64,7 +64,9 @@ public class MainSystem
      */
     public MainSystem()
     {
-        mysqlEngine = new MYSQLEngine("192.168.8.5", "Nexus", "nexususer", "nexuspassword");
+        mysqlEngine = new MYSQLEngine("192.168.8.5", "Nexus", "nexususer", 
+                "nexuspassword");
+        //mysqlEngine = new MYSQLEngine("localhost", "Nexus", "root", "");
         teamNames = mysqlEngine.enumerateTeamNames();
         initialGUI = new InitialGUI(teamNames);
         dataStructures = new DataStructures();
@@ -255,7 +257,7 @@ public class MainSystem
                         "Please enter the Ticket ID of the Job Ticket you wish to"
                         + "update.", "Update/Amend Ticket Search",
                         JOptionPane.QUESTION_MESSAGE);
-                createUpdateAmendEntryForm(ticketID, "Tickets");
+                createUpdateAmendEntryForm(ticketID, "tickets");
             }
         });
 
@@ -871,7 +873,7 @@ public class MainSystem
                         || cofe.getProblemLocationComboBox3().getSelectedItem().equals("Select a Location")))
                 {
                     ArrayList<String> fourthBoxOptions;
-                    if (cofe.getProblemLocationComboBox3().getSelectedItem().equals("NA"))
+                    if (cofe.getProblemLocationComboBox3().getSelectedItem().toString().substring(4).equals("NA"))
                     {
                         fourthBoxOptions =
                                 dataStructures.getMasterListBox4().get(cofe.
@@ -1421,10 +1423,10 @@ public class MainSystem
         user.setName(cofe.getTeamMembersComboBox().getSelectedItem().toString());
         String member = user.getName();
         String problemLocation = cofe.
-                getProblemLocationComboBox1().getSelectedItem()
-                + "-" + cofe.getProblemLocationComboBox2().getSelectedItem()
-                + "-" + cofe.getProblemLocationComboBox3().getSelectedItem()
-                + "-" + cofe.getProblemLocationComboBox4().getSelectedItem();
+                getProblemLocationComboBox1().getSelectedItem().toString()
+                + "-" + cofe.getProblemLocationComboBox2().getSelectedItem().toString().substring(4)
+                + "-" + cofe.getProblemLocationComboBox3().getSelectedItem().toString().substring(4)
+                + "-" + cofe.getProblemLocationComboBox4().getSelectedItem().toString().substring(4);
         String problemDescription = cofe.getProblemDescriptionTextArea().getText();
         Iterator<JRadioButton> buttonsIterator = cofe.getButtonsInGrid().iterator();
         ArrayList<String> keyWords = new ArrayList<>();

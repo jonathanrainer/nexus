@@ -156,17 +156,18 @@ public class Ticket
             String validText = textValidation(updateDescriptions.get(i));
             updateDescriptions.remove(i);
             updateDescriptions.add(i, validText);
+            i++;
         }
         
-        if(jobClosed != null & (!jobProgress.equals("Duplicate")
-                   || !jobProgress.equals("Job Escalated")
-                   || !jobProgress.equals("Job Done")))
-        {
-        } else
+        if(jobClosed != null & (jobProgress.equals("Issue Reported")
+                   || jobProgress.equals("Ticket Printed")
+                   || jobProgress.equals("Job In Progress")))
         {
             return false;
+        } else
+        {
+            return true;
         }
-        return true;
     }
 
     public int getJobRefId()
