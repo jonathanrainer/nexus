@@ -31,7 +31,7 @@ public class WelcomeScreen {
     /**
      * Construct a welcome screen object. No need for parameters in as 
      * form, in this case, is more important than function.
-     */
+     */ 
     public WelcomeScreen() {
         template = new Template();
         // Create mainv templated frame to place content into
@@ -42,7 +42,7 @@ public class WelcomeScreen {
                 headingString(title, 1)));
         // Create the text to go in the title 
         String subtitle;
-        subtitle = template.headingString("Project Version 1.0 (Kuuga)", 3);
+        subtitle = template.headingString("Project Version 1.1 (Kuuga - Mighty)", 3);
         // Create the label itself, adding in the text
         subtitleLabel = new JLabel(subtitle, JLabel.CENTER);
         //Add in the logo here

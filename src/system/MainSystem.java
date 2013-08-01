@@ -329,7 +329,7 @@ public class MainSystem
                                     ControlOfficeEntryForm cofeAmend =
                                         createUpdateAmendEntryForm("" + 
                                             duplicateTickets[index].getJobRefId(),
-                                            "Tickets");
+                                            "tickets");
                                 cofeAmend.getSubmitFormButton().setEnabled(false);
                                 cofeAmend.getResetFormButton().setEnabled(false);
                                 }
@@ -434,7 +434,7 @@ public class MainSystem
                                         locationToIndex(evt.getPoint());
                                 ControlOfficeEntryForm cofeAmend =
                                         createUpdateAmendEntryForm("" + 
-                                        unprintedTickets[index].getJobRefId(), "Tickets");
+                                        unprintedTickets[index].getJobRefId(), "tickets");
                             }
                         }
                     }
@@ -755,7 +755,7 @@ public class MainSystem
             public void actionPerformed(ActionEvent e)
             {
                 String ticketID = "" + submitTicket(cofe);
-                Ticket ticket = mysqlEngine.retrieveTicket(ticketID, "Tickets");
+                Ticket ticket = mysqlEngine.retrieveTicket(ticketID, "tickets");
                 if (ticket.dataValidationEntry().equals("Passed")
                         && ticket.printingValidation().equals("Passed"))
                 {
