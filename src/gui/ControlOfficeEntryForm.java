@@ -385,7 +385,7 @@ public class ControlOfficeEntryForm {
         Collections.addAll(labelsForButtons, "Gas Bottle","Hand Towels",
                 "Shower","Sink","Soap","Toilet/Urinal","Toilet Paper",
                 "Water","Blocked","Broken", "Cold", "Dirty", "Flooded",
-                "None", "Too Hot", "Other");
+                "Electricity", "Too Hot", "Other", "None");
         int i;
         for (i = 0; i < 16; i++) {
             JRadioButton buttonToAdd = new JRadioButton(labelsForButtons.get(i));

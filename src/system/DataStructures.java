@@ -47,12 +47,12 @@ public class DataStructures
         //Gate Colour ArrayList (To differentiate gates from Villages,
         //there are spaces at the end of common names. Add
         ArrayList<String> gateColour = new ArrayList<>();
-        Collections.addAll(gateColour, "G___Blue (Outer)", "G___Blue (Inner)", 
-                "G___Green ", "G___White (Outer)", "G___White (Inner)", "G___Red", 
-                "G___Yellow ", "G___H.F.G", "G___Black (Ped)", "G___Brown (Ped)");
+        Collections.addAll(gateColour, "G___Blue (Outer) Gate", "G___Blue (Inner) Gate", 
+                "G___Green Gate", "G___White (Outer) Gate", "G___White (Inner) Gate", "G___Red Gate", 
+                "G___Yellow Gate", "G___H.F Gate", "G___Black (Ped) Gate", "G___Brown (Ped) Gate");
         //Venue Type ArrayList
         ArrayList<String> venueType = new ArrayList<>();
-        Collections.addAll(venueType, "Ve__Grown Ups", "Ve__Children/Youth", 
+        Collections.addAll(venueType, "Ve__Grown Ups", "Ve__Childrens and Youth", 
                 "Ve__General");
         // Site ArrayList
         ArrayList<String> site = new ArrayList<>();
@@ -105,20 +105,20 @@ public class DataStructures
 
         //Adults options
         ArrayList<String> adultsVenues = new ArrayList<>();
-        Collections.addAll(adultsVenues, "VeA_Meeting Place (inc. Cafe)",
-                "VeA_Impact", "VeA_Burn", "VeA_Leaders Lounge", "VeA_Pastoral Prayer",
-                "VeA_Sanctuary", "VeA_Arts 3:16", "VeA_Manifest", "VeA_Renovate", "VeA_Synergy",
-                "VeA_Upper Room", "VeA_Tearfund (inc. Cafe)");
+        Collections.addAll(adultsVenues, "VeA_MEETING PLACE (inc. Cafe)",
+                "VeA_IMPACT", "VeA_BURN", "VeA_LEADERS LOUNGE", "VeA_PASTORAL PRAYER",
+                "VeA_SANCTUARY", "VeA_ARTS 3:16", "VeA_MANIFEST", "VeA_RENOVATE", "VeA_SYNERGY",
+                "VeA_UPPER ROOM", "VeA_TEARFUND (inc. Cafe)");
         //Childrens and Youth Options
         ArrayList<String> childrensYouthVenues = new ArrayList<>();
-        Collections.addAll(childrensYouthVenues, "VeC_Gems", "VeC_Pebbles",
-                "VeC_Stepping Stones", "VeC_Ground Breakers", "VeC_Rock Solid",
-                "VeC_Boulder Gang", "VeC_Fridge", "VeC_Club One", "VeC_Thirst", "VeC_Flava",
-                "VeC_Sports Field", "VeC_Our Place");
+        Collections.addAll(childrensYouthVenues, "VeC_GEMS", "VeC_PEBBLES",
+                "VeC_STEPPING STONES", "VeC_GROUND BREAKERS", "VeC_ROCK SOLID",
+                "VeC_BOULDER GANG", "VeC_FRIDGE", "VeC_CLUB ONE", "VeC_THIRST", "VeC_FLAVA",
+                "VeC_SPORTS FIELD", "VeC_OUR PLACE");
         //General Venues Options
         ArrayList<String> generalVenues = new ArrayList<>();
-        Collections.addAll(generalVenues, "VeG_Food Court", "VeG_Marketplace (inc. Cafe)",
-                "VeG_Medical Centre", "VeG_New Wine FM");
+        Collections.addAll(generalVenues, "VeG_FOOD COURT", "VeG_MARKETPLACE (inc. Cafe)",
+                "VeG_MEDICAL CENTRE", "VeG_NEW WINE FM");
 
         //Site Options
         ArrayList<String> carParkDaySite = new ArrayList<>();

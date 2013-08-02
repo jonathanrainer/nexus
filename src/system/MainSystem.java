@@ -356,6 +356,7 @@ public class MainSystem
                 });
                 resultsBox.getSubmitButton().addActionListener(new ActionListener()
                 {
+                    @Override
                     public void actionPerformed(ActionEvent e)
                     {
                         ArrayList<Ticket> duplicatesArrayList = new ArrayList<>();

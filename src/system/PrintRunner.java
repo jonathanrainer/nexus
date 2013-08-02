@@ -14,6 +14,8 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import javax.swing.SwingWorker;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.FilenameUtils;
@@ -90,6 +92,18 @@ public class PrintRunner extends SwingWorker<Void,String> {
             User ticketRaisedBy = ticket.getTicketRaisedBy();
             String ticketAllocatedTo = ticket.getTicketAllocatedTo();
             String problemLocation = ticket.getProblemLocation();
+            Pattern pattern = Pattern.compile("[a-zA-Z]+-");
+            Matcher match = pattern.matcher(problemLocation);
+            StringBuffer buffer = new StringBuffer();
+            int i = 0;
+            while(match.find() && i < 1)
+            {
+                String replacement = "";
+                match.appendReplacement(buffer,replacement);
+                i++;
+            }
+            match.appendTail(buffer);
+            problemLocation = buffer.toString();
             problemLocation = problemLocation.replace("-", ", ");
             String problemDescription = ticket.getProblemDescription();
             String reportedBy = ticket.getReportedBy();
