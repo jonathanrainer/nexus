@@ -336,7 +336,7 @@ public class Ticket
     @Override
     public String toString()
     {
-        return "ID: " + jobRefId + " - Time Submitted : " + dateTime.toString(DATEFORMAT);
+        return "ID: " + jobRefId + " - Time Submitted : " + dateTime.toString(DATEFORMAT) + "- Allocated To: " + ticketAllocatedTo;
     }
     
 }

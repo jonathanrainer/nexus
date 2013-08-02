@@ -15,6 +15,7 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.ListSelectionModel;
 import system.Ticket;
 
@@ -26,6 +27,7 @@ public class ResultsBox
 {
     private JFrame mainFrame;
     private JPanel resultsPane;
+    private JScrollPane resultsScroll;
     private JList resultsArea;
     private JList duplicateResultsArea;
     private JPanel buttonsPane;
@@ -85,6 +87,13 @@ public class ResultsBox
                 resultsPane.add(resultsArea);
                 resultsArea.setListData(results);
                 resultsArea.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+                break;
+            default:
+                mainFrame.setPreferredSize(new Dimension(525, 800));
+                resultsArea.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+                resultsArea.setListData(results);
+                resultsScroll = new JScrollPane(resultsArea, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+                resultsPane.add(resultsScroll);
                 break;
         }
         mainFrame.pack();

@@ -102,10 +102,14 @@ public class TaskSelectionScreen {
         JMenu fileMenu = mainMenu.getMenu(0);
         JMenuItem checkForPotentialDuplicates = new JMenuItem("Check For Potential Duplicates");
         JMenuItem checkForUnprintedTickets = new JMenuItem("Check For Unprinted Job Tickets");
+        JMenuItem search = new JMenuItem("Search");
+        JMenuItem retrievals = new JMenuItem("Retrieve Tickets");
         JMenuItem modeSwitch = new JMenuItem("Deploy Dashboard Module");
         fileMenu.add(checkForPotentialDuplicates, 0);
         fileMenu.add(checkForUnprintedTickets, 1);
-        fileMenu.add(modeSwitch, 2);
+        fileMenu.add(search, 2);
+        fileMenu.add(retrievals, 3);
+        fileMenu.add(modeSwitch, 4);
         
         JButton writeNewATTicketButton;
         writeNewATTicketButton = new JButton(template.headingString(

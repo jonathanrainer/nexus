@@ -9,6 +9,8 @@ import gui.DashBoard;
 import gui.InitialGUI;
 import gui.MainGUI;
 import gui.ResultsBox;
+import gui.RetrievalsMenu;
+import gui.SearchMenu;
 import gui.Template;
 import io.RemoteInterfaceEngine;
 import io.MYSQLEngine;
@@ -449,10 +451,30 @@ public class MainSystem
                         }
                     }
                 });
-
-
             }
         });
+        
+        mainGUI.getTaskSelectionScreen().getMainFrame().getJMenuBar().getMenu(0).
+                getItem(2).addActionListener(new ActionListener()
+                {
+                    @Override
+                    public void actionPerformed(ActionEvent e)
+                    {
+                        SearchMenu searchMenu = new SearchMenu(mysqlEngine);
+                        addActionListenersSearchMenu(searchMenu);
+                    }
+                });
+                
+        mainGUI.getTaskSelectionScreen().getMainFrame().getJMenuBar().getMenu(0).
+                getItem(3).addActionListener(new ActionListener()
+                {
+                    @Override
+                    public void actionPerformed(ActionEvent e)
+                    {
+                        RetrievalsMenu retrievalsMenu = new RetrievalsMenu();
+                        addActionListenersRetrievalsMenu(retrievalsMenu);
+                    }
+                });
         
         mainGUI.getTaskSelectionScreen().getMainFrame().getJMenuBar().getMenu(0).getItem(0).
                 addActionListener(new ActionListener()
@@ -466,7 +488,341 @@ public class MainSystem
                 });
 
     }
+    
+    public void addActionListenersRetrievalsMenu(RetrievalsMenu retrievalsMenu)
+    {
+        retrievalsMenu.getAllTickets().addActionListener(new ActionListener()
+        {
+            @Override
+            public void actionPerformed(ActionEvent e)
+            {
+                final Ticket[] results = mysqlEngine.getAllTickets();
+                final ResultsBox resultsBox = new ResultsBox(results, "All");
+                resultsBox.getResultsArea().addMouseListener(new MouseAdapter()
+                {
+                    @Override
+                    public void mouseClicked(MouseEvent evt)
+                    {
+                        if (evt.getSource().equals(resultsBox.getResultsArea()))
+                        {
+                            if (evt.getClickCount() == 2)
+                            {
+                                int index = resultsBox.
+                                        getResultsArea().
+                                        locationToIndex(evt.getPoint());
+                                ControlOfficeEntryForm cofeAmend =
+                                        createUpdateAmendEntryForm("" + 
+                                        results[index].getJobRefId(), "tickets");
+                            }
+                        }
+                    }
+                });
+            }
+        });
+        retrievalsMenu.getTicketPrinted().addActionListener(new ActionListener()
+        {
+            @Override
+            public void actionPerformed(ActionEvent e)
+            {
+                final Ticket[] results = mysqlEngine.getTicketPrintedTickets();
+                final ResultsBox resultsBox = new ResultsBox(results, "Ticket Printed");
+                resultsBox.getResultsArea().addMouseListener(new MouseAdapter()
+                {
+                    @Override
+                    public void mouseClicked(MouseEvent evt)
+                    {
+                        if (evt.getSource().equals(resultsBox.getResultsArea()))
+                        {
+                            if (evt.getClickCount() == 2)
+                            {
+                                int index = resultsBox.
+                                        getResultsArea().
+                                        locationToIndex(evt.getPoint());
+                                ControlOfficeEntryForm cofeAmend =
+                                        createUpdateAmendEntryForm("" + 
+                                        results[index].getJobRefId(), "tickets");
+                            }
+                        }
+                    }
+                });
+            }
+        });
+        retrievalsMenu.getJobInProgress().addActionListener(new ActionListener()
+        {
+            @Override
+            public void actionPerformed(ActionEvent e)
+            {
+                final Ticket[] results = mysqlEngine.getJobInProgressTickets();
+                final ResultsBox resultsBox = new ResultsBox(results, "Job In Progress");
+                resultsBox.getResultsArea().addMouseListener(new MouseAdapter()
+                {
+                    @Override
+                    public void mouseClicked(MouseEvent evt)
+                    {
+                        if (evt.getSource().equals(resultsBox.getResultsArea()))
+                        {
+                            if (evt.getClickCount() == 2)
+                            {
+                                int index = resultsBox.
+                                        getResultsArea().
+                                        locationToIndex(evt.getPoint());
+                                ControlOfficeEntryForm cofeAmend =
+                                        createUpdateAmendEntryForm("" + 
+                                        results[index].getJobRefId(), "tickets");
+                            }
+                        }
+                    }
+                });
+            }
+        });
+        retrievalsMenu.getJobEscalated().addActionListener(new ActionListener()
+        {
+            @Override
+            public void actionPerformed(ActionEvent e)
+            {
+                final Ticket[] results = mysqlEngine.getJobEscalatedTickets();
+                final ResultsBox resultsBox = new ResultsBox(results, "Job Escalated");
+                resultsBox.getResultsArea().addMouseListener(new MouseAdapter()
+                {
+                    @Override
+                    public void mouseClicked(MouseEvent evt)
+                    {
+                        if (evt.getSource().equals(resultsBox.getResultsArea()))
+                        {
+                            if (evt.getClickCount() == 2)
+                            {
+                                int index = resultsBox.
+                                        getResultsArea().
+                                        locationToIndex(evt.getPoint());
+                                ControlOfficeEntryForm cofeAmend =
+                                        createUpdateAmendEntryForm("" + 
+                                        results[index].getJobRefId(), "tickets");
+                            }
+                        }
+                    }
+                });
+            }
+        });
+        retrievalsMenu.getJobDone().addActionListener(new ActionListener()
+        {
+            @Override
+            public void actionPerformed(ActionEvent e)
+            {
+                final Ticket[] results = mysqlEngine.getJobDoneTickets();
+                final ResultsBox resultsBox = new ResultsBox(results, "Job Done");
+                resultsBox.getResultsArea().addMouseListener(new MouseAdapter()
+                {
+                    @Override
+                    public void mouseClicked(MouseEvent evt)
+                    {
+                        if (evt.getSource().equals(resultsBox.getResultsArea()))
+                        {
+                            if (evt.getClickCount() == 2)
+                            {
+                                int index = resultsBox.
+                                        getResultsArea().
+                                        locationToIndex(evt.getPoint());
+                                ControlOfficeEntryForm cofeAmend =
+                                        createUpdateAmendEntryForm("" + 
+                                        results[index].getJobRefId(), "tickets");
+                            }
+                        }
+                    }
+                });
+            }
+        });
+    }
 
+    public void addActionListenersSearchMenu(SearchMenu searchMenuIn)
+    {
+        final SearchMenu searchMenu = searchMenuIn;
+        Iterator it1 = dataStructures.getMasterListBox1().iterator();
+        searchMenu.getProblemLocationCB1().addItem("Select a Location");
+        while (it1.hasNext())
+        {
+            searchMenu.getProblemLocationCB1().addItem(it1.next());
+        }
+        //Create HashMap for ComboBox 2 it should link together the string
+        //selected in the previous box with the new set of strings for the next
+        //combo box.
+
+
+        searchMenu.getProblemLocationCB1().addActionListener(
+                new ActionListener()
+        {
+            @Override
+            public void actionPerformed(ActionEvent e)
+            {
+                if (e.getActionCommand().equals("comboBoxChanged")
+                        && !(searchMenu.getProblemLocationCB1().getSelectedItem().
+                        equals("Select a Location")))
+                {
+                    ArrayList<String> secondBoxOptions = dataStructures.getMasterListBox2().
+                            get(searchMenu.getProblemLocationCB1().getSelectedItem().toString());
+                    searchMenu.getProblemLocationCB2().removeAllItems();
+                    searchMenu.getProblemLocationCB3().removeAllItems();
+                    searchMenu.getProblemLocationCB4().removeAllItems();
+                    Iterator<String> secondBoxIterator = secondBoxOptions.iterator();
+                    searchMenu.getProblemLocationCB2().addItem("Select a Location");
+                    while (secondBoxIterator.hasNext())
+                    {
+                        searchMenu.getProblemLocationCB2().addItem(secondBoxIterator.next());
+                    }
+                    searchMenu.getProblemLocationCB2().setSelectedIndex(0);
+                } else if (searchMenu.getProblemLocationCB1().getSelectedItem().
+                        equals("Select a Location"))
+                {
+                    searchMenu.getProblemLocationCB2().removeAllItems();
+                    searchMenu.getProblemLocationCB3().removeAllItems();
+                    searchMenu.getProblemLocationCB4().removeAllItems();
+                }
+            }
+        });
+
+        searchMenu.getProblemLocationCB2().addActionListener(
+                new ActionListener()
+        {
+            @Override
+            public void actionPerformed(ActionEvent e)
+            {
+                if (e.getActionCommand().equals("comboBoxChanged")
+                        && !(searchMenu.getProblemLocationCB2().getSelectedItem() == null)
+                        && !(searchMenu.getProblemLocationCB2().getSelectedItem().equals("Select a Location")))
+                {
+                    ArrayList<String> thirdBoxOptions = dataStructures.getMasterListBox3().get(
+                            searchMenu.getProblemLocationCB2().getSelectedItem().toString());
+                    searchMenu.getProblemLocationCB3().removeAllItems();
+                    searchMenu.getProblemLocationCB4().removeAllItems();
+                    Iterator<String> thirdBoxIterator = thirdBoxOptions.iterator();
+                    if (!(thirdBoxOptions.size() == 1))
+                    {
+                        searchMenu.getProblemLocationCB3().addItem("Select a Location");
+                    }
+                    while (thirdBoxIterator.hasNext())
+                    {
+                        searchMenu.getProblemLocationCB3().addItem(thirdBoxIterator.next());
+                    }
+
+                }
+                if (!(searchMenu.getProblemLocationCB2().getSelectedItem() == null)
+                        && (searchMenu.getProblemLocationCB2().getSelectedItem().equals("Select a Location")))
+                {
+                    searchMenu.getProblemLocationCB3().removeAllItems();
+                    searchMenu.getProblemLocationCB4().removeAllItems();
+                }
+            }
+        });
+
+        searchMenu.getProblemLocationCB3().addActionListener(
+                new ActionListener()
+        {
+            @Override
+            public void actionPerformed(ActionEvent e)
+            {
+                if (e.getActionCommand().equals("comboBoxChanged")
+                        && !(searchMenu.getProblemLocationCB3().getSelectedItem() == null
+                        || searchMenu.getProblemLocationCB3().getSelectedItem().equals("Select a Location")))
+                {
+                    ArrayList<String> fourthBoxOptions;
+                    if (searchMenu.getProblemLocationCB3().getSelectedItem().toString().substring(4).equals("NA"))
+                    {
+                        fourthBoxOptions =
+                                dataStructures.getMasterListBox4().get(searchMenu.
+                                getProblemLocationCB2().
+                                getSelectedItem() + "-"
+                                + searchMenu.getProblemLocationCB3().
+                                getSelectedItem());
+                    } else
+                    {
+                        fourthBoxOptions =
+                                dataStructures.getMasterListBox4().get(searchMenu.getProblemLocationCB3()
+                                .getSelectedItem().toString());
+                    }
+                    searchMenu.getProblemLocationCB4().removeAllItems();
+                    Iterator<String> fourthBoxIterator =
+                            fourthBoxOptions.iterator();
+                    if (!(fourthBoxOptions.size() == 1))
+                    {
+                        searchMenu.getProblemLocationCB4().addItem("Select a Facility");
+                    }
+                    while (fourthBoxIterator.hasNext())
+                    {
+                        searchMenu.getProblemLocationCB4().addItem(fourthBoxIterator.next());
+                    }
+                }
+                if (!(searchMenu.getProblemLocationCB3().getSelectedItem() == null)
+                        && (searchMenu.getProblemLocationCB3().getSelectedItem().equals("Select a Location")))
+                {
+                    searchMenu.getProblemLocationCB4().removeAllItems();
+                }
+
+            }
+        });
+        
+       searchMenu.getSearchByLocation().addActionListener(new ActionListener()
+       {
+           @Override
+           public void actionPerformed(ActionEvent e)
+           {
+               String problemLocation = searchMenu.getProblemLocationCB1().getSelectedItem().toString() +
+                       "-" + searchMenu.getProblemLocationCB2().getSelectedItem().toString().substring(4) + 
+                       "-" + searchMenu.getProblemLocationCB3().getSelectedItem().toString().substring(4) +
+                       "-" + searchMenu.getProblemLocationCB4().getSelectedItem().toString().substring(4);
+               final Ticket[] tickets = mysqlEngine.searchByLocation(problemLocation);
+               final ResultsBox resultsBox = new ResultsBox(tickets, "");
+               resultsBox.getResultsArea().addMouseListener(new MouseAdapter()
+                {
+                    @Override
+                    public void mouseClicked(MouseEvent evt)
+                    {
+                        if (evt.getSource().equals(resultsBox.getResultsArea()))
+                        {
+                            if (evt.getClickCount() == 2)
+                            {
+                                int index = resultsBox.
+                                        getResultsArea().
+                                        locationToIndex(evt.getPoint());
+                                ControlOfficeEntryForm cofeAmend =
+                                        createUpdateAmendEntryForm("" + 
+                                        tickets[index].getJobRefId(), "tickets");
+                            }
+                        }
+                    }
+                });
+           }
+       });
+       
+       searchMenu.getSearchByAllocation().addActionListener(new ActionListener()
+       {
+           public void actionPerformed(ActionEvent e)
+           {
+               String allocation = searchMenu.getAllocationSearch().getSelectedItem().toString();
+               final Ticket[] tickets = mysqlEngine.searchByAllocation(allocation);
+                       final ResultsBox resultsBox = new ResultsBox(tickets, "");
+               resultsBox.getResultsArea().addMouseListener(new MouseAdapter()
+                {
+                    @Override
+                    public void mouseClicked(MouseEvent evt)
+                    {
+                        if (evt.getSource().equals(resultsBox.getResultsArea()))
+                        {
+                            if (evt.getClickCount() == 2)
+                            {
+                                int index = resultsBox.
+                                        getResultsArea().
+                                        locationToIndex(evt.getPoint());
+                                ControlOfficeEntryForm cofeAmend =
+                                        createUpdateAmendEntryForm("" + 
+                                        tickets[index].getJobRefId(), "tickets");
+                            }
+                        }
+                    }
+                });
+           }
+       });
+       
+    }
+    
     /**
      * Create the form, with some data prefilled, so that it can be entered into
      * the database.
