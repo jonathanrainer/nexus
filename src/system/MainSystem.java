@@ -125,7 +125,7 @@ public class MainSystem
                 String password = "";
                 JPasswordField pf = new JPasswordField();
                 int okCxl = JOptionPane.showConfirmDialog(null, pf, "Please enter your password", JOptionPane.OK_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE);
-
+                
                 if (okCxl == JOptionPane.OK_OPTION) 
                 {
                      password = new String(pf.getPassword());
@@ -321,14 +321,23 @@ public class MainSystem
                         {
                             if (evt.getClickCount() == 2)
                             {
+                                
+                                ListModel<Ticket> liveTickets = resultsBox.getDuplicateResultsArea().getModel();
+                                Ticket[] liveTicketsArray = new Ticket[liveTickets.getSize()];
+                                int i = 0;
+                                while(i < liveTickets.getSize())
+                                {
+                                    liveTicketsArray[i] = liveTickets.getElementAt(i);
+                                    i++;
+                                }
                                 int index = resultsBox.
                                         getResultsArea().
                                         locationToIndex(evt.getPoint());
-                                if(index < duplicateTickets.length)
+                                if(index < liveTicketsArray.length)
                                 {
                                     ControlOfficeEntryForm cofeAmend =
                                         createUpdateAmendEntryForm("" + 
-                                            duplicateTickets[index].getJobRefId(),
+                                            liveTicketsArray[index].getJobRefId(),
                                             "tickets");
                                 cofeAmend.getSubmitFormButton().setEnabled(false);
                                 cofeAmend.getResetFormButton().setEnabled(false);
@@ -693,7 +702,6 @@ public class MainSystem
                                     "The Job Ticket has been submitted. \n"
                                     + "The Job ID is: " + ticket.getJobRefId()
                                     + "\nIt was submitted at: " + ticket.getDateTime().toString(DATEFORMAT));
-                            cofe.getMainFrame().dispose();
                         } else
                         {
                             JOptionPane.showMessageDialog(cofe.getMainFrame(), "An error has occured. \n"
@@ -761,6 +769,7 @@ public class MainSystem
                 {
                     printTicket(ticket);
                 }
+                cofe.getMainFrame().dispose();
             }
         });
         fileMenu.add(printAndSubmit, 0);
@@ -952,6 +961,7 @@ public class MainSystem
             public void actionPerformed(ActionEvent e)
             {
                 submitTicket(cofe);
+                cofe.getMainFrame().dispose();
             }
         });
 
@@ -990,6 +1000,7 @@ public class MainSystem
                         {
                             printTicket(ticket);
                         }
+                        cofe.getMainFrame().dispose();
                     }
                 });
         
@@ -1470,7 +1481,6 @@ public class MainSystem
                             + "The Job ID is: " + ticket.getJobRefId()
                             + "\nIt was submitted at: "
                             + ticket.getDateTime().toString(DATEFORMAT));
-                    cofe.getMainFrame().dispose();
                 } else
                 {
                     JOptionPane.showMessageDialog(cofe.getMainFrame(), "An error has occured. \n"
@@ -1486,7 +1496,6 @@ public class MainSystem
                                     + "flagged as a duplicate. Control Office will advise. \n"
                                     + "The Temporary Job ID is: " + ticket.getJobRefId()
                                     + "\n It was submitted at: " + ticket.getDateTime().toString(DATEFORMAT));
-                cofe.getMainFrame().dispose();
                 return -2;
             }
         } else
